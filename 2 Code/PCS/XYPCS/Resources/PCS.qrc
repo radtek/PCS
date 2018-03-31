@@ -1,0 +1,97 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="login_background">images/pngs/login_background.png</file>
+        <file alias="login_cancel">images/pngs/login_cancel.png</file>
+        <file alias="login_cancel_active">images/pngs/login_cancel_active.png</file>
+        <file alias="login_cancel_click">images/pngs/login_cancel_click.png</file>
+        <file alias="login_minimize">images/pngs/login_minimize.png</file>
+        <file alias="login_minimize_active">images/pngs/login_minimize_active.png</file>
+        <file alias="login_minimize_click">images/pngs/login_minimize_click.png</file>
+        <file>images/pngs/circle_green.png</file>
+        <file>images/pngs/circle_grey.png</file>
+        <file>images/pngs/circle_red.png</file>
+        <file>images/pngs/circle_yellow.png</file>
+        <file>images/pngs/work_pause.png</file>
+        <file>images/pngs/work_start.png</file>
+        <file>images/pngs/common_add.png</file>
+        <file>images/pngs/common_delete.png</file>
+        <file>images/pngs/common_modify.png</file>
+        <file>images/pngs/common_movedown.png</file>
+        <file>images/pngs/common_moveup.png</file>
+        <file>images/pngs/common_accept.png</file>
+        <file>images/pngs/common_reject.png</file>
+        <file>images/pngs/comm_serialport.png</file>
+        <file>images/pngs/opc_connection.png</file>
+        <file>images/pngs/comm_linkstatus.png</file>
+        <file>images/pngs/label_preview.png</file>
+        <file>images/pngs/label_print.png</file>
+        <file>images/pngs/package_info.png</file>
+        <file>images/pngs/product_info.png</file>
+        <file>images/pngs/fixture_check.png</file>
+        <file>images/pngs/operator_login.png</file>
+        <file>images/pngs/common_refresh.png</file>
+        <file>images/pngs/tag_red.png</file>
+        <file>images/pngs/tag_blue.png</file>
+        <file>images/pngs/tag_green.png</file>
+        <file>images/pngs/tag_orange.png</file>
+        <file>images/pngs/tag_pink.png</file>
+        <file>images/pngs/tag_purple.png</file>
+        <file>images/pngs/tag_yellow.png</file>
+        <file>images/pngs/datecode_add.png</file>
+        <file>images/pngs/datecode_copy.png</file>
+        <file>images/pngs/datecode_delete.png</file>
+        <file>images/pngs/datecode_design.png</file>
+        <file>images/pngs/datecode_edit.png</file>
+        <file>images/pngs/common_exit.png</file>
+        <file>images/pngs/common_save.png</file>
+        <file>images/pngs/common_info.png</file>
+        <file>images/pngs/table_accept.png</file>
+        <file>images/pngs/table_reject.png</file>
+        <file>images/menu/order_history.png</file>
+        <file>images/menu/order_plan.png</file>
+        <file>images/menu/order_manage.png</file>
+        <file>images/menu/document_devicecheck.png</file>
+        <file>images/menu/document_manage.png</file>
+        <file>images/menu/document_productcheck.png</file>
+        <file>images/menu/document_qualitycheck.png</file>
+        <file>images/menu/document_unqualified.png</file>
+        <file>images/menu/craft_barcode.png</file>
+        <file>images/menu/craft_process.png</file>
+        <file>images/menu/craft_manage.png</file>
+        <file>images/menu/craft_route.png</file>
+        <file>images/menu/monitor_comm.png</file>
+        <file>images/menu/monitor_data.png</file>
+        <file>images/menu/monitor_order.png</file>
+        <file>images/menu/monitor_package.png</file>
+        <file>images/menu/monitor_produce.png</file>
+        <file>images/menu/andon_call.png</file>
+        <file>images/menu/andon_cart.png</file>
+        <file>images/menu/andon_stop.png</file>
+        <file>images/pngs/main_header.jpg</file>
+        <file>images/pngs/main_tabbed.jpg</file>
+        <file>images/pngs/tabbar_close.png</file>
+        <file>images/pngs/checkbox_empty.png</file>
+        <file>images/pngs/checkbox_full.png</file>
+        <file>images/pngs/common_key.png</file>
+        <file>images/pngs/order_activate.png</file>
+        <file>images/pngs/order_close.png</file>
+        <file>images/pngs/order_forceclose.png</file>
+        <file>images/pngs/order_offline.png</file>
+        <file>images/pngs/order_online.png</file>
+        <file>images/pngs/order_refresh.png</file>
+        <file>images/pngs/order_return.png</file>
+        <file>images/pngs/order_suspend.png</file>
+        <file>images/pngs/tree_craft.png</file>
+        <file>images/pngs/tree_label.png</file>
+        <file>images/pngs/tree_station.png</file>
+        <file>images/pngs/balance_zero.png</file>
+        <file>images/pngs/material_input.png</file>
+        <file>images/pngs/force_package.png</file>
+        <file>images/pngs/logistics_in.png</file>
+        <file>images/pngs/logistics_out.png</file>
+        <file>images/pngs/logistics_feed.png</file>
+        <file>images/pngs/logistics_back.png</file>
+        <file>images/pngs/document_addnew.png</file>
+        <file>images/pngs/document_browse.png</file>
+    </qresource>
+</RCC>

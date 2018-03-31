@@ -2,24 +2,38 @@
 # Copyright (c) 2018 Nanjing Xuanyong Techology Co.,Ltd
 # All rights reserved.
 #
-# Project: PCS
+# Project: XYWidget
 # Version: 1.0
 # Brief:
-#   XYWidget    自定义界面库
-#   XYCom       COM控件库
-#   XYPCS       项目核心程序
+#
 # ------------------------------------------------------------------------------
 # 2018/04/01  WeiHeng       Create this file
 #
 # ------------------------------------------------------------------------------
 
+# 引用Qt库
+QT += widgets sql xml
+
 # 输出类型
-TEMPLATE = subdirs
+TEMPLATE = lib
 
-# 子项目目录
-SUBDIRS += \
-    XYWidget        \
-    XYCom           \
-    XYPCS           \
+# 生成程序名
+TARGET = XYWidget
 
-CONFIG += ordered
+# 引用宏
+DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES += XYWIDGET_LIBRARY
+
+# 生成目录
+DESTDIR = $$PWD/../../bin
+
+# 引用源文件
+SOURCES += \
+    XYSqlQueryModel.cpp
+
+
+# 引用头文件
+HEADERS += \
+    XYWidgetExport.h                    \
+    XYSqlQueryModel.h
+
