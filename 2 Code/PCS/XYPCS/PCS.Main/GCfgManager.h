@@ -25,7 +25,6 @@ private:
 
     QString sysPathSqlConn;
     QString sysPathSqlName;
-    QString sysPathSqlSync;
     QString sysPathOpcConfig;
     QString sysPathCommConfig;
     QString sysPathAssyProcess;
@@ -54,17 +53,13 @@ public:
     {
         return softwareSplash;
     }
-    inline const QString &getSqlConn() const
+    inline const QString &getPathSqlConn() const
     {
         return sysPathSqlConn;
     }
-    inline const QString &getSqlName() const
+    inline const QString &getPathSqlName() const
     {
         return sysPathSqlName;
-    }
-    inline const QString &getSqlSync() const
-    {
-        return sysPathSqlSync;
     }
     inline const QString &getOpcConfig() const
     {

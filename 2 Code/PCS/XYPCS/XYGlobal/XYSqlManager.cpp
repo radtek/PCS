@@ -78,22 +78,40 @@ XYSqlManager::~XYSqlManager()
 {
 }
 
-bool XYSqlManager::Initialize()
+bool XYSqlManager::Initialize(const QString &configFile, const QString &namingFile)
 {
-    initConfigSQL(DEFAULT_CONFIG_CONFIGSQL);
-    initNamingSQL(DEFAULT_CONFIG_NAMINGSQL);
+    QString ConfigFile(configFile);
+    if (ConfigFile.isEmpty())
+    {
+        ConfigFile = DEFAULT_CONFIG_CONFIGSQL;
+    }
+    initConfigSQL(ConfigFile);
+
+    QString NamingFile(namingFile);
+    if (NamingFile.isEmpty())
+    {
+        NamingFile = DEFAULT_CONFIG_NAMINGSQL;
+    }
+    initNamingSQL(NamingFile);
 
     return init();
 }
 
-QString XYSqlManager::getSqlByName(const QString &name)
+QString XYSqlManager::getSqlByName(const QString &name, bool *pOk)
 {
     qDebug() << QString("[SQL] NamingSQL:[%1].").arg(name);
+
+    if (pOk)
+        *pOk = true;
 
     if (mapNamingSQL.contains(name))
     {
         return mapNamingSQL[name]->StrSQL;
     }
+
+    if (pOk)
+        *pOk = false;
+
     return QString();
 }
 

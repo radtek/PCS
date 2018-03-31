@@ -1,5 +1,19 @@
+/*!
+ * *****************************************************************************
+ * Copyright (c) 2018 Nanjing Xuanyong Techology Co.,Ltd
+ * All rights reserved.
+ *
+ * @file    XYLabel.cpp
+ *
+ * @example
+ *
+ * @brief
+ *
+ * @date 2018-04-01 @author zhuangming          @note create this file
+ * *****************************************************************************
+ */
+
 #include "XYLabel.h"
-#include <QMouseEvent>
 
 XYClickLabel::XYClickLabel(QWidget *parent)
     : QLabel(parent)
@@ -9,7 +23,6 @@ XYClickLabel::XYClickLabel(QWidget *parent)
 
 XYClickLabel::~XYClickLabel()
 {
-
 }
 
 void XYClickLabel::setStaticPixmap(const QPixmap &pixmap)
@@ -69,4 +82,3 @@ void XYClickLabel::leaveEvent(QEvent *event)
 
     QLabel::leaveEvent(event);
 }
-

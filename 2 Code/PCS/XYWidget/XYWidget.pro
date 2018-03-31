@@ -34,7 +34,12 @@ SOURCES += \
     XYLabel.cpp \
     XYComboBox.cpp \
     XYCustomLabel.cpp \
-    XYCustomButton.cpp
+    XYCustomButton.cpp \
+    XYCheckableComboBox.cpp \
+    XYCheckableModelHelper.cpp \
+    XYTextFieldLineEdit.cpp \
+    XYTextFieldStateMachine.cpp \
+    XYSearchLineEdit.cpp
 
 
 # 引用头文件
@@ -45,5 +50,10 @@ HEADERS += \
     XYLabel.h \
     XYComboBox.h \
     XYCustomLabel.h \
-    XYCustomButton.h
+    XYCustomButton.h \
+    XYCheckableComboBox.h \
+    XYCheckableModelHelper.h \
+    XYTextFieldLineEdit.h \
+    XYTextFieldStateMachine.h \
+    XYSearchLineEdit.h
 

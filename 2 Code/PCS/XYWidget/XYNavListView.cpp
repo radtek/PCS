@@ -17,16 +17,11 @@
  *          </layout>
  *      </root>
  *
- * @date 2018-04-01 @author weiheng             @note create this file
+ * @date 2018-04-01 @author zhuangming          @note create this file
  * *****************************************************************************
  */
 
 #include "XYNavListView.h"
-
-#include <QDebug>
-#include <QFile>
-#include <QPainter>
-#include <QtXml>
 
 XYNavListView::XYNavListView(QWidget *parent)
     : QListView(parent)

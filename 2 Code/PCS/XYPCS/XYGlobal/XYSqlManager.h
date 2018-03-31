@@ -52,8 +52,8 @@ public:
     ~XYSqlManager();
 
 public:
-    bool Initialize();
-    QString getSqlByName(const QString &name);
+    bool Initialize(const QString &configFile = QString(), const QString &namingFile = QString());
+    QString getSqlByName(const QString &name, bool *pOk = Q_NULLPTR);
 
 private:
     bool init();

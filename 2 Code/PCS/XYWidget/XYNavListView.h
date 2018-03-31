@@ -1,6 +1,7 @@
 /*!
  * *****************************************************************************
  * Copyright (c) 2018 Nanjing Xuanyong Techology Co.,Ltd
+ * All rights reserved.
  *
  * @file    XYNavListView.h
  * @brief   折叠式导航栏
@@ -18,8 +19,12 @@
 #include "XYWidgetExport.h"
 
 #include <QAbstractListModel>
+#include <QDebug>
+#include <QFile>
 #include <QListView>
+#include <QPainter>
 #include <QStyledItemDelegate>
+#include <QtXml>
 
 class XYNavModel;
 class XYNavDelegate;

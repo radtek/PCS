@@ -1,3 +1,18 @@
+/*!
+ * *****************************************************************************
+ * Copyright (c) 2018 Nanjing Xuanyong Techology Co.,Ltd
+ * All rights reserved.
+ *
+ * @file    XYCustomLabel.cpp
+ *
+ * @example
+ *
+ * @brief
+ *
+ * @date 2018-04-01 @author zhuangming          @note create this file
+ * *****************************************************************************
+ */
+
 #include "XYCustomLabel.h"
 
 XYCustomLabel::XYCustomLabel(QWidget *parent)
@@ -9,16 +24,15 @@ XYCustomLabel::XYCustomLabel(QWidget *parent)
     setAlignment(Qt::AlignCenter);
 
     m_pixmap1 = QPixmap(":/images/pngs/table_accept.png")
-                .scaled(16, 16, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                    .scaled(16, 16, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     m_pixmap2 = QPixmap(":/images/pngs/table_reject.png")
-                .scaled(16, 16, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                    .scaled(16, 16, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     setPixmap(m_valid ? m_pixmap1 : m_pixmap2);
 }
 
 XYCustomLabel::~XYCustomLabel()
 {
-
 }
 
 void XYCustomLabel::setValid(bool valid)
@@ -41,4 +55,3 @@ void XYCustomLabel::mousePressEvent(QMouseEvent *event)
 
     QLabel::mousePressEvent(event);
 }
-
