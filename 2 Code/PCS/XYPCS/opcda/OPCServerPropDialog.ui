@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OPCServerPropDialog</class>
+ <widget class="QDialog" name="OPCServerPropDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>360</width>
+    <height>520</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>9</number>
+   </property>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="spacing">
+      <number>9</number>
+     </property>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="editMachineName"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="labelProgID">
+       <property name="text">
+        <string>Prog ID:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="editVendor"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="labelVendor">
+       <property name="text">
+        <string>Vendor:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="labelUserType">
+       <property name="text">
+        <string>User Type:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="editProgID"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="labelMachineName">
+       <property name="text">
+        <string>Machine Name:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="editUserType"/>
+     </item>
+     <item row="7" column="1">
+      <widget class="QLineEdit" name="editCurrentTime"/>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="labelGroupCount">
+       <property name="text">
+        <string>Group Count:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="labelCurrentTime">
+       <property name="text">
+        <string>Current Time:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QLineEdit" name="editUpdateTime"/>
+     </item>
+     <item row="10" column="0">
+      <widget class="QLabel" name="labelBandWidth">
+       <property name="text">
+        <string>Band Width:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <widget class="QLineEdit" name="editMajorVersion"/>
+     </item>
+     <item row="12" column="0">
+      <widget class="QLabel" name="labelMinorVersion">
+       <property name="text">
+        <string>Minor Version:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QLineEdit" name="editMinorVersion"/>
+     </item>
+     <item row="13" column="0">
+      <widget class="QLabel" name="labelBuildNumber">
+       <property name="text">
+        <string>Build Number:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="labelCLSID">
+       <property name="text">
+        <string>CLSID:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLineEdit" name="editStartTime"/>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="labelUpdateTime">
+       <property name="text">
+        <string>Last Update Time:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="labelState">
+       <property name="text">
+        <string>State:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="0">
+      <widget class="QLabel" name="labelMajorVersion">
+       <property name="text">
+        <string>Major Version:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <widget class="QLineEdit" name="editBaudWidth"/>
+     </item>
+     <item row="9" column="1">
+      <widget class="QLineEdit" name="editGroupCount"/>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="labelStartTime">
+       <property name="text">
+        <string>Start Time:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="1">
+      <widget class="QLineEdit" name="editBuildNumber"/>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="editState"/>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="editCLSID"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonOK">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>OK</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonCancel">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonHelp">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Help</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>buttonOK</tabstop>
+  <tabstop>buttonCancel</tabstop>
+  <tabstop>buttonHelp</tabstop>
+  <tabstop>editProgID</tabstop>
+  <tabstop>editVendor</tabstop>
+  <tabstop>editUserType</tabstop>
+  <tabstop>editMachineName</tabstop>
+  <tabstop>editCLSID</tabstop>
+  <tabstop>editState</tabstop>
+  <tabstop>editStartTime</tabstop>
+  <tabstop>editCurrentTime</tabstop>
+  <tabstop>editUpdateTime</tabstop>
+  <tabstop>editGroupCount</tabstop>
+  <tabstop>editBaudWidth</tabstop>
+  <tabstop>editMajorVersion</tabstop>
+  <tabstop>editMinorVersion</tabstop>
+  <tabstop>editBuildNumber</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
