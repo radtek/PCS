@@ -1,9 +1,23 @@
-#ifndef PCS_EXWIDGET_XYLABEL_H_
-#define PCS_EXWIDGET_XYLABEL_H_
+/*!
+ * *****************************************************************************
+ * Copyright (c) 2018 Nanjing Xuanyong Techology Co.,Ltd
+ * All rights reserved.
+ *
+ * @file    XYLabel.h
+ * @brief   自定义多态标签
+ * @version 1.0
+ * @note
+ *
+ * *****************************************************************************
+ */
+
+#ifndef XYTECH_XYLABEL_H
+#define XYTECH_XYLABEL_H
 
 #include "XYWidgetExport.h"
 
 #include <QLabel>
+#include <QMouseEvent>
 
 class XYWIDGET_EXPORT XYClickLabel : public QLabel
 {

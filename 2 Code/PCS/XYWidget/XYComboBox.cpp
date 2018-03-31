@@ -1,5 +1,19 @@
-#include "XYComboBox.h"
+/*!
+ * *****************************************************************************
+ * Copyright (c) 2018 Nanjing Xuanyong Techology Co.,Ltd
+ * All rights reserved.
+ *
+ * @file    XYComboBox.cpp
+ *
+ * @example
+ *
+ * @brief
+ *
+ * @date 2018-04-01 @author zhuangming          @note create this file
+ * *****************************************************************************
+ */
 
+#include "XYComboBox.h"
 
 XYComboBox::XYComboBox(QWidget *parent)
     : QComboBox(parent)
@@ -9,7 +23,6 @@ XYComboBox::XYComboBox(QWidget *parent)
 
 XYComboBox::~XYComboBox()
 {
-
 }
 
 void XYComboBox::showPopup()

@@ -93,5 +93,6 @@
         <file>images/pngs/logistics_back.png</file>
         <file>images/pngs/document_addnew.png</file>
         <file>images/pngs/document_browse.png</file>
+        <file alias="search_dark">images/pngs/search_dark.png</file>
     </qresource>
 </RCC>

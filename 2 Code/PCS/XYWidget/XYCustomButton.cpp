@@ -1,3 +1,18 @@
+/*!
+ * *****************************************************************************
+ * Copyright (c) 2018 Nanjing Xuanyong Techology Co.,Ltd
+ * All rights reserved.
+ *
+ * @file    XYCustomButton.cpp
+ *
+ * @example
+ *
+ * @brief
+ *
+ * @date 2018-04-01 @author zhuangming          @note create this file
+ * *****************************************************************************
+ */
+
 #include "XYCustomButton.h"
 
 ChildButton::ChildButton(QWidget *parent)
@@ -14,7 +29,6 @@ ChildButton::ChildButton(QWidget *parent)
 
 ChildButton::~ChildButton()
 {
-
 }
 
 void ChildButton::setButtonText(const QString &text)
@@ -26,7 +40,6 @@ void ChildButton::slotClicked()
 {
     emit signalClicked(m_index);
 }
-
 
 XYCustomButton::XYCustomButton(QWidget *parent)
     : QWidget(parent)
@@ -41,7 +54,6 @@ XYCustomButton::XYCustomButton(QWidget *parent)
 
 XYCustomButton::~XYCustomButton()
 {
-
 }
 
 void XYCustomButton::addButtons(const QStringList &items)

@@ -3,6 +3,9 @@
 #include "GlobalData.h"
 #include "MainWindow.h"
 
+#include "XYSearchLineEdit.h"
+#include "XYTextFieldLineEdit.h"
+
 int main(int argc, char *argv[])
 {
     PCSApplication app(argc, argv);
@@ -45,14 +48,8 @@ bool PCSApplication::initialize()
     // 配置初始化
     cfgManager = qCfgManager;
 
-    // 检测程序是否开启
-    if (!isLocalServerOpen())
-    {
-        return false;
-    }
-
-    // 开启本地服务
-    if (!openLocalServer())
+    // 检测程序是否开启,开启本地服务
+    if (isLocalServerOpen() && openLocalServer())
     {
         return false;
     }
