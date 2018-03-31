@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogDateCodeDesign</class>
+ <widget class="QDialog" name="DialogDateCodeDesign">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>日期代码</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="buttonAddnew">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>新增</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../PCS.qrc">
+         <normaloff>:/images/pngs/datecode_add.png</normaloff>:/images/pngs/datecode_add.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonCopy">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>复制</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../PCS.qrc">
+         <normaloff>:/images/pngs/datecode_copy.png</normaloff>:/images/pngs/datecode_copy.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonModify">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>修改</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../PCS.qrc">
+         <normaloff>:/images/pngs/datecode_edit.png</normaloff>:/images/pngs/datecode_edit.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonDelete">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>删除</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../PCS.qrc">
+         <normaloff>:/images/pngs/datecode_delete.png</normaloff>:/images/pngs/datecode_delete.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonSave">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>保存</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../PCS.qrc">
+         <normaloff>:/images/pngs/common_save.png</normaloff>:/images/pngs/common_save.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonExit">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>退出</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../PCS.qrc">
+         <normaloff>:/images/pngs/common_exit.png</normaloff>:/images/pngs/common_exit.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QTreeWidget" name="treeWidget">
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tableWidget"/>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>buttonAddnew</tabstop>
+  <tabstop>buttonModify</tabstop>
+  <tabstop>buttonDelete</tabstop>
+  <tabstop>buttonSave</tabstop>
+  <tabstop>buttonExit</tabstop>
+  <tabstop>treeWidget</tabstop>
+  <tabstop>tableWidget</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../PCS.qrc"/>
+ </resources>
+ <connections/>
+</ui>

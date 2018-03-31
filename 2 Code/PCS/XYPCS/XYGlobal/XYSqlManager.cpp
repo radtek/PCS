@@ -80,8 +80,8 @@ XYSqlManager::~XYSqlManager()
 
 bool XYSqlManager::Initialize()
 {
-    initConfigSQL();
-    initNamingSQL();
+    initConfigSQL(DEFAULT_CONFIG_CONFIGSQL);
+    initNamingSQL(DEFAULT_CONFIG_NAMINGSQL);
 
     return init();
 }
@@ -97,13 +97,13 @@ QString XYSqlManager::getSqlByName(const QString &name)
     return QString();
 }
 
-void XYSqlManager::initConfigSQL()
+void XYSqlManager::initConfigSQL(const QString &fileName)
 {
     mapConfigSQL.clear();
 
     QDomDocument xmldoc;
 
-    QFile file(DEFAULT_CONFIG_CONFIGSQL);
+    QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly))
     {
         qWarning().noquote() << QString("[XML] Open file error, FileName[%1].").arg(file.fileName());
@@ -192,13 +192,13 @@ void XYSqlManager::initConfigSQL()
     }
 }
 
-void XYSqlManager::initNamingSQL()
+void XYSqlManager::initNamingSQL(const QString &fileName)
 {
     mapNamingSQL.clear();
 
     QDomDocument xmldoc;
 
-    QFile file(DEFAULT_CONFIG_NAMINGSQL);
+    QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly))
     {
         qWarning().noquote() << QString("[XML] Open file error, FileName[%1].").arg(file.fileName());

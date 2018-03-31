@@ -29,11 +29,21 @@ DESTDIR = $$PWD/../../bin
 
 # 引用源文件
 SOURCES += \
-    XYSqlQueryModel.cpp
+    XYSqlQueryModel.cpp \
+    XYNavListView.cpp \
+    XYLabel.cpp \
+    XYComboBox.cpp \
+    XYCustomLabel.cpp \
+    XYCustomButton.cpp
 
 
 # 引用头文件
 HEADERS += \
     XYWidgetExport.h                    \
-    XYSqlQueryModel.h
+    XYSqlQueryModel.h \
+    XYNavListView.h \
+    XYLabel.h \
+    XYComboBox.h \
+    XYCustomLabel.h \
+    XYCustomButton.h
 

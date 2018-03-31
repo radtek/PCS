@@ -18,9 +18,11 @@ INCLUDEPATH += $$PWD
 # 头文件
 HEADERS += \
     $$PWD/XYLogManager.h                    \
-    $$PWD/XYSqlManager.h
+    $$PWD/XYSqlManager.h \
+    $$PWD/XYBarTender.h
 
 # 源文件
 SOURCES += \
     $$PWD/XYLogManager.cpp                  \
-    $$PWD/XYSqlManager.cpp
+    $$PWD/XYSqlManager.cpp \
+    $$PWD/XYBarTender.cpp

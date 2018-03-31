@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <OPCServer UserType="OPC.SimaticNET" ProgID="OPC.SimaticNET.1" MachineName="127.0.0.1" CLSID="{b6eacb30-42d5-11d0-9517-0020afaa4b3c}">
+        <OPCGroup Active="1" UpdateRate="100" LCID="1033" Name="ZPZP024.ST10" PercentDeadband="100" TimeBias="100">
+            <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_1]DB1,DINT302"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_1]DB1,DINT306"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_1]DB1,REAL244"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_1]DB1,REAL310"/>
+            <OPCItem Active="0" DataType="8" ItemID="S7:[S7 connection_1]DB1,STRING180.38"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_1]DB1,DINT244"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_1]DB1,X314.0"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_1]DB1,X314.1"/>
+            <OPCItem Active="0" DataType="8" ItemID="S7:[S7 connection_1]DB1,STRING316.38"/>
+            <OPCItem Active="0" DataType="8" ItemID="S7:[S7 connection_1]DB1,STRING356.38"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_1]DB1,DINT396"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_1]DB1,DINT400"/>
+            <OPCItem Active="0" DataType="18" ItemID="S7:[S7 connection_1]DB1,W404"/>
+            <OPCItem Active="0" DataType="18" ItemID="S7:[S7 connection_1]DB1,W406"/>
+        </OPCGroup>
+        <OPCGroup Active="1" UpdateRate="100" LCID="1033" Name="ZPZP024.ST30" PercentDeadband="100" TimeBias="100">
+            <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT328"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT332"/>
+            <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT336"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT340"/>
+            <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT344"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT348"/>
+            <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT352"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT356"/>
+            <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT586"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT590"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL362"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL366"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL370"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL374"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL378"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL382"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL386"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL390"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL394"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL398"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL402"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL406"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL410"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL414"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL418"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL422"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL426"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL430"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL434"/>
+            <OPCItem Active="0" DataType="18" ItemID="S7:[S7 connection_3]DB1,W360"/>
+            <OPCItem Active="0" DataType="18" ItemID="S7:[S7 connection_3]DB1,W440"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X438.0"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X438.1"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X438.2"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X438.3"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X438.4"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X438.5"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X438.6"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X438.7"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X439.0"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X439.1"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X439.2"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X439.3"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X439.4"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X439.5"/>
+            <OPCItem Active="0" DataType="8" ItemID="S7:[S7 connection_3]DB1,STRING196.38"/>
+            <OPCItem Active="0" DataType="8" ItemID="S7:[S7 connection_3]DB1,STRING444.38"/>
+            <OPCItem Active="0" DataType="8" ItemID="S7:[S7 connection_3]DB1,STRING484.38"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT524"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT528"/>
+            <OPCItem Active="0" DataType="18" ItemID="S7:[S7 connection_3]DB1,W532"/>
+            <OPCItem Active="0" DataType="18" ItemID="S7:[S7 connection_3]DB1,W534"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X536.0"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X536.1"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X536.2"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X536.3"/>
+            <OPCItem Active="0" DataType="11" ItemID="S7:[S7 connection_3]DB1,X536.4"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL538"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL542"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL546"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL550"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL554"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL558"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL562"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL566"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL570"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL574"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL578"/>
+            <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL582"/>
+        </OPCGroup>
+    </OPCServer>
+</root>

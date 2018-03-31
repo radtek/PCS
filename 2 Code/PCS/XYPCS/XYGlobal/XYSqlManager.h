@@ -57,12 +57,14 @@ public:
 
 private:
     bool init();
-    void initConfigSQL();
-    void initNamingSQL();
+    void initConfigSQL(const QString &fileName);
+    void initNamingSQL(const QString &fileName);
 
 private:
     QMap<QString, TConfigSQLPtr> mapConfigSQL;
     QMap<QString, TNamingSQLPtr> mapNamingSQL;
 };
+
+#define qSqlManager (XYSqlManager::instance())
 
 #endif

@@ -35,7 +35,13 @@ RESOURCES += $$PWD/Resources/PCS.qrc
 # 引用子目录
 include(XYGlobal/XYGlobal.pri)
 include(PCS.Main/PCS.Main.pri)
-
+include(PCS.Core/PCS.Core.pri)
+include(PCS.OrderPlan/PCS.OrderPlan.pri)
+include(PCS.ProductCraft/PCS.ProductCraft.pri)
+include(PCS.ProductControl/PCS.ProductControl.pri)
+include(opcda/opcda.pri)
+include(comm/comm.pri)
+include(PCS.Documents/PCS.Documents.pri)
 
 # 引用其他项目目录
 INCLUDEPATH += $$PWD/../XYWidget

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<layout>
+		<Node label="工单计划" collapse="0" image=":/images/menu/order_plan.png">
+			<Node label="工单管理" info="OrderPlanManage" image=":/images/menu/order_manage.png"></Node>
+			<Node label="历史工单" info="OrderPlanHistory" image=":/images/menu/order_history.png"></Node>
+		</Node>
+		<Node label="生产监控" collapse="0" image=":/images/menu/monitor_produce.png">
+			<Node label="工单监控" info="OrderPlanControl" image=":/images/menu/monitor_order.png"></Node>
+			<Node label="总成包装" info="AssemblyControl" image=":/images/menu/monitor_package.png"></Node>
+			<Node label="生产数据监控" info="WorkDataMonitor" image=":/images/menu/monitor_data.png"></Node>
+			<Node label="通讯数据监控" info="CommDataMonitor" image=":/images/menu/monitor_comm.png"></Node>
+		</Node>
+		
+		<Node label="单据管理" collapse="0" image=":/images/menu/document_manage.png">
+			<Node label="质检单" info="QualityCheck" image=":/images/menu/document_qualitycheck.png"></Node>
+			<Node label="产品点检单" info="ProductCheck" image=":/images/menu/document_productcheck.png"></Node>
+			<Node label="设备点检单" info="DeviceCheck" image=":/images/menu/document_devicecheck.png"></Node>
+			<Node label="不合格品单" info="Unqualified" image=":/images/menu/document_unqualified.png"></Node>
+		</Node>
+		<Node label="安灯呼叫" collapse="0" image=":/images/menu/andon_call.png">
+			<Node label="故障停线" info="AnDanManage" image=":/images/menu/andon_stop.png"></Node>
+			<Node label="线边叫料" info="AnDonCall" image=":/images/menu/andon_cart.png"></Node>
+		</Node>
+		<Node label="生产工艺" collapse="0" image=":/images/menu/craft_manage.png">
+			<Node label="工艺路由配方" info="CraftFormula" image=":/images/menu/craft_route.png"></Node>
+			<Node label="装配流程设计" info="AssemblyFlow" image=":/images/menu/craft_process.png"></Node>
+			<Node label="标签打印设计" info="LabelPrinting" image=":/images/menu/craft_barcode.png"></Node>
+		</Node>
+		<Node label="参数配置" collapse="0">
+			<Node label="OPC通讯配置" info="OPC_Config"></Node>
+			<Node label="COM通讯配置" info="Comm_Config"></Node>
+		</Node>
+	</layout>
+</root>
