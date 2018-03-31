@@ -44,6 +44,8 @@ public slots:
     void slotActivateOrder();    //激活工单
     void slotSuspendOrder();     //暂停工单
     void slotCloseOrder();       //关闭工单
+    void slotAddOrder();         //新建工单
+
 signals:
     void signalActivateOrder(const QString &order);
     void signalSuspendOrder(const QString &order);

@@ -42,6 +42,7 @@ include(PCS.ProductControl/PCS.ProductControl.pri)
 include(opcda/opcda.pri)
 include(comm/comm.pri)
 include(PCS.Documents/PCS.Documents.pri)
+include(PCS.BasisData/PCS.BasisData.pri)
 
 # 引用其他项目目录
 INCLUDEPATH += $$PWD/../XYWidget

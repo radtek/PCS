@@ -5,7 +5,13 @@
 #include "OPCWidget.h"
 #include "WidgetAssemblyControl.h"
 #include "WidgetAssyProcessDesign.h"
+#include "WidgetBaseFixture.h"
+#include "WidgetBaseMaterial.h"
+#include "WidgetBaseMeasure.h"
+#include "WidgetBaseStation.h"
+#include "WidgetBaseWorker.h"
 #include "WidgetCommDataMonitor.h"
+#include "WidgetCraftEdit.h"
 #include "WidgetCraftRouteDesign.h"
 #include "WidgetLabelPrintDesign.h"
 #include "WidgetOrderPlanControl.h"
@@ -209,6 +215,42 @@ QWidget *MainWindow::createSubWindow(const QString &info)
         connect(qCommManager, SIGNAL(commDataReceived(QString, DataDefine)), widget, SLOT(slotDacDataReceived(QString, DataDefine)));
         connect(widget, SIGNAL(signalDacReadData(QString, DataDefine)), qCommManager, SLOT(commWriteData(QString, DataDefine)));
         connect(qWorkManager, SIGNAL(opcWriteValue(QString, DataDefine)), widget, SLOT(slotOpcDataReceived(QString, DataDefine)));
+
+        return widget;
+    }
+    if (info == "WorkerInfo")
+    {
+        QWidget *widget = new WidgetBaseWorker(this);
+
+        return widget;
+    }
+    if (info == "WorkStationInfo")
+    {
+        QWidget *widget = new WidgetBaseStation(this);
+
+        return widget;
+    }
+    if (info == "MaterialInfo")
+    {
+        QWidget *widget = new WidgetBaseMaterial(this);
+
+        return widget;
+    }
+    if (info == "MeasureInfo")
+    {
+        QWidget *widget = new WidgetBaseMeasure(this);
+
+        return widget;
+    }
+    if (info == "FixtureInfo")
+    {
+        QWidget *widget = new WidgetBaseFixture(this);
+
+        return widget;
+    }
+    if (info == "CraftInfo")
+    {
+        QWidget *widget = new WidgetCraftEdit(this);
 
         return widget;
     }

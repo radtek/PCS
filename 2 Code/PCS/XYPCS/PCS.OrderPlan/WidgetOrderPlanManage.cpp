@@ -1,4 +1,5 @@
 #include "WidgetOrderPlanManage.h"
+#include "DialogCreateWorkOrder.h"
 #include "DialogOrderPlanRemark.h"
 #include "PCSApplication.h"
 #include "ui_WidgetOrderPlanManage.h"
@@ -28,9 +29,9 @@ void WidgetOrderPlanManage::initialWidget()
         tableHeaderMap.insert(TableHeader::ProductID, "产品编号");
         tableHeaderMap.insert(TableHeader::ProductName, "产品名称");
         tableHeaderMap.insert(TableHeader::ProductBatch, "生产批次");
-        tableHeaderMap.insert(TableHeader::OrderPlanDate, "排产日期");
-        tableHeaderMap.insert(TableHeader::OrderPlanQuantity, "排产计划数量");
-        tableHeaderMap.insert(TableHeader::InspectQuantity, "排产抽检数量");
+        tableHeaderMap.insert(TableHeader::OrderPlanDate, "计划生产日期");
+        tableHeaderMap.insert(TableHeader::OrderPlanQuantity, "计划生产数量");
+        tableHeaderMap.insert(TableHeader::InspectQuantity, "计划抽检数量");
         tableHeaderMap.insert(TableHeader::OrderState, "工单状态");
 
         QTableWidget *table = ui->tableWidget;
@@ -65,6 +66,7 @@ void WidgetOrderPlanManage::initialWidget()
         connect(ui->buttonActivateOrder, SIGNAL(clicked()), this, SLOT(slotActivateOrder()));
         connect(ui->buttonSuspendOrder, SIGNAL(clicked()), this, SLOT(slotSuspendOrder()));
         connect(ui->buttonCloseOrder, SIGNAL(clicked()), this, SLOT(slotCloseOrder()));
+        connect(ui->buttonAddOrder, SIGNAL(clicked()), this, SLOT(slotAddOrder()));
     } while (0);
 }
 
@@ -76,23 +78,21 @@ void WidgetOrderPlanManage::initialOrder()
     table->setRowCount(0);
 
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(SELECT [UID]
-                  ,[WOCode] AS [OrderID]
-                  ,[PocessCode] AS [CraftID]
-                  ,[MCode] AS [ProductID]
-                  ,[MName] AS [ProductName]
-                  ,[ProduceBatch] AS [ProductBatch]
-                  ,CONVERT(NVARCHAR, [PlanDate], 23) AS [OrderPlanDate]
-                  ,[PlanDailyYields] AS [OrderPlanQuantity]
-                  ,[QASubmitted] AS [InspectQuantity]
-                  ,[State]
-                  FROM [MES_WorkOrder]
-                  WHERE [WorkShopCode] = ? AND [WorkLineCode] = ?
-                  AND ([State] = ? OR [State] = ? OR [State] = ?)
-                  ORDER BY [PlanDate] DESC, [priority] ASC, [OrderNum] ASC)");
-    query.addBindValue(qWorkManager->getWorkshopID());
-    query.addBindValue(qWorkManager->getWorklineID());
-    query.addBindValue(static_cast<int>(OrderState::Issued));
+    query.prepare(R"(SELECT A.[UID]
+                  ,A.[OrderID]
+                  ,A.[ProductionBatch]
+                  ,A.[CraftID]
+                  ,CONVERT(NVARCHAR, A.[PlanDate], 23) AS [PlanDate]
+                  ,A.[PlanProductionQuantity]
+                  ,A.[PlanInspectionQuantity]
+                  ,A.[State]
+                  ,B.[ProductID]
+                  ,B.[ProductName]
+              FROM [PCS_WorkOrder] A LEFT JOIN [PCS_Craft] B ON B.[CraftID]=A.[CraftID]
+                  WHERE A.[State] = ? OR A.[State] = ? OR A.[State] = ?)");
+    //   query.addBindValue(qWorkManager->getWorkshopID());
+    //   query.addBindValue(qWorkManager->getWorklineID());
+    query.addBindValue(static_cast<int>(OrderState::Create));
     query.addBindValue(static_cast<int>(OrderState::Activated));
     query.addBindValue(static_cast<int>(OrderState::Suspended));
 
@@ -119,18 +119,18 @@ void WidgetOrderPlanManage::initialOrder()
         item = new QTableWidgetItem(query.value("ProductName").toString());
         table->setItem(row, static_cast<int>(TableHeader::ProductName), item);
 
-        item = new QTableWidgetItem(query.value("ProductBatch").toString());
+        item = new QTableWidgetItem(query.value("ProductionBatch").toString());
         table->setItem(row, static_cast<int>(TableHeader::ProductBatch), item);
 
-        item = new QTableWidgetItem(query.value("OrderPlanDate").toString());
+        item = new QTableWidgetItem(query.value("PlanDate").toString());
         item->setTextAlignment(Qt::AlignCenter);
         table->setItem(row, static_cast<int>(TableHeader::OrderPlanDate), item);
 
-        item = new QTableWidgetItem(query.value("OrderPlanQuantity").toString());
+        item = new QTableWidgetItem(query.value("PlanProductionQuantity").toString());
         item->setTextAlignment(Qt::AlignCenter);
         table->setItem(row, static_cast<int>(TableHeader::OrderPlanQuantity), item);
 
-        item = new QTableWidgetItem(query.value("InspectQuantity").toString());
+        item = new QTableWidgetItem(query.value("PlanInspectionQuantity").toString());
         item->setTextAlignment(Qt::AlignCenter);
         table->setItem(row, static_cast<int>(TableHeader::InspectQuantity), item);
 
@@ -154,7 +154,8 @@ void WidgetOrderPlanManage::changeButtonState(OrderState state)
 {
     switch (state)
     {
-    case OrderState::Create:
+    case OrderState::Issued:
+
     case OrderState::Delete:
     case OrderState::Closed:
     case OrderState::ForceClose:
@@ -167,7 +168,7 @@ void WidgetOrderPlanManage::changeButtonState(OrderState state)
         ui->buttonForceClose->setEnabled(false);
         break;
 
-    case OrderState::Issued:
+    case OrderState::Create:
         ui->buttonActivateOrder->setEnabled(true);
         ui->buttonSuspendOrder->setEnabled(false);
         ui->buttonReturnOrder->setEnabled(true);
@@ -196,34 +197,28 @@ void WidgetOrderPlanManage::changeButtonState(OrderState state)
 void WidgetOrderPlanManage::displayOrderInfo(const QString &orderID)
 {
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(SELECT [UID]
-                  ,[PDCode] AS [PlanID]
-                  ,[PlanBatch] AS [PlanBatch]
-                  ,[ProduceBatch] AS [ProductBatch]
-                  ,CONVERT(NVARCHAR, [PlanMadeDate], 23) AS [PlanDate]
-                  ,[Dict_PDType] AS [PlanType]
-                  ,[WOCode] AS [OrderID]
-                  ,[PocessCode] AS [CraftID]
-                  ,[MCode] AS [ProductID]
-                  ,[MName] AS [ProductName]
-                  ,[MTeam] AS [ProductTeam]
-                  ,CONVERT(NVARCHAR, [PlanDate], 23) AS [OrderPlanDate]
-                  ,CONVERT(NVARCHAR, [DeliveryTime], 20) AS [DeliveryTime]
-                  ,[priority] AS [Priority]
-                  ,[OrderNum] AS [Number]
-                  ,[Remark] AS [Remark]
-                  ,[PlanDailyYields] AS [OrderPlanQty]
-                  ,[QASubmitted] AS [InspectQty]
-                  ,[TotalCompleted] AS [FinishQty]
-                  ,[TotalBrokenParts] AS [FailedQty]
-                  ,[TotalPrimaryMolding] AS [FirstPassQty]
-                  ,[TotalPackageBox] AS [PackageQty]
-                  ,[TotalSampleParts] AS [SampleQty]
-                  ,[TotalRepairParts] AS [RepairQty]
-                  ,CASE [State] WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ?
+    query.prepare(R"(SELECT A.[UID]
+                  ,A.[ProductionBatch]
+                  ,A.[CraftID]
+                  ,A.[OrderID]
+                  ,CONVERT(NVARCHAR, A.[PlanDate], 23) AS [PlanDate]
+                  ,A.[PlanProductionQuantity]
+                  ,A.[PlanInspectionQuantity]
+                  ,A.[FirstPassQuantity]
+                  ,A.[UnqualifiedQuantity]
+                  ,A.[QualifiedQuantity]
+                  ,A.[InspectionQuantity]
+                  ,A.[RepairQuantity]
+                  ,A.[PackageQuantity]
+                  ,A.[FinishTime]
+                  ,A.[Description]
+                  ,B.[ProductID]
+                  ,B.[ProductName]
+                  ,CASE A.[State] WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ?
                   WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ?
                   WHEN ? THEN ? WHEN ? THEN ? END AS [State]
-                  FROM [MES_WorkOrder] WHERE [WOCode] = ?)");
+                  FROM [PCS_WorkOrder] A LEFT JOIN [PCS_Craft] B ON B.[CraftID]=A.[CraftID]
+                    WHERE A.[OrderID]=? )");
     query.addBindValue(static_cast<int>(OrderState::Create));
     query.addBindValue(orderStateMap.value(OrderState::Create));
     query.addBindValue(static_cast<int>(OrderState::Issued));
@@ -255,32 +250,33 @@ void WidgetOrderPlanManage::displayOrderInfo(const QString &orderID)
         return;
     }
 
-    ui->textPlanID->setText(query.value("PlanID").toString());
-    ui->textPlanBatch->setText(query.value("PlanBatch").toString());
-    ui->textProductBatch->setText(query.value("ProductBatch").toString());
-    ui->textPlanDate->setText(query.value("PlanDate").toString());
-    ui->textPlanType->setText(query.value("PlanType").toString());
     ui->textProductID->setText(query.value("ProductID").toString());
     ui->textProductName->setText(query.value("ProductName").toString());
-    ui->textProductTeam->setText(query.value("ProductTeam").toString());
-
     ui->textOrderID->setText(query.value("OrderID").toString());
     ui->textCraftID->setText(query.value("CraftID").toString());
-    ui->textOrderPlanDate->setText(query.value("OrderPlanDate").toString());
-    ui->textDeliveryTime->setText(query.value("DeliveryTime").toString());
-    ui->textPriority->setText(query.value("Priority").toString());
-    ui->textNumber->setText(query.value("Number").toString());
+    ui->textProductBatch->setText(query.value("ProductionBatch").toString());
     ui->textState->setText(query.value("State").toString());
-    ui->textRemark->setText(query.value("Remark").toString());
 
-    ui->valueOrderPlanQty->setText(query.value("OrderPlanQty").toString());
-    ui->valueInspectQty->setText(query.value("InspectQty").toString());
-    ui->valueFinishQty->setText(query.value("FinishQty").toString());
-    ui->valueFailedQty->setText(query.value("FailedQty").toString());
-    ui->valueFirstPassQty->setText(query.value("FirstPassQty").toString());
-    ui->valuePackageQty->setText(query.value("PackageQty").toString());
-    ui->valueSampleQty->setText(query.value("SampleQty").toString());
-    ui->valueRepairQty->setText(query.value("RepairQty").toString());
+    ui->textOrderPlanDate->setText(query.value("PlanDate").toString());
+    ui->valueOrderPlanQty->setText(query.value("PlanProductionQuantity").toString());
+    ui->valueInspectQty->setText(query.value("PlanInspectionQuantity").toString());
+    ui->valueFirstPassQty->setText(query.value("FirstPassQuantity").toString());
+    ui->valueFailedQty->setText(query.value("UnqualifiedQuantity").toString());
+    ui->textRemark->setText(query.value("Description").toString());
+
+    ui->valueFinishQty->setText(query.value("QualifiedQuantity").toString());
+    ui->valueSampleQty->setText(query.value("InspectionQuantity").toString());
+    ui->valueRepairQty->setText(query.value("RepairQuantity").toString());
+    ui->valuePackageQty->setText(query.value("PackageQuantity").toString());
+    ui->textDeliveryTime->setText(query.value("FinishTime").toString());
+
+    // ui->textPlanID->setText(query.value("PlanID").toString());
+    // ui->textPlanBatch->setText(query.value("PlanBatch").toString());
+    // ui->textPlanDate->setText(query.value("PlanDate").toString());
+    // ui->textPlanType->setText(query.value("PlanType").toString());
+    //  ui->textProductTeam->setText(query.value("ProductTeam").toString());
+    // ui->textPriority->setText(query.value("Priority").toString());
+    // ui->textNumber->setText(query.value("Number").toString());
 }
 
 void WidgetOrderPlanManage::slotSelectOrder()
@@ -299,6 +295,7 @@ void WidgetOrderPlanManage::slotSelectOrder()
     changeButtonState(orderStateMap.key(item->text()));
 
     item = table->item(row, static_cast<int>(TableHeader::OrderID));
+    qDebug() << item->text();
     displayOrderInfo(item->text());
 }
 
@@ -410,6 +407,14 @@ void WidgetOrderPlanManage::slotCloseOrder()
     auto item = table->item(row, static_cast<int>(TableHeader::OrderID));
 
     qWorkManager->suspendOrder(item->text());
+}
+
+void WidgetOrderPlanManage::slotAddOrder()
+{
+    DialogCreateWorkOrder dialog;
+
+    if (QDialog::Accepted != dialog.exec())
+        return;
 }
 
 //激活工单

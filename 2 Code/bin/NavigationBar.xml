@@ -11,16 +11,13 @@
 			<Node label="生产数据监控" info="WorkDataMonitor" image=":/images/menu/monitor_data.png"></Node>
 			<Node label="通讯数据监控" info="CommDataMonitor" image=":/images/menu/monitor_comm.png"></Node>
 		</Node>
-		
-		<Node label="单据管理" collapse="0" image=":/images/menu/document_manage.png">
-			<Node label="质检单" info="QualityCheck" image=":/images/menu/document_qualitycheck.png"></Node>
-			<Node label="产品点检单" info="ProductCheck" image=":/images/menu/document_productcheck.png"></Node>
-			<Node label="设备点检单" info="DeviceCheck" image=":/images/menu/document_devicecheck.png"></Node>
-			<Node label="不合格品单" info="Unqualified" image=":/images/menu/document_unqualified.png"></Node>
-		</Node>
-		<Node label="安灯呼叫" collapse="0" image=":/images/menu/andon_call.png">
-			<Node label="故障停线" info="AnDanManage" image=":/images/menu/andon_stop.png"></Node>
-			<Node label="线边叫料" info="AnDonCall" image=":/images/menu/andon_cart.png"></Node>
+		<Node label="基础数据" collapse="0" image=":/images/menu/document_manage.png">
+			<Node label="员工信息" info="WorkerInfo" image=":/images/menu/document_qualitycheck.png"></Node>
+			<Node label="工位信息" info="WorkStationInfo" image=":/images/menu/document_qualitycheck.png"></Node>
+			<Node label="物料信息" info="MaterialInfo" image=":/images/menu/document_qualitycheck.png"></Node>
+			<Node label="测试信息" info="MeasureInfo" image=":/images/menu/document_qualitycheck.png"></Node>
+			<Node label="工装信息" info="FixtureInfo" image=":/images/menu/document_qualitycheck.png"></Node>
+			<Node label="工艺信息" info="CraftInfo" image=":/images/menu/document_qualitycheck.png"></Node>
 		</Node>
 		<Node label="生产工艺" collapse="0" image=":/images/menu/craft_manage.png">
 			<Node label="工艺路由配方" info="CraftFormula" image=":/images/menu/craft_route.png"></Node>
