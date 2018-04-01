@@ -479,9 +479,9 @@ void WidgetOrderPlanManage::changeOrderState(int row, OrderState state, const QS
         do
         {
             QSqlQuery query(LOCAL_DB);
-            query.prepare(R"(UPDATE [MES_WorkOrder]
-                          SET [DeliveryTime] = ?, [State] = ?, [remark] = ?
-                          WHERE [WOCode] = ?)");
+            query.prepare(R"(UPDATE [PCS_WorkOrder]
+                          SET [FinishTime] = ?, [State] = ?, [Description] = ?
+                          WHERE [OrderID] = ?)");
             query.addBindValue(QDateTime::currentDateTime());
             query.addBindValue(static_cast<int>(state));
             query.addBindValue(remark);
@@ -613,9 +613,9 @@ void WidgetOrderPlanManage::changeOrderState(int row, OrderState state, const QS
     {
         //更新工单状态
         QSqlQuery query(LOCAL_DB);
-        query.prepare(R"(UPDATE [MES_WorkOrder]
-                      SET [State] = ?,  [remark] = ?
-                      WHERE [WOCode] = ?)");
+        query.prepare(R"(UPDATE [PCS_WorkOrder]
+                      SET [State] = ?,  [Description] = ?
+                      WHERE [OrderID] = ?)");
         query.addBindValue(static_cast<int>(state));
         query.addBindValue(remark);
         query.addBindValue(orderID);

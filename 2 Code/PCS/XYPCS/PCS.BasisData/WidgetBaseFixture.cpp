@@ -80,7 +80,7 @@ void WidgetBaseFixture::slotDeleteFixture()
         return;
     }
     QSqlQuery query(LOCAL_DB);
-    query.prepare("UPDATE PCS_Base_Fixture SET State=2 WHERE FixtureID=? ");
+    query.prepare(R"(UPDATE [PCS_Base_Fixture] SET [State]=2 WHERE [FixtureID]=? )");
     query.addBindValue(ui->editFixtureID->text());
     query.exec();
     ui->buttonGroup->setGroupState(ButtonGroup::GroupState::Unselect);

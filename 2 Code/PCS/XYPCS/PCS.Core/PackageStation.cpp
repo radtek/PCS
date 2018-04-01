@@ -6,7 +6,6 @@ PackageStation::PackageStation(WorkManager *manager)
     , assemblyPrint(new LabelPrint)
     , packagePrint(new LabelPrint)
 {
-
 }
 
 PackageStation::~PackageStation()
@@ -21,15 +20,14 @@ bool PackageStation::initialStation(const QString &stationID)
     {
         if (!WorkStation::initialStation(stationID))
             return false;
-    }
-    while (0);
+    } while (0);
 
     do
     {
         QString filename = QString("%1/%2.%3.xml")
-                           .arg(PROCESS_PACKAGE_PATH)
-                           .arg(craft->getCraftID())
-                           .arg(stationID);
+                               .arg(PROCESS_PACKAGE_PATH)
+                               .arg(craft->getCraftID())
+                               .arg(stationID);
 
         if (!AssyPackage_ReadXmlFile(filename, preparePara, assemblyPara, packagePara))
             return false;
@@ -43,8 +41,7 @@ bool PackageStation::initialStation(const QString &stationID)
         {
             packagePrint->loadBarcode(craft->getCraftID(), labelTypeMap.value(LabelType::Package));
         }
-    }
-    while (0);
+    } while (0);
 
     if (assemblyPara.enable)
     {
@@ -57,7 +54,7 @@ bool PackageStation::initialStation(const QString &stationID)
         case SerialRule::UpdateByBatch:
             query.prepare(R"(SELECT MAX([AssemblySerial]) AS [MaxSerial]
                           FROM [PCS_Data_Assembly]
-                          WHERE [WorkshopID] = ? AND [WorklineID] = ? AND [OrderID] = ?)");
+                          WHERE [WorkShopID] = ? AND [WorkLineID] = ? AND [OrderID] = ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
             query.addBindValue(order->getOrderID());
@@ -65,9 +62,9 @@ bool PackageStation::initialStation(const QString &stationID)
 
         case SerialRule::UpdateByDay:
             query.prepare(R"(SELECT MAX(A.[AssemblySerial]) AS [MaxSerial]
-                          FROM [PCS_Data_Assembly] A, [MES_WorkOrder] B
-                          WHERE A.[WorkshopID] = ? AND A.[WorklineID] = ?
-                          AND B.WOCode = A.OrderID AND B.PocessCode = ?
+                          FROM [PCS_Data_Assembly] A, [PCS_WorkOrder] B
+                          WHERE A.[WorkShopID] = ? AND A.[WorkLineID] = ?
+                          AND B.OrderID = A.OrderID AND B.CraftID = ?
                           AND CONVERT(NVARCHAR(8), B.[PlanDate], 112) = ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
@@ -77,9 +74,9 @@ bool PackageStation::initialStation(const QString &stationID)
 
         case SerialRule::UpdateByMonth:
             query.prepare(R"(SELECT MAX(A.[AssemblySerial]) AS [MaxSerial]
-                          FROM [PCS_Data_Assembly] A, [MES_WorkOrder] B
-                          WHERE A.[WorkshopID] = ? AND A.[WorklineID] = ?
-                          AND B.WOCode = A.OrderID AND B.PocessCode = ?
+                          FROM [PCS_Data_Assembly] A, [PCS_WorkOrder] B
+                          WHERE A.[WorkShopID] = ? AND A.[WorkLineID] = ?
+                          AND B.OrderID = A.OrderID AND B.CraftID = ?
                           AND CONVERT(NVARCHAR(6), B.[PlanDate], 112) = ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
@@ -89,9 +86,9 @@ bool PackageStation::initialStation(const QString &stationID)
 
         case SerialRule::UpdateByYear:
             query.prepare(R"(SELECT MAX(A.[AssemblySerial]) AS [MaxSerial]
-                          FROM [PCS_Data_Assembly] A, [MES_WorkOrder] B
-                          WHERE A.[WorkshopID] = ? AND A.[WorklineID] = ?
-                          AND B.WOCode = A.OrderID AND B.PocessCode = ?
+                          FROM [PCS_Data_Assembly] A, [PCS_WorkOrder] B
+                          WHERE A.[WorkShopID] = ? AND A.[WorkLineID] = ?
+                          AND B.OrderID = A.OrderID AND B.CraftID = ?
                           AND CONVERT(NVARCHAR(4), B.[PlanDate], 112) = ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
@@ -101,9 +98,9 @@ bool PackageStation::initialStation(const QString &stationID)
 
         case SerialRule::KeepContinuous:
             query.prepare(R"(SELECT MAX(A.[AssemblySerial]) AS [MaxSerial]
-                          FROM [PCS_Data_Assembly] A, [MES_WorkOrder] B
-                          WHERE A.[WorkshopID] = ? AND A.[WorklineID] = ?
-                          AND B.WOCode = A.OrderID AND B.PocessCode = ?)");
+                          FROM [PCS_Data_Assembly] A, [PCS_WorkOrder] B
+                          WHERE A.[WorkShopID] = ? AND A.[WorkLineID] = ?
+                          AND B.OrderID = A.OrderID AND B.CraftID = ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
             query.addBindValue(order->getCraftID());
@@ -151,7 +148,7 @@ bool PackageStation::initialStation(const QString &stationID)
         case SerialRule::UpdateByBatch:
             query.prepare(R"(SELECT MAX([PackageSerial]) AS [MaxSerial]
                           FROM [PCS_Data_Package]
-                          WHERE [WorkshopID] = ? AND [WorklineID] = ? AND [OrderID] = ?)");
+                          WHERE [WorkShopID] = ? AND [WorkLineID] = ? AND [OrderID] = ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
             query.addBindValue(order->getOrderID());
@@ -159,9 +156,9 @@ bool PackageStation::initialStation(const QString &stationID)
 
         case SerialRule::UpdateByDay:
             query.prepare(R"(SELECT MAX(A.[PackageSerial]) AS [MaxSerial]
-                          FROM [PCS_Data_Package] A, [MES_WorkOrder] B
-                          WHERE A.[WorkshopID] = ? AND A.[WorklineID] = ?
-                          AND B.WOCode = A.OrderID AND B.PocessCode = ?
+                          FROM [PCS_Data_Package] A, [PCS_WorkOrder] B
+                          WHERE A.[WorkShopID] = ? AND A.[WorkLineID] = ?
+                          AND B.OrderID = A.OrderID AND B.CraftID = ?
                           AND CONVERT(NVARCHAR(8), B.[PlanDate], 112) = ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
@@ -171,9 +168,9 @@ bool PackageStation::initialStation(const QString &stationID)
 
         case SerialRule::UpdateByMonth:
             query.prepare(R"(SELECT MAX(A.[PackageSerial]) AS [MaxSerial]
-                          FROM [PCS_Data_Package] A, [MES_WorkOrder] B
-                          WHERE A.[WorkshopID] = ? AND A.[WorklineID] = ?
-                          AND B.WOCode = A.OrderID AND B.PocessCode = ?
+                          FROM [PCS_Data_Package] A, [PCS_WorkOrder] B
+                          WHERE A.[WorkShopID] = ? AND A.[WorkLineID] = ?
+                          AND B.OrderID = A.OrderID AND B.CraftID = ?
                           AND CONVERT(NVARCHAR(6), B.[PlanDate], 112) = ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
@@ -183,9 +180,9 @@ bool PackageStation::initialStation(const QString &stationID)
 
         case SerialRule::UpdateByYear:
             query.prepare(R"(SELECT MAX(A.[PackageSerial]) AS [MaxSerial]
-                          FROM [PCS_Data_Package] A, [MES_WorkOrder] B
-                          WHERE A.[WorkshopID] = ? AND A.[WorklineID] = ?
-                          AND B.WOCode = A.OrderID AND B.PocessCode = ?
+                          FROM [PCS_Data_Package] A, [PCS_WorkOrder] B
+                          WHERE A.[WorkShopID] = ? AND A.[WorkLineID] = ?
+                          AND B.OrderID = A.OrderID AND B.CraftID = ?
                           AND CONVERT(NVARCHAR(4), B.[PlanDate], 112) = ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
@@ -195,9 +192,9 @@ bool PackageStation::initialStation(const QString &stationID)
 
         case SerialRule::KeepContinuous:
             query.prepare(R"(SELECT MAX(A.[PackageSerial]) AS [MaxSerial]
-                          FROM [PCS_Data_Package] A, [MES_WorkOrder] B
-                          WHERE A.[WorkshopID] = ? AND A.[WorklineID] = ?
-                          AND B.WOCode = A.OrderID AND B.PocessCode = ?)");
+                          FROM [PCS_Data_Package] A, [PCS_WorkOrder] B
+                          WHERE A.[WorkShopID] = ? AND A.[WorkLineID] = ?
+                          AND B.OrderID = A.OrderID AND B.CraftID = ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
             query.addBindValue(order->getCraftID());
@@ -233,8 +230,7 @@ bool PackageStation::initialStation(const QString &stationID)
     {
         assemblyData.initial();
         packageData.initial();
-    }
-    while (0);
+    } while (0);
 
     return true;
 }
@@ -243,7 +239,7 @@ bool PackageStation::isTransferBarcodeValidInPrevStation(const QString &barcode)
 {
     QSqlQuery query(LOCAL_DB);
     query.prepare("SELECT AssemblyState FROM PCS_Data_Transfer "
-                  "WHERE OrderID = ? AND StationID = ? AND TransferBarcode = ? AND AssemblyState = 0");
+                  "WHERE OrderID = ? AND WorkStationID = ? AND TransferBarcode = ? AND AssemblyState = 0");
     query.addBindValue(order->getOrderID());
     query.addBindValue(assemblyPara.prevStationID);
     query.addBindValue(barcode);
@@ -261,7 +257,7 @@ bool PackageStation::isTransferBarcodeExistInThisStation(const QString &barcode)
 {
     QSqlQuery query(LOCAL_DB);
     query.prepare("SELECT UID FROM PCS_Data_Transfer "
-                  "WHERE OrderID = ? AND StationID = ? AND TransferBarcode = ?");
+                  "WHERE OrderID = ? AND WorkStationID = ? AND TransferBarcode = ?");
     query.addBindValue(order->getOrderID());
     query.addBindValue(stationData.stationID);
     query.addBindValue(barcode);
@@ -309,7 +305,7 @@ void PackageStation::getAssemblyDataByTransferBarcode(const QString &barcode)
 {
     QSqlQuery query(LOCAL_DB);
     query.prepare("SELECT AssemblyID FROM PCS_Data_Transfer "
-                  "WHERE OrderID = ? AND StationID = ? AND TransferBarcode = ? AND AssemblyState = 0");
+                  "WHERE OrderID = ? AND WorkStationID = ? AND TransferBarcode = ? AND AssemblyState = 0");
     query.addBindValue(order->getOrderID());
     query.addBindValue(assemblyPara.prevStationID);
     query.addBindValue(barcode);
@@ -332,7 +328,6 @@ void PackageStation::getAssemblyDataByTransferBarcode(const QString &barcode)
     assemblyData.sampleState = order->isExecuteSample() ? 1 : 0;
     assemblyData.createTime = QDateTime::currentDateTime();
 }
-
 
 //判断上工位过渡条码是否完成
 EventState PackageStation::verifyTransferBarcode(const QString &barcode)
@@ -427,7 +422,7 @@ void PackageStation::saveAssemblyData()
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare("UPDATE PCS_Data_Transfer SET "
-                      "StationID = ?, AssemblyState = ?, RepairState = ?, RetestState = ?, CreateTime = ?, FinishTime = ? "
+                      "WorkStationID = ?, AssemblyState = ?, RepairState = ?, RetestState = ?, CreateTime = ?, FinishTime = ? "
                       "WHERE AssemblyID = ? AND OrderID = ?");
         query.addBindValue(stationData.stationID);
         query.addBindValue(assemblyData.assemblyState);
@@ -443,8 +438,7 @@ void PackageStation::saveAssemblyData()
             qDebug().noquote() << query.lastQuery();
             break;
         }
-    }
-    while (0);
+    } while (0);
 
     //获取总成装配开始、结束时间
     do
@@ -466,13 +460,12 @@ void PackageStation::saveAssemblyData()
             assemblyData.createTime = query.value("CreateTime").toDateTime();
             assemblyData.finishTime = query.value("FinishTime").toDateTime();
         }
-    }
-    while (0);
+    } while (0);
 
     ///***************************************************************************
     ///保存数据至车间服务器
     ///***************************************************************************
-    if (qApplication->isOnline())
+    /*  if (qApplication->isOnline())
     {
         //保存工位数据
         do
@@ -556,8 +549,8 @@ void PackageStation::saveAssemblyData()
         {
             QSqlQuery query(REMOTE_DB);
             query.prepare("INSERT INTO PCS_Data_Assembly "
-                          "(WorkshopID, WorklineID, AssemblyID, OrderID, ProductID, OperatorID, AssemblyBarcode, AssemblySerial, "
-                          "AssemblyState, SampleState, RepairState, RetestState, CreateTime, FinishTime, UploadTime) "
+                          "(WorkShopID, WorkLineID, AssemblyID, OrderID, ProductID, WorkerID, AssemblyBarcode, AssemblySerial, "
+                          "AssemblyState, InspectionMarker, RepairState, RetestState, CreateTime, FinishTime, UploadTime) "
                           "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
@@ -582,123 +575,118 @@ void PackageStation::saveAssemblyData()
             }
         }
         while (0);
-    }
+    }*/
 
     ///***************************************************************************
     ///保存数据至本地服务器
     ///***************************************************************************
 
-    if (1)
+    //保存工位数据
+    do
     {
-        //保存工位数据
-        do
+        QSqlQuery query(LOCAL_DB);
+        query.prepare("INSERT INTO PCS_Data_Station "
+                      "(AssemblyID, OrderID, WorkStationID, WorkerID, AssemblyState, RepairState, RetestState, CreateTime, FinishTime, UploadTime) "
+                      "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        query.addBindValue(assemblyData.assemblyID);
+        query.addBindValue(order->getOrderID());
+        query.addBindValue(stationData.stationID);
+        query.addBindValue(getOperatorID());
+        query.addBindValue(assemblyData.assemblyState);
+        query.addBindValue(assemblyData.repairState);
+        query.addBindValue(assemblyData.retestState);
+        query.addBindValue(assemblyData.createTime);
+        query.addBindValue(assemblyData.finishTime);
+        query.addBindValue(getUploadTime());
+
+        if (!query.exec())
         {
-            QSqlQuery query(LOCAL_DB);
-            query.prepare("INSERT INTO PCS_Data_Station "
-                          "(AssemblyID, OrderID, StationID, OperatorID, AssemblyState, RepairState, RetestState, CreateTime, FinishTime, UploadTime) "
-                          "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            query.addBindValue(assemblyData.assemblyID);
-            query.addBindValue(order->getOrderID());
-            query.addBindValue(stationData.stationID);
-            query.addBindValue(getOperatorID());
-            query.addBindValue(assemblyData.assemblyState);
-            query.addBindValue(assemblyData.repairState);
-            query.addBindValue(assemblyData.retestState);
-            query.addBindValue(assemblyData.createTime);
-            query.addBindValue(assemblyData.finishTime);
-            query.addBindValue(getUploadTime());
-
-            if (!query.exec())
-            {
-                qDebug().noquote() << query.lastQuery();
-                break;
-            }
+            qDebug().noquote() << query.lastQuery();
+            break;
         }
-        while (0);
+    } while (0);
 
-        //保存物料数据
-        for (auto material : materialList)
+    //保存物料数据
+    for (auto material : materialList)
+    {
+        const MaterialData &materialData = material->getMaterialData();
+
+        QSqlQuery query(LOCAL_DB);
+        query.prepare("INSERT INTO PCS_Data_Station_Material "
+                      "(AssemblyID, OrderID, WorkStationID, MaterialID, MaterialBarcode, MaterialBatch, RepairCount, UploadTime) "
+                      "VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+        query.addBindValue(assemblyData.assemblyID);
+        query.addBindValue(order->getOrderID());
+        query.addBindValue(stationData.stationID);
+        query.addBindValue(materialData.materialID);
+        query.addBindValue(materialData.materialBarcode);
+        query.addBindValue(materialData.materialBatch);
+        query.addBindValue(materialData.repairCount);
+        query.addBindValue(getUploadTime());
+
+        if (!query.exec())
         {
-            const MaterialData &materialData = material->getMaterialData();
-
-            QSqlQuery query(LOCAL_DB);
-            query.prepare("INSERT INTO PCS_Data_Station_Material "
-                          "(AssemblyID, OrderID, StationID, MaterialID, MaterialBarcode, MaterialBatch, RepairCount, UploadTime) "
-                          "VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
-            query.addBindValue(assemblyData.assemblyID);
-            query.addBindValue(order->getOrderID());
-            query.addBindValue(stationData.stationID);
-            query.addBindValue(materialData.materialID);
-            query.addBindValue(materialData.materialBarcode);
-            query.addBindValue(materialData.materialBatch);
-            query.addBindValue(materialData.repairCount);
-            query.addBindValue(getUploadTime());
-
-            if (!query.exec())
-            {
-                qDebug().noquote() << query.lastQuery();
-                break;
-            }
+            qDebug().noquote() << query.lastQuery();
+            break;
         }
-
-        //保存采集数据
-        for (auto measure : measureList)
-        {
-            const MeasureData &measureData = measure->getMeasureData();
-
-            QSqlQuery query(LOCAL_DB);
-            query.prepare("INSERT INTO PCS_Data_Station_Measure "
-                          "(AssemblyID, OrderID, StationID, MeasureType, MeasureOrder, MeasureValue, MeasureState, RetestCount, UploadTime) "
-                          "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            query.addBindValue(assemblyData.assemblyID);
-            query.addBindValue(order->getOrderID());
-            query.addBindValue(stationData.stationID);
-            query.addBindValue(measureData.measureID.split('#').at(0));
-            query.addBindValue(measureData.measureID.split('#').at(1));
-            query.addBindValue(measureData.measureValue);
-            query.addBindValue(measureData.measureState);
-            query.addBindValue(measureData.retestCount);
-            query.addBindValue(getUploadTime());
-
-            if (!query.exec())
-            {
-                qDebug().noquote() << query.lastQuery();
-                break;
-            }
-        }
-
-        //保存总成数据
-        do
-        {
-            QSqlQuery query(LOCAL_DB);
-            query.prepare("INSERT INTO PCS_Data_Assembly "
-                          "(WorkshopID, WorklineID, AssemblyID, OrderID, ProductID, OperatorID, AssemblyBarcode, AssemblySerial, "
-                          "AssemblyState, SampleState, RepairState, RetestState, CreateTime, FinishTime, UploadTime) "
-                          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            query.addBindValue(manager->getWorkshopID());
-            query.addBindValue(manager->getWorklineID());
-            query.addBindValue(assemblyData.assemblyID);
-            query.addBindValue(order->getOrderID());
-            query.addBindValue(craft->getProductID());
-            query.addBindValue(getOperatorID());
-            query.addBindValue(assemblyData.assemblyBarcode);
-            query.addBindValue(assemblyData.assemblySerial);
-            query.addBindValue(assemblyData.assemblyState);
-            query.addBindValue(assemblyData.sampleState);
-            query.addBindValue(assemblyData.repairState);
-            query.addBindValue(assemblyData.retestState);
-            query.addBindValue(assemblyData.createTime);
-            query.addBindValue(assemblyData.finishTime);
-            query.addBindValue(getUploadTime());
-
-            if (!query.exec())
-            {
-                qDebug().noquote() << query.lastQuery();
-                break;
-            }
-        }
-        while (0);
     }
+
+    //保存采集数据
+    for (auto measure : measureList)
+    {
+        const MeasureData &measureData = measure->getMeasureData();
+
+        QSqlQuery query(LOCAL_DB);
+        query.prepare("INSERT INTO PCS_Data_Station_Measure "
+                      "(AssemblyID, OrderID, WorkStationID, MeasureType, MeasureOrder, MeasureValue, MeasureState, RetestCount, UploadTime) "
+                      "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        query.addBindValue(assemblyData.assemblyID);
+        query.addBindValue(order->getOrderID());
+        query.addBindValue(stationData.stationID);
+        query.addBindValue(measureData.measureID.split('#').at(0));
+        query.addBindValue(measureData.measureID.split('#').at(1));
+        query.addBindValue(measureData.measureValue);
+        query.addBindValue(measureData.measureState);
+        query.addBindValue(measureData.retestCount);
+        query.addBindValue(getUploadTime());
+
+        if (!query.exec())
+        {
+            qDebug().noquote() << query.lastQuery();
+            break;
+        }
+    }
+
+    //保存总成数据
+    do
+    {
+        QSqlQuery query(LOCAL_DB);
+        query.prepare("INSERT INTO PCS_Data_Assembly "
+                      "(WorkShopID, WorkLineID, AssemblyID, OrderID, ProductID, WorkerID, AssemblyBarcode, AssemblySerial, "
+                      "AssemblyState, InspectionMarker, RepairState, RetestState, CreateTime, FinishTime, UploadTime) "
+                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        query.addBindValue(manager->getWorkshopID());
+        query.addBindValue(manager->getWorklineID());
+        query.addBindValue(assemblyData.assemblyID);
+        query.addBindValue(order->getOrderID());
+        query.addBindValue(craft->getProductID());
+        query.addBindValue(getOperatorID());
+        query.addBindValue(assemblyData.assemblyBarcode);
+        query.addBindValue(assemblyData.assemblySerial);
+        query.addBindValue(assemblyData.assemblyState);
+        query.addBindValue(assemblyData.sampleState);
+        query.addBindValue(assemblyData.repairState);
+        query.addBindValue(assemblyData.retestState);
+        query.addBindValue(assemblyData.createTime);
+        query.addBindValue(assemblyData.finishTime);
+        query.addBindValue(getUploadTime());
+
+        if (!query.exec())
+        {
+            qDebug().noquote() << query.lastQuery();
+            break;
+        }
+    } while (0);
 
     do
     {
@@ -731,8 +719,7 @@ void PackageStation::saveAssemblyData()
 
         //更新界面信息
         emit manager->signalStationUpdate(stationData);
-    }
-    while (0);
+    } while (0);
 
     do
     {
@@ -766,8 +753,7 @@ void PackageStation::saveAssemblyData()
 
         assemblyData.initial();
         assemblyData.serialInc();
-    }
-    while (0);
+    } while (0);
 }
 
 //判断包装箱防错标识
@@ -840,14 +826,14 @@ void PackageStation::savePackageData()
     ///***************************************************************************
     ///保存数据至车间服务器
     ///***************************************************************************
-    if (qApplication->isOnline())
+    /*  if (qApplication->isOnline())
     {
         do
         {
             QSqlQuery query(REMOTE_DB);
             query.prepare("INSERT INTO PCS_Data_Package "
-                          "(WorkshopID, WorklineID, PackageID, OrderID, ProductID, OperatorID, PackageBarcode, PackageSerial, "
-                          "PackageWeight, PackageCount, PackageState, CreateTime, FinishTime, UploadTime) "
+                          "(WorkShopID, WorkLineID, PackageID, OrderID, ProductID, WorkerID, PackageBarcode, PackageSerial, "
+                          "PackageWeight, PackageQuantity, PackageState, CreateTime, FinishTime, UploadTime) "
                           "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
@@ -871,7 +857,7 @@ void PackageStation::savePackageData()
             }
         }
         while (0);
-    }
+    }*/
 
     ///***************************************************************************
     ///保存数据至本地数据库
@@ -896,8 +882,8 @@ void PackageStation::savePackageData()
         {
             QSqlQuery query(LOCAL_DB);
             query.prepare("INSERT INTO PCS_Data_Package "
-                          "(WorkshopID, WorklineID, PackageID, OrderID, ProductID, OperatorID, PackageBarcode, PackageSerial, "
-                          "PackageWeight, PackageCount, PackageState, CreateTime, FinishTime, UploadTime) "
+                          "(WorkShopID, WorkLineID, PackageID, OrderID, ProductID, WorkerID, PackageBarcode, PackageSerial, "
+                          "PackageWeight, PackageQuantity, PackageState, CreateTime, FinishTime, UploadTime) "
                           "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             query.addBindValue(manager->getWorkshopID());
             query.addBindValue(manager->getWorklineID());
@@ -919,8 +905,7 @@ void PackageStation::savePackageData()
                 qDebug().noquote() << query.lastQuery();
                 break;
             }
-        }
-        while (0);
+        } while (0);
     }
 
     do
@@ -934,8 +919,7 @@ void PackageStation::savePackageData()
 
         packageData.initial();
         packageData.serialInc();
-    }
-    while (0);
+    } while (0);
 }
 
 void PackageStation::scaleRead()
@@ -984,19 +968,19 @@ void PackageStation::dacDataReceived(const DataDefine &data)
 
     if (packageData.packageCount == 0)
     {
-        packageData.packageState = -1;      //空箱
+        packageData.packageState = -1;    //空箱
     }
     else if (packageData.packageCount < packagePara.packageNumber)
     {
-        packageData.packageState = 1;       //不足
+        packageData.packageState = 1;    //不足
     }
     else if (packageData.packageCount > packagePara.packageNumber)
     {
-        packageData.packageState = 2;       //过量
+        packageData.packageState = 2;    //过量
     }
     else
     {
-        packageData.packageState = 0;       //满箱
+        packageData.packageState = 0;    //满箱
     }
 
     emit manager->signalPackageUpdate(packageData);
@@ -1065,6 +1049,4 @@ EventState PackageStation::verifyStationStatus()
 
 void PackageStation::updateStationStatus()
 {
-
 }
-

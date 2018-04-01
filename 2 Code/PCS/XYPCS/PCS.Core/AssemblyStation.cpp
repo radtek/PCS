@@ -5,7 +5,6 @@
 AssemblyStation::AssemblyStation(WorkManager *manager)
     : WorkStation(manager)
 {
-
 }
 
 AssemblyStation::~AssemblyStation()
@@ -24,15 +23,14 @@ bool AssemblyStation::initialStation(const QString &stationID)
     {
         if (!WorkStation::initialStation(stationID))
             return false;
-    }
-    while (0);
+    } while (0);
 
     do
     {
         QString filename = QString("%1/%2.%3.xml")
-                           .arg(PROCESS_ASSEMBLY_PATH)
-                           .arg(craft->getCraftID())
-                           .arg(stationID);
+                               .arg(PROCESS_ASSEMBLY_PATH)
+                               .arg(craft->getCraftID())
+                               .arg(stationID);
 
         if (!AssyStation_ReadXmlFile(filename, preparePara, processPara, stepParaList))
             return false;
@@ -48,16 +46,14 @@ bool AssemblyStation::initialStation(const QString &stationID)
 
             process->setProcessIndex(i);
         }
-    }
-    while (0);
+    } while (0);
 
     do
     {
         opcWriteProductInfo();
         opcWriteOrderQuantity();
         opcWriteProcessPrompt(EventState::E_General_ResetMachine);
-    }
-    while (0);
+    } while (0);
 
     return true;
 }
@@ -124,10 +120,9 @@ EventState AssemblyStation::verifyMeasureValue(const QString &measureID, double 
 {
     auto measure = getMeasure(measureID);
     return measure->verifyValue(value)
-           ? EventState::E_General_Successfully
-           : EventState::E_General_Failed;
+               ? EventState::E_General_Successfully
+               : EventState::E_General_Failed;
 }
-
 
 //物料条码是否已经被扫描
 bool AssemblyStation::isMaterialBarcodeAlreadyScanned(const QString &matBarcode)
@@ -153,8 +148,8 @@ bool AssemblyStation::isTransferBarcodeAlreadyScanned(const QString &assemblyID)
 bool AssemblyStation::isTransferBarcodeValidInPrevStation(const QString &stationID, const QString &barcode)
 {
     QSqlQuery query(LOCAL_DB);
-    query.prepare("SELECT AssemblyState FROM PCS_Data_Transfer "
-                  "WHERE OrderID = ? AND StationID = ? AND TransferBarcode = ? AND AssemblyState = 0");
+    query.prepare(R"(SELECT [AssemblyState] FROM [PCS_Data_Transfer] "
+                  "WHERE [OrderID] = ? AND [WorkStationID] = ? AND [TransferBarcode] = ? AND [AssemblyState] = 0)");
     query.addBindValue(order->getOrderID());
     query.addBindValue(stationID);
     query.addBindValue(barcode);
@@ -172,8 +167,8 @@ bool AssemblyStation::isTransferBarcodeValidInPrevStation(const QString &station
 bool AssemblyStation::isTransferBarcodeExistInThisStation(const QString &barcode)
 {
     QSqlQuery query(LOCAL_DB);
-    query.prepare("SELECT UID FROM PCS_Data_Transfer "
-                  "WHERE OrderID = ? AND StationID = ? AND TransferBarcode = ?");
+    query.prepare(R"(SELECT [UID] FROM [PCS_Data_Transfer] "
+                  "WHERE [OrderID] = ? AND [WorkStationID] = ? AND [TransferBarcode] = ?)");
     query.addBindValue(order->getOrderID());
     query.addBindValue(stationData.stationID);
     query.addBindValue(barcode);
@@ -191,8 +186,8 @@ bool AssemblyStation::isTransferBarcodeExistInThisStation(const QString &barcode
 QString AssemblyStation::getAssemblyIDByTransferBarcode(const QString &stationID, const QString &barcode)
 {
     QSqlQuery query(LOCAL_DB);
-    query.prepare("SELECT AssemblyID FROM PCS_Data_Transfer "
-                  "WHERE OrderID = ? AND StationID = ? AND TransferBarcode = ?");
+    query.prepare(R"(SELECT [AssemblyID] FROM [PCS_Data_Transfer] "
+                  "WHERE [OrderID] = ? AND [WorkStationID] = ? AND [TransferBarcode] = ?)");
     query.addBindValue(order->getOrderID());
     query.addBindValue(stationID);
     query.addBindValue(barcode);
@@ -221,8 +216,8 @@ int AssemblyStation::getRepairCountByMaterialBarcode(const QString &materialID, 
 int AssemblyStation::getRepairStateByTransferBarcode(const QString &assemblyID, const QString &barcode)
 {
     QSqlQuery query(LOCAL_DB);
-    query.prepare("SELECT RepairState FROM PCS_Data_Transfer "
-                  "WHERE OrderID = ? AND AssemblyID = ? AND TransferBarcode = ?");
+    query.prepare(R"(SELECT [RepairState] FROM [PCS_Data_Transfer] "
+                  "WHERE [OrderID] = ? AND [AssemblyID] = ? AND [TransferBarcode] = ?)");
     query.addBindValue(order->getOrderID());
     query.addBindValue(assemblyID);
     query.addBindValue(barcode);
@@ -252,9 +247,9 @@ void AssemblyStation::saveStationData(const ProcessData &processData)
         do
         {
             QSqlQuery query(LOCAL_DB);
-            query.prepare("UPDATE PCS_Data_Transfer SET "
-                          "StationID = ?, AssemblyState = ?, RepairState = ?, RetestState = ? "
-                          "WHERE AssemblyID = ? AND OrderID = ?");
+            query.prepare(R"(UPDATE [PCS_Data_Transfer] SET "
+                          "[WorkStationID] = ?, [AssemblyState] = ?, [RepairState] = ?, [RetestState] = ? "
+                          "WHERE [AssemblyID] = ? AND [OrderID] = ?)");
             query.addBindValue(stationData.stationID);
             query.addBindValue(processData.assemblyState);
             query.addBindValue(processData.repairState);
@@ -267,8 +262,7 @@ void AssemblyStation::saveStationData(const ProcessData &processData)
                 qDebug().noquote() << query.lastQuery();
                 break;
             }
-        }
-        while (0);
+        } while (0);
 
         //保存过渡条码
         for (auto material : materialList)
@@ -279,10 +273,10 @@ void AssemblyStation::saveStationData(const ProcessData &processData)
                 continue;
 
             QSqlQuery query(LOCAL_DB);
-            query.prepare("INSERT INTO PCS_Data_Transfer "
-                          "(AssemblyID, OrderID, StationID, TransferBarcode, AssemblyState, "
-                          "RepairState, RetestState, CreateTime, FinishTime) "
-                          "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            query.prepare(R"(INSERT INTO [PCS_Data_Transfer] "
+                          "([AssemblyID], [OrderID], [WorkStationID], [TransferBarcode], [AssemblyState], "
+                          "[RepairState], [RetestState], [CreateTime], [FinishTime]) "
+                          "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?))");
             query.addBindValue(processData.assemblyID);
             query.addBindValue(order->getOrderID());
             query.addBindValue(stationData.stationID);
@@ -308,8 +302,8 @@ void AssemblyStation::saveStationData(const ProcessData &processData)
         for (auto assemblyID : processData.subAssemblyIDs)
         {
             QSqlQuery query(LOCAL_DB);
-            query.prepare("UPDATE PCS_Data_Assembly_Relation SET "
-                          "AssemblyID = ? WHERE AssemblyID = ?");
+            query.prepare(R"(UPDATE [PCS_Data_Assembly_Relation] SET "
+                          "[AssemblyID] = ? WHERE [AssemblyID] = ?)");
             query.addBindValue(processData.assemblyID);
             query.addBindValue(assemblyID);
 
@@ -323,8 +317,8 @@ void AssemblyStation::saveStationData(const ProcessData &processData)
         for (auto assemblyID : processData.subAssemblyIDs)
         {
             QSqlQuery query(LOCAL_DB);
-            query.prepare("INSERT INTO PCS_Data_Assembly_Relation "
-                          "(AssemblyID, SubAssemblyID) VALUES(?, ?)");
+            query.prepare(R"(INSERT INTO [PCS_Data_Assembly_Relation] "
+                          "([AssemblyID], [SubAssemblyID]) VALUES(?, ?))");
             query.addBindValue(processData.assemblyID);
             query.addBindValue(assemblyID);
 
@@ -339,7 +333,7 @@ void AssemblyStation::saveStationData(const ProcessData &processData)
     ///***************************************************************************
     ///保存数据至车间服务器
     ///***************************************************************************
-    if (qApplication->isOnline())
+    /*   if (qApplication->isOnline())
     {
         //保存工位数据
         do
@@ -420,91 +414,88 @@ void AssemblyStation::saveStationData(const ProcessData &processData)
                 break;
             }
         }
-    }
+    }*/
 
     ///***************************************************************************
     ///保存数据至本地数据库
     ///***************************************************************************
-    if (1)
+
+    //保存工位数据
+    do
     {
-        //保存工位数据
-        do
-        {
-            QSqlQuery query(LOCAL_DB);
-            query.prepare("INSERT INTO PCS_Data_Station "
-                          "(AssemblyID, OrderID, StationID, OperatorID, AssemblyState, "
-                          "RepairState, RetestState, CreateTime, FinishTime, UploadTime) "
-                          "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            query.addBindValue(processData.assemblyID);
-            query.addBindValue(order->getOrderID());
-            query.addBindValue(stationData.stationID);
-            query.addBindValue(getOperatorID());
-            query.addBindValue(processData.assemblyState);
-            query.addBindValue(processData.repairState);
-            query.addBindValue(processData.retestState);
-            query.addBindValue(processData.createTime);
-            query.addBindValue(processData.finishTime);
-            query.addBindValue(getUploadTime());
+        QSqlQuery query(LOCAL_DB);
+        query.prepare("INSERT INTO PCS_Data_Station "
+                      "(AssemblyID, OrderID, WorkStationID, WorkerID, AssemblyState, "
+                      "RepairState, RetestState, CreateTime, FinishTime, UploadTime) "
+                      "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        query.addBindValue(processData.assemblyID);
+        query.addBindValue(order->getOrderID());
+        query.addBindValue(stationData.stationID);
+        query.addBindValue(getOperatorID());
+        query.addBindValue(processData.assemblyState);
+        query.addBindValue(processData.repairState);
+        query.addBindValue(processData.retestState);
+        query.addBindValue(processData.createTime);
+        query.addBindValue(processData.finishTime);
+        query.addBindValue(getUploadTime());
 
-            if (!query.exec())
-            {
-                qDebug().noquote() << query.lastQuery();
-                break;
-            }
+        if (!query.exec())
+        {
+            qDebug().noquote() << query.lastQuery();
+            break;
         }
-        while (0);
+    } while (0);
 
-        //保存物料数据
-        for (auto material : materialList)
+    //保存物料数据
+    for (auto material : materialList)
+    {
+        const MaterialData &materialData = material->getMaterialData();
+
+        QSqlQuery query(LOCAL_DB);
+        query.prepare("INSERT INTO PCS_Data_Station_Material "
+                      "(AssemblyID, OrderID, WorkStationID, MaterialID, MaterialBarcode, "
+                      "MaterialBatch, RepairCount, UploadTime) "
+                      "VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+        query.addBindValue(processData.assemblyID);
+        query.addBindValue(order->getOrderID());
+        query.addBindValue(stationData.stationID);
+        query.addBindValue(materialData.materialID);
+        query.addBindValue(materialData.materialBarcode);
+        query.addBindValue(materialData.materialBatch);
+        query.addBindValue(materialData.repairCount);
+        query.addBindValue(getUploadTime());
+
+        if (!query.exec())
         {
-            const MaterialData &materialData = material->getMaterialData();
-
-            QSqlQuery query(LOCAL_DB);
-            query.prepare("INSERT INTO PCS_Data_Station_Material "
-                          "(AssemblyID, OrderID, StationID, MaterialID, MaterialBarcode, "
-                          "MaterialBatch, RepairCount, UploadTime) "
-                          "VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
-            query.addBindValue(processData.assemblyID);
-            query.addBindValue(order->getOrderID());
-            query.addBindValue(stationData.stationID);
-            query.addBindValue(materialData.materialID);
-            query.addBindValue(materialData.materialBarcode);
-            query.addBindValue(materialData.materialBatch);
-            query.addBindValue(materialData.repairCount);
-            query.addBindValue(getUploadTime());
-
-            if (!query.exec())
-            {
-                qDebug().noquote() << query.lastQuery();
-                break;
-            }
+            qDebug().noquote() << query.lastQuery();
+            break;
         }
+    }
 
-        //保存采集数据
-        for (auto measure : measureList)
+    //保存采集数据
+    for (auto measure : measureList)
+    {
+        const MeasureData &measureData = measure->getMeasureData();
+
+        QSqlQuery query(LOCAL_DB);
+        query.prepare("INSERT INTO PCS_Data_Station_Measure "
+                      "(AssemblyID, OrderID, WorkStationID, MeasureType, MeasureOrder, "
+                      "MeasureValue, MeasureState, RetestCount, UploadTime) "
+                      "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        query.addBindValue(processData.assemblyID);
+        query.addBindValue(order->getOrderID());
+        query.addBindValue(stationData.stationID);
+        query.addBindValue(measureData.measureID.split('#').at(0));
+        query.addBindValue(measureData.measureID.split('#').at(1));
+        query.addBindValue(measureData.measureValue);
+        query.addBindValue(measureData.measureState);
+        query.addBindValue(measureData.retestCount);
+        query.addBindValue(getUploadTime());
+
+        if (!query.exec())
         {
-            const MeasureData &measureData = measure->getMeasureData();
-
-            QSqlQuery query(LOCAL_DB);
-            query.prepare("INSERT INTO PCS_Data_Station_Measure "
-                          "(AssemblyID, OrderID, StationID, MeasureType, MeasureOrder, "
-                          "MeasureValue, MeasureState, RetestCount, UploadTime) "
-                          "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            query.addBindValue(processData.assemblyID);
-            query.addBindValue(order->getOrderID());
-            query.addBindValue(stationData.stationID);
-            query.addBindValue(measureData.measureID.split('#').at(0));
-            query.addBindValue(measureData.measureID.split('#').at(1));
-            query.addBindValue(measureData.measureValue);
-            query.addBindValue(measureData.measureState);
-            query.addBindValue(measureData.retestCount);
-            query.addBindValue(getUploadTime());
-
-            if (!query.exec())
-            {
-                qDebug().noquote() << query.lastQuery();
-                break;
-            }
+            qDebug().noquote() << query.lastQuery();
+            break;
         }
     }
 
@@ -538,8 +529,7 @@ void AssemblyStation::saveStationData(const ProcessData &processData)
         }
 
         emit manager->signalStationUpdate(stationData);
-    }
-    while (0);
+    } while (0);
 
     do
     {
@@ -550,10 +540,8 @@ void AssemblyStation::saveStationData(const ProcessData &processData)
             //保存工单数量信息
             order->saveOrderData();
         }
-    }
-    while (0);
+    } while (0);
 }
-
 
 //保存物料数据
 void AssemblyStation::updateMaterialData(const QString &materialID, const QString &barcode, int count)
@@ -642,7 +630,7 @@ void AssemblyStation::opcWriteProcessPrompt(EventState state)
 //PLC监控数据事件
 void AssemblyStation::opcValueChanged(const DataDefine &data)
 {
-//    qDebug() << stationID << data.itemID << data.itemValue;
+    //    qDebug() << stationID << data.itemID << data.itemValue;
 
     if (data == processPara.resetSignal)
     {

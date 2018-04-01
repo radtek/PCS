@@ -6,14 +6,11 @@ StationMaterial::StationMaterial(WorkStation *station)
     : manager(station->getManager())
     , station(station)
 {
-
 }
 
 StationMaterial::~StationMaterial()
 {
-
 }
-
 
 bool StationMaterial::initialMaterial(const QString &materialID)
 {
@@ -21,16 +18,16 @@ bool StationMaterial::initialMaterial(const QString &materialID)
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT A.[UID]
-                      ,A.[ProcessCode] AS [CraftID]
-                      ,A.[WorkStationCode] AS [StationID]
-                      ,A.[MCode] AS [MaterialID]
-                      ,M.[MName] AS [MaterialName]
-                      ,A.[MBarCode] AS [BarcodeRule]
-                      ,A.[CQ] AS [UsageQuantity]
-                      ,A.[WarningCount] AS [AlarmQuantity]
-                      FROM [MES_Process_WorkStationMaterial] A
-                      LEFT JOIN [MES_db_MaterialInfo] M ON A.MCode = M.MCode
-                      WHERE A.[ProcessCode] = ? AND A.[WorkStationCode] = ? AND A.[MCode] = ? AND A.[State] != ?)");
+                      ,A.[CraftID]
+                      ,A.[WorkStationID]
+                      ,A.[MaterialID]
+                      ,M.[MaterialName]
+                      ,M.[BarcodeRule]
+                      ,A.[SingleConsumeQuantity]
+                      ,A.[ShortWarningQuantity]
+                      FROM [PCS_Craft_Station_Material] A
+                      LEFT JOIN [PCS_Base_Material] M ON A.MaterialID = M.MaterialID
+                      WHERE A.[CraftID] = ? AND A.[WorkStationID] = ? AND A.[MaterialID] = ? AND A.[State] != ?)");
         query.addBindValue(manager->getCraftID());
         query.addBindValue(station->getStationID());
         query.addBindValue(materialID);
@@ -51,11 +48,10 @@ bool StationMaterial::initialMaterial(const QString &materialID)
         materialData.materialID = query.value("MaterialID").toString();
         materialData.materialName = query.value("MaterialName").toString();
         materialData.barcodeRule = query.value("BarcodeRule").toString();
-        materialData.usageQuantity = query.value("UsageQuantity").toInt();
-        materialData.alarmQuantity = query.value("AlarmQuantity").toInt();
+        materialData.usageQuantity = query.value("SingleConsumeQuantity").toInt();
+        materialData.alarmQuantity = query.value("ShortWarningQuantity").toInt();
 
-    }
-    while (0);
+    } while (0);
 
     do
     {
@@ -64,12 +60,10 @@ bool StationMaterial::initialMaterial(const QString &materialID)
         materialData.materialBatch.clear();
         materialData.packageBatch.clear();
         materialData.batchQuantity = 0;
-    }
-    while (0);
+    } while (0);
 
     return true;
 }
-
 
 bool StationMaterial::verifyBarcodeFormat(const QString &barcode)
 {
@@ -116,39 +110,39 @@ bool StationMaterial::verifyBarcodeRepair(const QString &barcode)
 bool StationMaterial::inputMaterialBatch(const QString &batch, int quantity)
 {
     //判断工位物料表中是否有相关数据
-//    do
-//    {
-//        QSqlQuery query(LOCAL_DB);
-//        query.prepare(R"(SELECT * FROM [PCS_Material_batch]
-//                      WHERE [WorkshopID] = ? AND [WorklineID] = ? AND [StationID] = ?
-//                      AND [MaterialID] = ? AND [MaterialBatch] = ? AND [BatchState] = ?)");
-//        query.addBindValue(manager->getWorkshopID());
-//        query.addBindValue(manager->getWorklineID());
-//        query.addBindValue(station->getStationID());
-//        query.addBindValue(materialData.materialID);
-//        query.addBindValue(batch);
-//        query.addBindValue(static_cast<int>(BatchState::Return));
+    //    do
+    //    {
+    //        QSqlQuery query(LOCAL_DB);
+    //        query.prepare(R"(SELECT * FROM [PCS_Material_batch]
+    //                      WHERE [WorkshopID] = ? AND [WorklineID] = ? AND [StationID] = ?
+    //                      AND [MaterialID] = ? AND [MaterialBatch] = ? AND [BatchState] = ?)");
+    //        query.addBindValue(manager->getWorkshopID());
+    //        query.addBindValue(manager->getWorklineID());
+    //        query.addBindValue(station->getStationID());
+    //        query.addBindValue(materialData.materialID);
+    //        query.addBindValue(batch);
+    //        query.addBindValue(static_cast<int>(BatchState::Return));
 
-//        if (!query.exec())
-//        {
-//            qDebug().noquote() << query.lastQuery();
-//            return false;
-//        }
+    //        if (!query.exec())
+    //        {
+    //            qDebug().noquote() << query.lastQuery();
+    //            return false;
+    //        }
 
-//        if (query.first())
-//        {
-//            qDebug() << "inputMaterialBatch() error, batch has returned!";
-//            return false;
-//        }
-//    }
-//    while (0);
+    //        if (query.first())
+    //        {
+    //            qDebug() << "inputMaterialBatch() error, batch has returned!";
+    //            return false;
+    //        }
+    //    }
+    //    while (0);
 
     //判断工位物料表中是否有相关数据
     do
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT * FROM [PCS_Material_batch]
-                      WHERE [WorkshopID] = ? AND [WorklineID] = ? AND [StationID] = ?
+                      WHERE [WorkShopID] = ? AND [WorkLineID] = ? AND [WorkStationID] = ?
                       AND [MaterialID] = ? AND [MaterialBatch] = ?)");
         query.addBindValue(manager->getWorkshopID());
         query.addBindValue(manager->getWorklineID());
@@ -169,8 +163,7 @@ bool StationMaterial::inputMaterialBatch(const QString &batch, int quantity)
             materialData.batchQuantity = query.value("BatchQuantity").toInt();
             return true;
         }
-    }
-    while (0);
+    } while (0);
 
     //向工位物料表中插入数据
     do
@@ -180,7 +173,7 @@ bool StationMaterial::inputMaterialBatch(const QString &batch, int quantity)
 
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(INSERT INTO [PCS_Material_Batch]
-                      ([WorkshopID], [WorklineID], [StationID], [OrderID], [MaterialID], [MaterialBatch], [PackageBatch], [BatchQuantity], [BatchState])
+                      ([WorkShopID], [WorkLineID], [WorkStationID], [OrderID], [MaterialID], [MaterialBatch], [PackageBatch], [BatchQuantity], [BatchState])
                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?))");
         query.addBindValue(manager->getWorkshopID());
         query.addBindValue(manager->getWorklineID());
@@ -198,8 +191,7 @@ bool StationMaterial::inputMaterialBatch(const QString &batch, int quantity)
             return false;
         }
 
-    }
-    while (0);
+    } while (0);
 
     return true;
 }
@@ -212,40 +204,40 @@ bool StationMaterial::inputMaterialBatch(const QString &barcode)
     int batchQuantity = barcode.split(';').at(1).toInt();
 
     //判断工位物料表中是否有相关数据
-//    do
-//    {
-//        QSqlQuery query(LOCAL_DB);
-//        query.prepare(R"(SELECT * FROM [PCS_Material_batch]
-//                      WHERE [WorkshopID] = ? AND [WorklineID] = ? AND [StationID] = ?
-//                      AND [MaterialID] = ? AND [MaterialBatch] = ? AND [PackageBatch] = ? AND [BatchState] = ?)");
-//        query.addBindValue(manager->getWorkshopID());
-//        query.addBindValue(manager->getWorklineID());
-//        query.addBindValue(station->getStationID());
-//        query.addBindValue(materialData.materialID);
-//        query.addBindValue(materialBatch);
-//        query.addBindValue(packageBatch);
-//        query.addBindValue(static_cast<int>(BatchState::Return));
+    //    do
+    //    {
+    //        QSqlQuery query(LOCAL_DB);
+    //        query.prepare(R"(SELECT * FROM [PCS_Material_batch]
+    //                      WHERE [WorkshopID] = ? AND [WorklineID] = ? AND [StationID] = ?
+    //                      AND [MaterialID] = ? AND [MaterialBatch] = ? AND [PackageBatch] = ? AND [BatchState] = ?)");
+    //        query.addBindValue(manager->getWorkshopID());
+    //        query.addBindValue(manager->getWorklineID());
+    //        query.addBindValue(station->getStationID());
+    //        query.addBindValue(materialData.materialID);
+    //        query.addBindValue(materialBatch);
+    //        query.addBindValue(packageBatch);
+    //        query.addBindValue(static_cast<int>(BatchState::Return));
 
-//        if (!query.exec())
-//        {
-//            qDebug().noquote() << query.lastQuery();
-//            return false;
-//        }
+    //        if (!query.exec())
+    //        {
+    //            qDebug().noquote() << query.lastQuery();
+    //            return false;
+    //        }
 
-//        if (query.first())
-//        {
-//            qDebug() << "inputMaterialBatch() error, batch has returned!";
-//            return false;
-//        }
-//    }
-//    while (0);
+    //        if (query.first())
+    //        {
+    //            qDebug() << "inputMaterialBatch() error, batch has returned!";
+    //            return false;
+    //        }
+    //    }
+    //    while (0);
 
     //判断工位物料表中是否有相关数据
     do
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT * FROM [PCS_Material_batch]
-                      WHERE [WorkshopID] = ? AND [WorklineID] = ? AND [StationID] = ?
+                      WHERE [WorkShopID] = ? AND [WorkLineID] = ? AND [WorkStationID] = ?
                       AND [MaterialID] = ? AND [MaterialBatch] = ? AND [PackageBatch] = ?)");
         query.addBindValue(manager->getWorkshopID());
         query.addBindValue(manager->getWorklineID());
@@ -267,8 +259,7 @@ bool StationMaterial::inputMaterialBatch(const QString &barcode)
             materialData.batchQuantity = query.value("BatchQuantity").toInt();
             return true;
         }
-    }
-    while (0);
+    } while (0);
 
     //向工位物料表中插入数据
     do
@@ -279,7 +270,7 @@ bool StationMaterial::inputMaterialBatch(const QString &barcode)
 
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(INSERT INTO [PCS_Material_Batch]
-                      ([WorkshopID], [WorklineID], [StationID], [OrderID], [MaterialID], [MaterialBatch], [PackageBatch], [BatchQuantity], [BatchState])
+                      ([WorkShopID], [WorkLineID], [WorkStationID], [OrderID], [MaterialID], [MaterialBatch], [PackageBatch], [BatchQuantity], [BatchState])
                       VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?))");
         query.addBindValue(manager->getWorkshopID());
         query.addBindValue(manager->getWorklineID());
@@ -297,8 +288,7 @@ bool StationMaterial::inputMaterialBatch(const QString &barcode)
             return false;
         }
 
-    }
-    while (0);
+    } while (0);
 
     return true;
 }
@@ -311,7 +301,7 @@ bool StationMaterial::returnMaterialBatch()
 
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(UPDATE [PCS_Material_batch] SET [BatchState] = ?, [BatchQuantity] = ?
-                  WHERE [WorkshopID] = ? AND [WorklineID] = ? AND [StationID] = ? AND [OrderID] = ?
+                  WHERE [WorkShopID] = ? AND [WorkLineID] = ? AND [WorkStationID] = ? AND [OrderID] = ?
                   AND [MaterialID] = ? AND [MaterialBatch] = ? AND [PackageBatch] = ? AND [BatchState] = ?)");
     query.addBindValue(static_cast<int>(BatchState::Return));
     query.addBindValue(materialData.batchQuantity);
@@ -346,7 +336,7 @@ void StationMaterial::updateBatchQuantity()
 
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(UPDATE [PCS_Material_batch] SET [BatchQuantity] = ?
-                  WHERE [WorkshopID] = ? AND [WorklineID] = ? AND [StationID] = ? AND [OrderID] = ?
+                  WHERE [WorkShopID] = ? AND [WorkLineID] = ? AND [WorkStationID] = ? AND [OrderID] = ?
                   AND [MaterialID] = ? AND [MaterialBatch] = ? AND [PackageBatch] = ? AND [BatchState] = ?)");
     query.addBindValue(materialData.batchQuantity);
     query.addBindValue(manager->getWorkshopID());
@@ -374,7 +364,7 @@ void StationMaterial::adjustBatchQuantity(int quantity)
 
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(UPDATE [PCS_Material_batch] SET [BatchQuantity] = ?
-                  WHERE [WorkshopID] = ? AND [WorklineID] = ? AND [StationID] = ? AND [OrderID] = ?
+                  WHERE [WorkShopID] = ? AND [WorkLineID] = ? AND [WorkStationID] = ? AND [OrderID] = ?
                   AND [MaterialID] = ? AND [MaterialBatch] = ? AND [PackageBatch] = ? AND [BatchState] = ?)");
     query.addBindValue(materialData.batchQuantity);
     query.addBindValue(manager->getWorkshopID());
@@ -392,4 +382,3 @@ void StationMaterial::adjustBatchQuantity(int quantity)
         return;
     }
 }
-

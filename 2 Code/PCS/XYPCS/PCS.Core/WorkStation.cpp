@@ -23,12 +23,12 @@ bool WorkStation::initialStation(const QString &stationID)
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT [UID]
-                      ,[WorkStationCode] AS [StationID]
-                      ,[WorkStationShortName] AS [StationCode]
+                      ,[WorkStationID] AS [StationID]
+                      ,[WorkStationCode] AS [StationCode]
                       ,[WorkStationName] AS [StationName]
                       ,CASE [IsPackage] WHEN 0 THEN 'Station' WHEN 1 THEN 'Package' END AS [StationType]
-                      FROM [MES_db_WorkStation]
-                      WHERE [WorkLineCode] = ? AND [WorkStationCode] = ?)");
+                      FROM [PCS_Base_Station]
+                      WHERE [WorkLineID] = ? AND [WorkStationID] = ?)");
         query.addBindValue(manager->getWorklineID());
         query.addBindValue(stationID);
 
@@ -48,15 +48,14 @@ bool WorkStation::initialStation(const QString &stationID)
         stationData.stationCode = query.value("StationCode").toString();
         stationData.stationName = query.value("StationName").toString();
         stationData.stationType = query.value("StationType").toString();
-    }
-    while (0);
+    } while (0);
 
     //读取工位完成数量
     do
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare("SELECT COUNT(UID) AS Count FROM PCS_Data_Station "
-                      "WHERE OrderID = ? AND StationID = ? AND AssemblyState = 0");
+                      "WHERE OrderID = ? AND WorkStationID = ? AND AssemblyState = 0");
         query.addBindValue(order->getOrderID());
         query.addBindValue(stationID);
 
@@ -73,15 +72,14 @@ bool WorkStation::initialStation(const QString &stationID)
         }
 
         stationData.finishQuantity = query.value("Count").toInt();
-    }
-    while (0);
+    } while (0);
 
     //获取工位不合格数量
     do
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare("SELECT COUNT(UID) AS Count FROM PCS_Data_Station "
-                      "WHERE OrderID = ? AND StationID = ? AND AssemblyState = 1");
+                      "WHERE OrderID = ? AND WorkStationID = ? AND AssemblyState = 1");
         query.addBindValue(order->getOrderID());
         query.addBindValue(stationID);
 
@@ -98,8 +96,7 @@ bool WorkStation::initialStation(const QString &stationID)
         }
 
         stationData.failedQuantity = query.value("Count").toInt();
-    }
-    while (0);
+    } while (0);
 
     //获取工位一次成功数量
     //    do
@@ -145,14 +142,16 @@ bool WorkStation::initialStation(const QString &stationID)
 
     do
     {
-        stationData.isOperatorLogin = operatorList.size() != 0; //员工登陆
-        stationData.isMaterialInput = materialList.size() == 0; //物料上料
+        stationData.isOperatorLogin = operatorList.size() != 0;    //员工登陆
+        stationData.isMaterialInput = materialList.size() == 0;    //物料上料
 
-        machineCheck();     //设备点检
-        productCheck();     //产品点检
-        fixtureCheck();     //工装模具点检
-    }
-    while (0);
+        stationData.isMachineCheck = true;
+        stationData.isProductCheck = true;
+        stationData.isFixtureCheck = true;
+        //        machineCheck();     //设备点检
+        //        productCheck();     //产品点检
+        //        fixtureCheck();     //工装模具点检
+    } while (0);
 
     return true;
 }
@@ -348,8 +347,8 @@ bool WorkStation::verifyOrderFinished()
     //各工位的目标数量 = 排产数量 + 抽检数量 + 不合格数量
     return stationData.finishQuantity >=
            order->getOrderData().orderPlanQuantity +
-           order->getOrderData().inspectQuantity +
-           order->getOrderData().failedQuantity;
+               order->getOrderData().inspectQuantity +
+               order->getOrderData().failedQuantity;
 }
 
 //校验员工信息
@@ -416,7 +415,7 @@ bool WorkStation::verifyFixtureCheck()
 
 void WorkStation::machineCheck()
 {
-    QSqlQuery query(LOCAL_DB);
+    /*  QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT [DocCode] AS [DocumentID] FROM [MES_Device_CheckMaster]
                   WHERE [WorkShopCode] = ? AND [WorkLineCode] = ? AND [WorkStationCode] = ?
                   AND CONVERT(NVARCHAR, [CheckTime], 23) = ? AND [DocResult] = 0 AND [State] = 3)");
@@ -444,12 +443,12 @@ void WorkStation::machineCheck()
 
     emit manager->signalStationUpdate(stationData);
 
-    updateStationStatus();
+    updateStationStatus();*/
 }
 
 void WorkStation::productCheck()
 {
-    QSqlQuery query(LOCAL_DB);
+    /*  QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT [DocCode] AS [DocumentID] FROM [MES_PCheck_DocMaster]
                   WHERE [WorkShopCode] = ? AND [WorkLineCode] = ? AND [WorkStationCode] = ?
                   AND [WorkOrderCode] = ? AND CONVERT(NVARCHAR, [CheckDate], 23) = ?
@@ -480,10 +479,12 @@ void WorkStation::productCheck()
     emit manager->signalStationUpdate(stationData);
 
     updateStationStatus();
+    */
 }
 
 void WorkStation::fixtureCheck()
 {
+    /*
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT [DocCode] AS [DocumentID] FROM [MES_PCheck_DocMaster]
                   WHERE [WorkShopCode] = ? AND [WorkLineCode] = ? AND [WorkStationCode] = ?
@@ -516,17 +517,16 @@ void WorkStation::fixtureCheck()
 
     emit manager->signalStationUpdate(stationData);
 
-    updateStationStatus();
+    updateStationStatus();*/
 }
 
 bool WorkStation::fixtureLoad(const QString &documentID)
 {
-    QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(SELECT [DeviceCode] AS [FixtureID]
-                  ,[DeviceClassify] AS [FixtureClassify]
-                  FROM [MES_PCheck_DocItems]
-                  WHERE [MasterCode] = ? AND [ItemResult] = 0
-                  AND ([CheckStyle] = 1 OR [CheckStyle] = 2))");
+    /* QSqlQuery query(LOCAL_DB);
+    query.prepare(R"(SELECT [FixtureID] AS [FixtureID]
+                  ,[FixtureType] AS [FixtureClassify]
+                  FROM [PCS_Base_Fixture]
+                  WHERE [FixtureBarcode] = ? AND [ScrapMarker] = 0)");
     query.addBindValue(documentID);
 
     if (!query.exec())
@@ -550,7 +550,7 @@ bool WorkStation::fixtureLoad(const QString &documentID)
         ptr->setFixutreClassify(query.value("FixtureClassify").toString());
 
         emit manager->signalFixtureLoaded(getStationID(), ptr->getFixtureData());
-    }
+    }*/
 
     return true;
 }

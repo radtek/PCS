@@ -74,7 +74,7 @@ void WidgetBaseWorker::slotDeleteWorker()
         return;
     }
     QSqlQuery query(LOCAL_DB);
-    query.prepare("UPDATE PCS_Base_Worker SET State=2 WHERE WorkerID=? ");
+    query.prepare(R"(UPDATE [PCS_Base_Worker] SET [State]=2 WHERE [WorkerID]=? )");
     query.addBindValue(ui->editWorkerID->text());
     query.exec();
     ui->buttonGroup->setGroupState(ButtonGroup::GroupState::Unselect);

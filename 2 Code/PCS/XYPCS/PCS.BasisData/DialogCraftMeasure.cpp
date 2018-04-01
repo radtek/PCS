@@ -98,7 +98,7 @@ void DialogCraftMeasure::initialDialog()
         ui->comboBoxMeasureType->addItem(query.value("MeasureType").toString());
     }
 
-    ui->lineEditMeasureSerial->setText(dbRecord.value("MeasureSerial").toString());
+    ui->lineEditMeasureSerial->setText(dbRecord.value("MeasureOrder").toString());
     ui->lineEditStandardValue->setText(dbRecord.value("StandardValue").toString());
     ui->lineEditUpperLimit->setText(dbRecord.value("UpperLimit").toString());
     ui->lineEditLowerLimit->setText(dbRecord.value("LowerLimit").toString());

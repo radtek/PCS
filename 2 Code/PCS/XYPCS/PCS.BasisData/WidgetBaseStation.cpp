@@ -70,7 +70,7 @@ void WidgetBaseStation::slotDeleteStation()
         return;
     }
     QSqlQuery query(LOCAL_DB);
-    query.prepare("UPDATE PCS_Base_Station SET State=2 WHERE WorkStationID=? ");
+    query.prepare(R"(UPDATE [PCS_Base_Station] SET [State]=2 WHERE [WorkStationID]=? )");
     query.addBindValue(ui->editStationID->text());
     query.exec();
     ui->buttonGroup->setGroupState(ButtonGroup::GroupState::Unselect);

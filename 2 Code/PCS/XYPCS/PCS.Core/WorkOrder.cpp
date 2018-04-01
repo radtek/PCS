@@ -17,22 +17,22 @@ bool WorkOrder::initialOrder(const QString &orderID)
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT [UID]
-                      ,[WorkShopCode] AS [WorkshopID]
-                      ,[WorkLineCode] AS [WorklineID]
-                      ,[WOCode] AS [OrderID]
-                      ,[PocessCode] AS [CraftID]
-                      ,[ProduceBatch] AS [ProductBatch]
+                      ,[WorkShopID] AS [WorkshopID]
+                      ,[WorkLineID] AS [WorklineID]
+                      ,[OrderID] AS [OrderID]
+                      ,[CraftID] AS [CraftID]
+                      ,[ProductionBatch] AS [ProductBatch]
                       ,[PlanDate] AS [OrderPlanDate]
-                      ,[PlanDailyYields] AS [OrderPlanQuantity]
-                      ,[QASubmitted] AS [InspectQuantity]
-                      ,[TotalCompleted] AS [FinishQuantity]
-                      ,[TotalBrokenParts] AS [FailedQuantity]
-                      ,[TotalPackageBox] AS [PackageQuanity]
-                      ,[TotalSampleParts] AS [SampleQuantity]
-                      ,[TotalRepairParts] AS [RepairQuantity]
+                      ,[PlanProductionQuantity] AS [OrderPlanQuantity]
+                      ,[PlanInspectionQuantity] AS [InspectQuantity]
+                      ,[QualifiedQuantity] AS [FinishQuantity]
+                      ,[UnqualifiedQuantity] AS [FailedQuantity]
+                      ,[PackageQuantity] AS [PackageQuanity]
+                      ,[InspectionQuantity] AS [SampleQuantity]
+                      ,[RepairQuantity] AS [RepairQuantity]
                       ,[State]
-                      FROM [MES_WorkOrder]
-                      WHERE [WorkShopCode] = ? AND [WorkLineCode] = ? AND [WOCode] = ?)");
+                      FROM [PCS_WorkOrder]
+                      WHERE [WorkShopID] = ? AND [WorkLineID] = ? AND [OrderID] = ?)");
         query.addBindValue(manager->getWorkshopID());
         query.addBindValue(manager->getWorklineID());
         query.addBindValue(orderID);
@@ -140,7 +140,7 @@ bool WorkOrder::initialOrder(const QString &orderID)
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare("SELECT COUNT(UID) AS Count FROM PCS_Data_Assembly "
-                      "WHERE OrderID = ? AND SampleState = 1");
+                      "WHERE OrderID = ? AND InspectionMarker = 1");
         query.addBindValue(orderID);
 
         if (!query.exec())
@@ -163,7 +163,7 @@ bool WorkOrder::initialOrder(const QString &orderID)
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare("SELECT COUNT(UID) AS Count FROM PCS_Data_Assembly "
-                      "WHERE OrderID = ? AND RepairState = 1");
+                      "WHERE OrderID = ? AND RepairMarker = 1");
         query.addBindValue(orderID);
 
         if (!query.exec())
@@ -206,10 +206,14 @@ bool WorkOrder::initialOrder(const QString &orderID)
 
     do
     {
-        firstProductQA();
-        firstPackageQA();
-        finalProductQA();
-        finalPackageQA();
+        orderData.isFirstProductQA = true;
+        orderData.isFirstPackageQA = true;
+        orderData.isFinalProductQA = true;
+        orderData.isFinalPackageQA = true;
+        //      firstProductQA();
+        //      firstPackageQA();
+        //      finalProductQA();
+        //     finalPackageQA();
     } while (0);
 
     return true;
@@ -221,14 +225,14 @@ bool WorkOrder::saveOrderData()
     do
     {
         QSqlQuery query(LOCAL_DB);
-        query.prepare(R"(UPDATE MES_WorkOrder SET
-                      [TotalCompleted] = ?,
-                      [TotalBrokenParts] = ?,
-                      [TotalPackageBox] = ?,
-                      [TotalSampleParts] = ?,
-                      [TotalRepairParts] = ?,
-                      [TotalPrimaryMolding] = ?
-                      WHERE [WorkShopCode] = ? AND [WorkLineCode] = ? AND [WOCode] = ?)");
+        query.prepare(R"(UPDATE PCS_WorkOrder SET
+                      [QualifiedQuantity] = ?,
+                      [UnqualifiedQuantity] = ?,
+                      [PackageQuantity] = ?,
+                      [InspectionQuantity] = ?,
+                      [RepairQuantity] = ?,
+                      [FirstPassQuantity] = ?
+                      WHERE [WorkShopID] = ? AND [WorkLineID] = ? AND [OrderID] = ?)");
         query.addBindValue(orderData.finishQuantity);
         query.addBindValue(orderData.failedQuantity);
         query.addBindValue(orderData.packageQuantity);
@@ -278,6 +282,7 @@ bool WorkOrder::verifyFinalPackageQA()
 //首件检验
 void WorkOrder::firstProductQA()
 {
+    /*
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT [DocCode] AS [DocumentID] FROM [MES_QA_DocMaster]
                   WHERE [WorkShopCode] = ? AND [WorkLineCode] = ?
@@ -306,11 +311,13 @@ void WorkOrder::firstProductQA()
     }
 
     emit manager->signalOrderPlanUpdate(orderData);
+    */
 }
 
 //首箱检验
 void WorkOrder::firstPackageQA()
 {
+    /*
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT [DocCode] AS [DocumentID] FROM [MES_QA_DocMaster]
                   WHERE [WorkShopCode] = ? AND [WorkLineCode] = ?
@@ -338,12 +345,13 @@ void WorkOrder::firstPackageQA()
         orderData.isFirstPackageQA = false;
     }
 
-    emit manager->signalOrderPlanUpdate(orderData);
+    emit manager->signalOrderPlanUpdate(orderData);*/
 }
 
 //末件质检
 void WorkOrder::finalProductQA()
 {
+    /*
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT [DocCode] AS [DocumentID] FROM [MES_QA_DocMaster]
                   WHERE [WorkShopCode] = ? AND [WorkLineCode] = ?
@@ -371,12 +379,13 @@ void WorkOrder::finalProductQA()
         orderData.isFinalProductQA = false;
     }
 
-    emit manager->signalOrderPlanUpdate(orderData);
+    emit manager->signalOrderPlanUpdate(orderData);*/
 }
 
 //末箱质检
 void WorkOrder::finalPackageQA()
 {
+    /*
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT [DocCode] AS [DocumentID] FROM [MES_QA_DocMaster]
                   WHERE [WorkShopCode] = ? AND [WorkLineCode] = ?
@@ -404,5 +413,5 @@ void WorkOrder::finalPackageQA()
         orderData.isFinalPackageQA = false;
     }
 
-    emit manager->signalOrderPlanUpdate(orderData);
+    emit manager->signalOrderPlanUpdate(orderData);*/
 }

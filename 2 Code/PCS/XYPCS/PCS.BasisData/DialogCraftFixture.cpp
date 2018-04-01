@@ -60,7 +60,7 @@ void DialogCraftFixture::initialDialog()
         ui->comboBoxFixtureType->addItem(query.value("FixtureType").toString());
     }
 
-    ui->lineEditFixtureSerial->setText(dbRecord.value("FixtureSerial").toString());
+    ui->lineEditFixtureSerial->setText(dbRecord.value("FixtureOrder").toString());
     if (!dbRecord.value("FixtureType").toString().isEmpty())
     {
         ui->comboBoxFixtureType->setCurrentText(dbRecord.value("FixtureType").toString());

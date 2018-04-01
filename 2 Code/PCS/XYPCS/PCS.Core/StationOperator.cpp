@@ -6,12 +6,10 @@ StationOperator::StationOperator(WorkStation *station)
     : manager(station->getManager())
     , station(station)
 {
-
 }
 
 StationOperator::~StationOperator()
 {
-
 }
 
 bool StationOperator::operatorLogin(const QString &barcode)
@@ -20,16 +18,14 @@ bool StationOperator::operatorLogin(const QString &barcode)
     do
     {
         QSqlQuery query(LOCAL_DB);
-        query.prepare(R"(SELECT A.[UID]
-                      ,A.[WorkerCode] AS [OperatorID]
-                      ,A.[WorkerBarCode] AS [OperatorCard]
-                      ,A.[WorkerName] AS [OperatorName]
-                      ,A.[Team] AS [OperatorTeam]
-                      ,B.[DName] AS [OperatorDuty]
-                      ,A.[Duty] AS [DutyLevel]
-                      FROM [MES_db_WorkerInfo] A LEFT JOIN [MES_db_Dict] B
-                      ON A.[Duty] = B.[DCode] AND B.[PDCode] = 'WorkerDuty'
-                      WHERE A.[WorkShopCode] = ? AND A.[WorkerBarCode] = ? AND A.[State] != ?)");
+        query.prepare(R"(SELECT [UID]
+                      ,[WorkerID]
+                      ,[WorkerBarCode]
+                      ,[WorkerName]
+                      ,[WorkerDuty]
+                      ,[WorkerDuty] AS [DutyLevel]
+                      FROM [PCS_Base_Worker]
+                      WHERE [WorkShopID] = ? AND [WorkerBarCode] = ? AND [State] != ?)");
         query.addBindValue(manager->getWorkshopID());
         query.addBindValue(barcode);
         query.addBindValue(RECORD_DELETE);
@@ -46,17 +42,16 @@ bool StationOperator::operatorLogin(const QString &barcode)
             return false;
         }
 
-        operatorData.operatorID = query.value("OperatorID").toString();
-        operatorData.operatorCard = query.value("OperatorCard").toString();
-        operatorData.operatorName = query.value("OperatorName").toString();
-        operatorData.operatorTeam = query.value("OperatorTeam").toString();
-        operatorData.operatorDuty = query.value("OperatorDuty").toString();
-        operatorData.dutyLevel = static_cast<OperatorDuty>(query.value("DutyLevel").toInt());
-    }
-    while (0);
+        operatorData.operatorID = query.value("WorkerID").toString();
+        operatorData.operatorCard = query.value("WorkerBarCode").toString();
+        operatorData.operatorName = query.value("WorkerName").toString();
+        //   operatorData.operatorTeam = query.value("OperatorTeam").toString();//@@@
+        operatorData.operatorDuty = query.value("WorkerDuty").toString();
+        operatorData.dutyLevel = static_cast<OperatorDuty>(query.value("DutyLevel").toInt());    //@@@
+    } while (0);
 
     //校验人员能力
-    do
+    /*   do
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT [UID] FROM [MES_Capacity_Workers]
@@ -80,10 +75,10 @@ bool StationOperator::operatorLogin(const QString &barcode)
             return false;
         }
     }
-    while (0);
+    while (0);*/
 
     //判断是否在其它产线登陆
-    do
+    /*  do
     {
         QSqlQuery query(REMOTE_DB);
         query.prepare(R"(SELECT [UID] FROM [PCS_Operator_Hours]
@@ -106,10 +101,10 @@ bool StationOperator::operatorLogin(const QString &barcode)
             return false;
         }
     }
-    while (0);
+    while (0);*/
 
     //判断之前登陆是否登出
-    do
+    /*   do
     {
         QSqlQuery query(REMOTE_DB);
         query.prepare(R"(SELECT A.[LogMarker]
@@ -138,16 +133,16 @@ bool StationOperator::operatorLogin(const QString &barcode)
             return true;
         }
     }
-    while (0);
+    while (0);*/
 
     //插入登陆信息
     do
     {
         operatorData.logMarker = QUuid::createUuid().toString().remove('{').remove('}');
 
-        QSqlQuery query(REMOTE_DB);
+        QSqlQuery query(LOCAL_DB);
         query.prepare(R"(INSERT INTO [PCS_Operator_Hours]
-                      ([WorkshopID], [WorklineID], [StationID], [OrderID], [OperatorID], [LogMarker], [LogTime], [LogState])
+                      ([WorkShopID], [WorkLineID], [WorkStationID], [OrderID], [WorkerID], [LogMarker], [LogTime], [LogState])
                       VALUES(?, ?, ?, ?, ?, ?, ?, ?))");
         query.addBindValue(manager->getWorkshopID());
         query.addBindValue(manager->getWorklineID());
@@ -163,8 +158,7 @@ bool StationOperator::operatorLogin(const QString &barcode)
             qDebug().noquote() << query.lastQuery();
             return false;
         }
-    }
-    while (0);
+    } while (0);
 
     return true;
 }
@@ -174,9 +168,9 @@ bool StationOperator::operatorLogout()
     //插入登陆信息
     do
     {
-        QSqlQuery query(REMOTE_DB);
+        QSqlQuery query(LOCAL_DB);
         query.prepare(R"(INSERT INTO [PCS_Operator_Hours]
-                      ([WorkshopID], [WorklineID], [StationID], [OrderID], [OperatorID], [LogMarker], [LogTime], [LogState])
+                      ([WorkShopID], [WorkLineID], [WorkStationID], [OrderID], [WorkerID], [LogMarker], [LogTime], [LogState])
                       VALUES(?, ?, ?, ?, ?, ?, ?, ?))");
         query.addBindValue(manager->getWorkshopID());
         query.addBindValue(manager->getWorklineID());
@@ -192,10 +186,7 @@ bool StationOperator::operatorLogout()
             qDebug().noquote() << query.lastQuery();
             return false;
         }
-    }
-    while (0);
+    } while (0);
 
     return true;
 }
-
-

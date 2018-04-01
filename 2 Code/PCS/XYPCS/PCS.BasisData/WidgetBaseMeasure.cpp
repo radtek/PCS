@@ -62,7 +62,7 @@ void WidgetBaseMeasure::slotDeleteMeasure()
         return;
     }
     QSqlQuery query(LOCAL_DB);
-    query.prepare("UPDATE PCS_Base_Measure SET State=2 WHERE MeasureType=? ");
+    query.prepare(R"(UPDATE [PCS_Base_Measure] SET [State]=2 WHERE [MeasureType]=? )");
     query.addBindValue(ui->editMeasureType->text());
     query.exec();
     ui->buttonGroup->setGroupState(ButtonGroup::GroupState::Unselect);

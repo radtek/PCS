@@ -36,7 +36,7 @@ bool WorkManager::loadSqlData(const QString &workshopID, const QString &workline
         //        return false;
     }
 
-    do
+    /*  do
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT [UID]
@@ -61,9 +61,9 @@ bool WorkManager::loadSqlData(const QString &workshopID, const QString &workline
 
         workshopData.id = query.value("WorkshopID").toString();
         workshopData.name = query.value("WorkshopName").toString();
-    } while (0);
+    } while (0);*/
 
-    do
+    /*  do
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT [UID]
@@ -89,16 +89,16 @@ bool WorkManager::loadSqlData(const QString &workshopID, const QString &workline
 
         worklineData.id = query.value("WorklineID").toString();
         worklineData.name = query.value("WorklineName").toString();
-    } while (0);
+    } while (0);*/
 
     do
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT [UID]
-                      ,[ProcessCode] AS [CraftID]
-                      ,[MCode] AS [ProductID]
-                      FROM [MES_Process_Info]
-                      WHERE [WorkLineCode] = ? AND [State] != ?
+                      ,[CraftID] AS [CraftID]
+                      ,[ProductID] AS [ProductID]
+                      FROM [PCS_Craft]
+                      WHERE [WorkLineID] = ? AND [State] != ?
                       ORDER BY [UID])");
         query.addBindValue(worklineID);
         query.addBindValue(RECORD_DELETE);
@@ -122,11 +122,11 @@ bool WorkManager::loadSqlData(const QString &workshopID, const QString &workline
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT [UID]
-                      ,[WorkStationCode] AS [StationID]
-                      ,[WorkStationShortName] AS [StationCode]
+                      ,[WorkStationID] AS [StationID]
+                      ,[WorkStationCode] AS [StationCode]
                       ,CASE [IsPackage] WHEN ? THEN ? WHEN ? THEN ? END AS [StationType]
-                      FROM [MES_db_WorkStation]
-                      WHERE [WorkLineCode] = ? AND [State] != ?
+                      FROM [PCS_Base_Station]
+                      WHERE [WorkLineID] = ? AND [State] != ?
                       ORDER BY [UID])");
         query.addBindValue(static_cast<int>(StationType::Station));
         query.addBindValue(stationTypeMap.value(StationType::Station));
@@ -160,9 +160,9 @@ bool WorkManager::loadSqlData(const QString &workshopID, const QString &workline
 QStringList WorkManager::getMaterialIDList(const QString &craftID, const QString &stationID)
 {
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(SELECT [MCode] AS [MaterialID]
-                  FROM [MES_Process_WorkStationMaterial]
-                  WHERE [ProcessCode] = ? AND [WorkStationCode] = ? AND [State] != ?
+    query.prepare(R"(SELECT [MaterialID] AS [MaterialID]
+                  FROM [PCS_Craft_Station_Material]
+                  WHERE [CraftID] = ? AND [WorkStationID] = ? AND [State] != ?
                   ORDER BY [UID])");
     query.addBindValue(craftID);
     query.addBindValue(stationID);
@@ -187,9 +187,9 @@ QStringList WorkManager::getMaterialIDList(const QString &craftID, const QString
 QStringList WorkManager::getMeasureIDList(const QString &craftID, const QString &stationID)
 {
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(SELECT [Dict_ParaTypeCode] + '#' + CAST([OrderNum] AS NVARCHAR) AS [MeasureID]
-                  FROM [MES_Process_Para]
-                  WHERE [ProcessCode] = ? AND [WorkStationCode] = ? AND [State] != ?
+    query.prepare(R"(SELECT [MeasureType] + '#' + CAST([MeasureOrder] AS NVARCHAR) AS [MeasureID]
+                  FROM [PCS_Craft_Station_Measure]
+                  WHERE [CraftID] = ? AND [WorkStationID] = ? AND [State] != ?
                   ORDER BY [UID])");
     query.addBindValue(craftID);
     query.addBindValue(stationID);
@@ -213,7 +213,7 @@ QStringList WorkManager::getMeasureIDList(const QString &craftID, const QString 
 
 QStringList WorkManager::getFixtureClsList(const QString &craftID, const QString &stationID)
 {
-    QSqlQuery query(LOCAL_DB);
+    /*  QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT DISTINCT T.[FixtureClassify] FROM(
                   SELECT D1.[DName] + D2.[DName] AS [FixtureClassify]
                   FROM [MES_Process_DeviceMapping] A
@@ -240,7 +240,7 @@ QStringList WorkManager::getFixtureClsList(const QString &craftID, const QString
         list.append(query.value("FixtureClassify").toString());
     }
 
-    return list;
+    return list;*/
 }
 
 //初始化工单

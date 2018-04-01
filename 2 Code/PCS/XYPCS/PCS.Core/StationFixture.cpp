@@ -6,17 +6,15 @@ StationFixture::StationFixture(WorkStation *station)
     : manager(station->getManager())
     , station(station)
 {
-
 }
 
 StationFixture::~StationFixture()
 {
-
 }
 
 bool StationFixture::loadFixture(const QString &fixtureID)
 {
-    do
+    /* do
     {
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT A.[UID]
@@ -59,7 +57,7 @@ bool StationFixture::loadFixture(const QString &fixtureID)
         fixtureData.usedTimes = query.value("UsedTimes").toInt();
         fixtureData.remindTimes = query.value("RemindTimes").toInt();
     }
-    while (0);
+    while (0);*/
 
     return true;
 }
@@ -68,16 +66,3 @@ void StationFixture::updateUsedTimes()
 {
     ++fixtureData.usedTimes;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -172,18 +172,12 @@ void WidgetCraftRouteDesign::slotTreeSelectionChanged()
     do
     {
         QSqlQuery query(LOCAL_DB);
-        query.prepare(R"(SELECT A.[UID]
-                      ,A.[ProcessCode] AS [CraftID]
-                      ,A.[ProcessName] AS [CraftName]
-                      ,M.[MCode] AS [ProductID]
-                      ,M.[MName] AS [ProductName]
-                      ,A.[AssySerialNumRule] AS [AssySerialRule]
-                      ,A.[BoxSerialNumRule] AS [PackSerialRule]
-                      ,A.[AssySerialNumStart] AS [AssySerialInit]
-                      ,A.[BoxSerialNumStart] AS [PackSerialInit]
-                      FROM [MES_Process_Info] A
-                      LEFT JOIN [MES_db_MaterialInfo] M ON A.[MCode] = M.[MCode]
-                      WHERE A.[WorkLineCode] = ? AND A.[ProcessCode] = ?)");
+        query.prepare(R"(SELECT [UID]
+                      ,[CraftID]
+                      ,[ProductID]
+                      ,[ProductName]
+                      FROM [PCS_Craft]
+                      WHERE [WorkLineID] = ? AND [CraftID] = ?)");
         query.addBindValue(qWorkManager->getWorklineID());
         query.addBindValue(craftID);
         if (!query.exec())
@@ -195,17 +189,17 @@ void WidgetCraftRouteDesign::slotTreeSelectionChanged()
         if (query.first())
         {
             ui->labelCraftID->setText(query.value("CraftID").toString());
-            ui->labelCraftName->setText(query.value("CraftName").toString());
+            //  ui->labelCraftName->setText(query.value("CraftName").toString());
             ui->labelProductID->setText(query.value("ProductID").toString());
             ui->labelProductName->setText(query.value("ProductName").toString());
 
-            SerialRule assyRule = static_cast<SerialRule>(query.value("AssySerialRule").toInt());
-            ui->labelAssySerialRule->setText(SerialRuleMap.value(assyRule));
-            SerialRule packRule = static_cast<SerialRule>(query.value("PackSerialRule").toInt());
-            ui->labelPackSerialRule->setText(SerialRuleMap.value(packRule));
+            //       SerialRule assyRule = static_cast<SerialRule>(query.value("AssySerialRule").toInt());//@@@
+            //      ui->labelAssySerialRule->setText(SerialRuleMap.value(assyRule));
+            //      SerialRule packRule = static_cast<SerialRule>(query.value("PackSerialRule").toInt());
+            //      ui->labelPackSerialRule->setText(SerialRuleMap.value(packRule));
 
-            ui->labelAssySerialInit->setNum(query.value("AssySerialInit").toInt());
-            ui->labelPackSerialInit->setNum(query.value("PackSerialInit").toInt());
+            //      ui->labelAssySerialInit->setNum(query.value("AssySerialInit").toInt());
+            //      ui->labelPackSerialInit->setNum(query.value("PackSerialInit").toInt());
         }
     } while (0);
 
@@ -219,14 +213,14 @@ void WidgetCraftRouteDesign::slotTreeSelectionChanged()
 
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT A.[UID]
-                      ,A.[MCode] AS [MaterialID]
-                      ,M.[MName] AS [MaterialName]
-                      ,A.[MBarCode] AS [BarcodeRule]
-                      ,A.[CQ] AS [UsageQuantity]
-                      ,A.[WarningCount] AS [AlarmQuantity]
-                      FROM [MES_Process_WorkStationMaterial] A
-                      LEFT JOIN [MES_db_MaterialInfo] M ON A.MCode = M.MCode
-                      WHERE A.[ProcessCode] = ? AND A.[WorkStationCode] = ? AND A.[State] != ?)");
+                      ,A.[MaterialID]
+                      ,M.[MaterialName]
+                      ,M.[BarcodeRule]
+                      ,A.[SingleConsumeQuantity] AS [UsageQuantity]
+                      ,A.[ShortWarningQuantity] AS [AlarmQuantity]
+                      FROM [PCS_Craft_Station_Material] A
+                      LEFT JOIN [PCS_Base_Material] M ON A.MaterialID = M.MaterialID
+                      WHERE A.[CraftID] = ? AND A.[WorkStationID] = ? AND A.[State] != ?)");
         query.addBindValue(craftID);
         query.addBindValue(stationID);
         query.addBindValue(RECORD_DELETE);
@@ -265,15 +259,15 @@ void WidgetCraftRouteDesign::slotTreeSelectionChanged()
 
         QSqlQuery query(LOCAL_DB);
         query.prepare(R"(SELECT A.[UID]
-                      ,A.[Dict_ParaTypeCode] + '#' + CAST(A.[OrderNum] AS NVARCHAR) AS [MeasureID]
-                      ,D.[DName] + '#' + CAST(A.[OrderNum] AS NVARCHAR) AS [MeasureName]
-                      ,D.[DClass] AS [MeasureUnit]
+                      ,A.[MeasureType] + '#' + CAST(A.[MeasureOrder] AS NVARCHAR) AS [MeasureID]
+                      ,D.[MeasureName] + '#' + CAST(A.[MeasureOrder] AS NVARCHAR) AS [MeasureName]
+                      ,D.[Unit] AS [MeasureUnit]
                       ,A.[StandardValue] AS [StandardValue]
                       ,A.[UpperLimit] AS [UpperLimit]
                       ,A.[LowerLimit] AS [LowerLimit]
-                      FROM [MES_Process_Para] A
-                      LEFT JOIN [MES_db_Dict] D ON A.[Dict_ParaTypeCode] = D.[Dcode]
-                      WHERE A.[ProcessCode] = ? AND A.[WorkStationCode] = ? AND A.[State] != ?)");
+                      FROM [PCS_Craft_Station_Measure] A
+                      LEFT JOIN [PCS_Base_Measure] D ON A.[MeasureType] = D.[MeasureType]
+                      WHERE A.[CraftID] = ? AND A.[WorkStationID] = ? AND A.[State] != ?)");
         query.addBindValue(craftID);
         query.addBindValue(stationID);
         query.addBindValue(RECORD_DELETE);
@@ -308,7 +302,7 @@ void WidgetCraftRouteDesign::slotTreeSelectionChanged()
         }
     } while (0);
 
-    do
+    /*  do
     {
         QTableWidget *table = ui->tableFixture;
         QTableWidgetItem *item = nullptr;
@@ -365,5 +359,6 @@ void WidgetCraftRouteDesign::slotTreeSelectionChanged()
             item = new QTableWidgetItem(query.value("RemindTimes").toString());
             table->setItem(row, static_cast<int>(FixtureHeader::RemindTimes), item);
         }
-    } while (0);
+    } while (0);*/
+    //   @@@
 }

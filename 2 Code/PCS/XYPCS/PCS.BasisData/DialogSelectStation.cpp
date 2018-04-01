@@ -39,15 +39,15 @@ void DialogSelectStation::init()
     view->setEditTriggers(QTableView::NoEditTriggers);
     view->horizontalHeader()->setMinimumSectionSize(120);
     view->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    QSqlQuery dbQuery(LOCAL_DB);
-    dbQuery.exec(R"(SELECT [WorkStationID]
+    QSqlQuery query(LOCAL_DB);
+    query.exec(R"(SELECT [WorkStationID]
                  ,[WorkStationName]
                  ,[WorkStationCode]
                  ,[IsPackage]
                  ,[Description]
              FROM [PCS_Base_Station] WHERE [State] != 2 )");
 
-    model->setQuery(dbQuery);
+    model->setQuery(query);
 
     //   ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     //    ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -72,16 +72,16 @@ void DialogSelectStation::slotAccept()
     stationID = model->record(index.row()).value("WorkStationID").toString();
 
     // check
-    QSqlQuery dbQuery(LOCAL_DB);
-    dbQuery.prepare(R"(SELECT [UID] FROM [PCS_Craft_Station] WHERE [CraftID] = :CraftID AND [WorkStationID] = :WorkStationID )");
-    dbQuery.bindValue(":WorkStationID", stationID);
-    dbQuery.bindValue(":CraftID", craftID);
-    if (!dbQuery.exec())
+    QSqlQuery query(LOCAL_DB);
+    query.prepare(R"(SELECT [UID] FROM [PCS_Craft_Station] WHERE [CraftID] = :CraftID AND [WorkStationID] = :WorkStationID )");
+    query.bindValue(":WorkStationID", stationID);
+    query.bindValue(":CraftID", craftID);
+    if (!query.exec())
     {
         QMessageBox::warning(Q_NULLPTR, "警告", "数据库错误,请重试");
         return;
     }
-    if (dbQuery.first())
+    if (query.first())
     {
         QMessageBox::warning(Q_NULLPTR, "警告", "已存在工位绑定");
         return;
