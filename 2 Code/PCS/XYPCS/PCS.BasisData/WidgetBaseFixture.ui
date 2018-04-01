@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WidgetBaseFixture</class>
+ <widget class="QWidget" name="WidgetBaseFixture">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>999</width>
+    <height>1163</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>微软雅黑</family>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="4,1,10">
+   <item>
+    <widget class="QGroupBox" name="groupBoxMessage">
+     <property name="title">
+      <string>工装基础信息</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="3" column="2">
+       <widget class="QLabel" name="labelUsedCount">
+        <property name="text">
+         <string>已使用次数：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="editFixtureID"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="labelDescription">
+        <property name="text">
+         <string>备注：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="editTotalCount"/>
+      </item>
+      <item row="3" column="3">
+       <widget class="QLineEdit" name="editUsedCount"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="labelFixtureName">
+        <property name="text">
+         <string>工装名称：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" rowspan="2">
+       <widget class="QLabel" name="labelFixtureType">
+        <property name="text">
+         <string>工装类型：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelTotalCount">
+        <property name="text">
+         <string>使用总次数：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLineEdit" name="editFixtureBarcode"/>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="labelFixtureBarcode">
+        <property name="text">
+         <string>工装条码：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="editFixtureType"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelFixtureID">
+        <property name="text">
+         <string>工装编号：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1" colspan="3">
+       <widget class="QTextEdit" name="editDescription"/>
+      </item>
+      <item row="0" column="3" rowspan="2">
+       <widget class="QLineEdit" name="editFixtureName"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelWarningCount">
+        <property name="text">
+         <string>预警次数：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="editWarningCount"/>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLabel" name="labelScrap">
+        <property name="text">
+         <string>报废标记：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QComboBox" name="comboBoxScrap"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="ButtonGroup" name="buttonGroup" native="true"/>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>工装列表</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QTableView" name="tableView"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ButtonGroup</class>
+   <extends>QWidget</extends>
+   <header>ButtonGroup.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

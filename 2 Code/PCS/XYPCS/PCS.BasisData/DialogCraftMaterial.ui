@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogCraftMaterial</class>
+ <widget class="QDialog" name="DialogCraftMaterial">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>432</width>
+    <height>394</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>微软雅黑</family>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>请选择物料</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="4,1">
+   <item>
+    <layout class="QGridLayout" name="gridLayout" columnstretch="1,2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="labelMaterialID">
+       <property name="text">
+        <string>物料编号：</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="labelSingleConsumeQuantity">
+       <property name="text">
+        <string>单件消耗数量：</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="comboBoxMaterialID"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="labelMaterialName">
+       <property name="text">
+        <string>物料名称：</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineEditMaterialName">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="labelBarcodeRule">
+       <property name="text">
+        <string>条码规则：</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="lineEditBarcodeRule">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="lineEditSingleConsumeQuantity"/>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="lineEditShortWarningQuantity"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="labelShortWarningQuantity">
+       <property name="text">
+        <string>缺料预警数量：</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonAccept">
+       <property name="text">
+        <string>确定</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonReject">
+       <property name="text">
+        <string>取消</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

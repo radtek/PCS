@@ -49,13 +49,13 @@ bool PCSApplication::initialize()
     cfgManager = qCfgManager;
 
     // 检测程序是否开启,开启本地服务
-    if (isLocalServerOpen() && openLocalServer())
+    if (!isLocalServerOpen() || !openLocalServer())
     {
         return false;
     }
 
     // 开启数据库
-    if (!qSqlManager->Initialize())
+    if (!qSqlManager->Initialize(qCfgManager->getPathSqlConn(), qCfgManager->getPathSqlName()))
     {
         MessageBox_Critical("数据库打开失败！");
         this->processEvents();
