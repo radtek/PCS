@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <bartender>
+        <templateFile>E:/标签模版/测试包装箱标签.btw</templateFile>
+        <printerName>ZDesigner 105SLPlus-300dpi ZPL</printerName>
+        <dateCode>奇瑞</dateCode>
+        <checkCode>神龙抽检</checkCode>
+    </bartender>
+    <template>
+        <item name="VenderCode" type="固定内容" text="ASDF"/>
+        <item name="PartCode" type="固定内容" text="123123123"/>
+        <item name="ProName" type="固定内容" text="123123"/>
+        <item name="ProCode" type="固定内容" text="123123123"/>
+        <item name="Barcode" type="追溯条码" text=""/>
+        <item name="MfgDate" type="格式化日期" text="YYYY/MM/DD"/>
+    </template>
+    <barcode>
+        <item size="5" type="固定内容" text="12345"/>
+        <item size="6" type="格式化日期" text="YYMMDD"/>
+        <item size="1" type="年代码" text=""/>
+        <item size="1" type="月代码" text=""/>
+        <item size="1" type="日代码" text=""/>
+        <item size="4" type="流水码(10)" text=""/>
+    </barcode>
+</root>

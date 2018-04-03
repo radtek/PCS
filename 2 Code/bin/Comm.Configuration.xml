@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<serial stationID="ST10" deviceID="条码枪10" deviceType="条码枪(HONEYWELL)" deviceParam="COM7,9600,8,N,1"/>
+	<serial stationID="ST20" deviceID="条码枪20" deviceType="条码枪(HONEYWELL)" deviceParam="COM8,9600,8,N,1"/>
+	<serial stationID="ST30" deviceID="条码枪30" deviceType="条码枪(HONEYWELL)" deviceParam="COM9,9600,8,N,1"/>
+	<serial stationID="ST30" deviceID="拧紧枪30" deviceType="拧紧枪(DDK)" deviceParam="COM10,9600,8,N,1"/>
+	<serial stationID="ST30" deviceID="电阻表30" deviceType="电阻表(KEITHLY)" deviceParam="COM11,9600,8,N,1"/>
+	<serial stationID="ST40" deviceID="电子秤40" deviceType="电子台秤(TOLEDO)" deviceParam="COM1,9600,8,N,1"/>
+</root>

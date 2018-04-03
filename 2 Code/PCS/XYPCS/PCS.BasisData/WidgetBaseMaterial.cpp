@@ -90,11 +90,7 @@ void WidgetBaseMaterial::slotSaveMaterial()
         QMessageBox::warning(this, tr("警告"), tr("请输入物料名称！"));
         return;
     }
-    if (ui->editMaterialBarcode->text().isEmpty())
-    {
-        QMessageBox::warning(this, tr("警告"), tr("请输入条码规则！"));
-        return;
-    }
+
     QSqlQuery query(LOCAL_DB);
     switch (saveStateMark)
     {

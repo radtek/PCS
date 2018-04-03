@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <QualityControl>
+        <enableFirstProductQA>1</enableFirstProductQA>
+        <enableFinalProductQA>1</enableFinalProductQA>
+    </QualityControl>
+    <MistakeProof>
+        <enableMistakeProof01>0</enableMistakeProof01>
+        <enableMistakeProof02>0</enableMistakeProof02>
+        <enableMistakeProof03>0</enableMistakeProof03>
+        <enableMistakeProof04>0</enableMistakeProof04>
+        <enableMistakeProof05>0</enableMistakeProof05>
+        <enableMistakeProof06>0</enableMistakeProof06>
+        <enableMistakeProof07>0</enableMistakeProof07>
+        <enableMistakeProof08>0</enableMistakeProof08>
+        <enableMistakeProof09>0</enableMistakeProof09>
+        <enableMistakeProof10>0</enableMistakeProof10>
+        <enableMistakeProof11>0</enableMistakeProof11>
+    </MistakeProof>
+</root>

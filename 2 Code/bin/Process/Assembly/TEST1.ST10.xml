@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <prepare>
+        <enableOperatorLogin>0</enableOperatorLogin>
+        <enableMaterialInput>0</enableMaterialInput>
+        <enableFixtureCheck>0</enableFixtureCheck>
+        <enableMachineCheck>0</enableMachineCheck>
+        <enableProductCheck>0</enableProductCheck>
+    </prepare>
+    <station>
+        <formulaNumber>1</formulaNumber>
+        <processNumber>1</processNumber>
+        <writeProductID itemID="S7:[S7 connection_1]DB1,STRING316.38"/>
+        <writeProductBatch itemID="S7:[S7 connection_1]DB1,STRING356.38"/>
+        <writeFinishQuantity itemID="S7:[S7 connection_1]DB1,DINT396"/>
+        <writeFailedQuantity itemID="S7:[S7 connection_1]DB1,DINT400"/>
+        <writeFormulaNumber itemID="S7:[S7 connection_1]DB1,W404"/>
+        <writeProcessPrompt itemID="S7:[S7 connection_1]DB1,W406"/>
+        <resetSignal itemID="S7:[S7 connection_1]DB1,DINT302" value="0"/>
+        <alarmSignal itemID="S7:[S7 connection_1]DB1,DINT302" value="1"/>
+    </station>
+    <step type="loopStart">
+        <interaction>循环开始</interaction>
+        <description>下载产品信息，设备启动</description>
+        <isDisabled>0</isDisabled>
+        <maxMeasure>0</maxMeasure>
+        <startRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="100"/>
+        <startResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="100"/>
+        <skipResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="102"/>
+        <measureRequest itemID="" value=""/>
+        <successResponse itemID="" value=""/>
+        <failedResponse itemID="" value=""/>
+        <loopStart/>
+    </step>
+    <step type="scanBarcode">
+        <interaction>扫描条码</interaction>
+        <description>扫描发生器条码</description>
+        <isDisabled>0</isDisabled>
+        <maxMeasure>1</maxMeasure>
+        <startRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="200"/>
+        <startResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="200"/>
+        <skipResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="202"/>
+        <measureRequest itemID="" value=""/>
+        <successResponse itemID="" value=""/>
+        <failedResponse itemID="" value=""/>
+        <scanBarcode>
+            <item>
+                <isDisabled>0</isDisabled>
+                <barcodeType>物料条码</barcodeType>
+                <barcodeID>V-149</barcodeID>
+                <measureType>COM读取</measureType>
+                <readBarcode itemID="条码枪10,条码"/>
+                <writeDisplay itemID="S7:[S7 connection_1]DB1,STRING180.38"/>
+                <writeResult itemID=""/>
+                <resultValue NG="" OK=""/>
+            </item>
+        </scanBarcode>
+    </step>
+    <step type="measureData">
+        <interaction>采集数据</interaction>
+        <description>压装盖壳，采集压力和位移</description>
+        <isDisabled>0</isDisabled>
+        <maxMeasure>1</maxMeasure>
+        <startRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="300"/>
+        <startResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="300"/>
+        <skipResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="302"/>
+        <measureRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="305"/>
+        <successResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="305"/>
+        <failedResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="306"/>
+        <measureData>
+            <item>
+                <isDisabled>0</isDisabled>
+                <measureID>YLKgf#1</measureID>
+                <offsetValue>0.0</offsetValue>
+                <measureType>PLC读取</measureType>
+                <readMeasure itemID="S7:[S7 connection_1]DB1,REAL244"/>
+                <writeDisplay itemID=""/>
+                <writeResult itemID="S7:[S7 connection_1]DB1,X314.0"/>
+                <resultValue NG="" OK=""/>
+            </item>
+            <item>
+                <isDisabled>0</isDisabled>
+                <measureID>WYmm#1</measureID>
+                <offsetValue>0.0</offsetValue>
+                <measureType>PLC读取</measureType>
+                <readMeasure itemID="S7:[S7 connection_1]DB1,REAL310"/>
+                <writeDisplay itemID=""/>
+                <writeResult itemID="S7:[S7 connection_1]DB1,X314.1"/>
+                <resultValue NG="" OK=""/>
+            </item>
+        </measureData>
+    </step>
+    <step type="loopEnd">
+        <interaction>循环结束</interaction>
+        <description>工作循环结束，保存生产数据</description>
+        <isDisabled>0</isDisabled>
+        <maxMeasure>0</maxMeasure>
+        <startRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="2000"/>
+        <startResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="2000"/>
+        <skipResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="2002"/>
+        <measureRequest itemID="" value=""/>
+        <successResponse itemID="" value=""/>
+        <failedResponse itemID="" value=""/>
+        <loopEnd/>
+    </step>
+</root>
