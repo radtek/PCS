@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <OPCServer UserType="OPC.SimaticNET" ProgID="OPC.SimaticNET.1" MachineName="127.0.0.1" CLSID="{b6eacb30-42d5-11d0-9517-0020afaa4b3c}">
-        <OPCGroup Active="1" UpdateRate="100" LCID="1033" Name="ZPZP024.ST10" PercentDeadband="100" TimeBias="100">
+        <OPCGroup Active="1" UpdateRate="100" LCID="1033" Name="ST10" PercentDeadband="100" TimeBias="100">
             <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_1]DB1,DINT302"/>
             <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_1]DB1,DINT306"/>
             <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_1]DB1,REAL244"/>
@@ -17,7 +17,7 @@
             <OPCItem Active="0" DataType="18" ItemID="S7:[S7 connection_1]DB1,W404"/>
             <OPCItem Active="0" DataType="18" ItemID="S7:[S7 connection_1]DB1,W406"/>
         </OPCGroup>
-        <OPCGroup Active="1" UpdateRate="100" LCID="1033" Name="ZPZP024.ST30" PercentDeadband="100" TimeBias="100">
+        <OPCGroup Active="1" UpdateRate="100" LCID="1033" Name="ST20" PercentDeadband="100" TimeBias="100">
             <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT328"/>
             <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT332"/>
             <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT336"/>

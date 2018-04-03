@@ -142,8 +142,8 @@ void WidgetBaseStation::slotSaveStation()
                       ,[Description])
                 VALUES
                       (?,?,?,?,?,?,?,?,?,?)       )");
-        query.addBindValue("");
-        query.addBindValue("");
+        query.addBindValue(qWorkManager->getWorkshopID());
+        query.addBindValue(qWorkManager->getWorklineID());
         query.addBindValue(ui->editStationID->text());
         query.addBindValue(ui->editStationName->text());
         query.addBindValue(ui->editStationCode->text());

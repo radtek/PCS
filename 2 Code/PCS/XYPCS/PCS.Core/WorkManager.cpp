@@ -62,6 +62,7 @@ bool WorkManager::loadSqlData(const QString &workshopID, const QString &workline
         workshopData.id = query.value("WorkshopID").toString();
         workshopData.name = query.value("WorkshopName").toString();
     } while (0);*/
+    workshopData.id = workshopID;
 
     /*  do
     {
@@ -90,7 +91,7 @@ bool WorkManager::loadSqlData(const QString &workshopID, const QString &workline
         worklineData.id = query.value("WorklineID").toString();
         worklineData.name = query.value("WorklineName").toString();
     } while (0);*/
-
+    worklineData.id = worklineID;
     do
     {
         QSqlQuery query(LOCAL_DB);
@@ -246,6 +247,7 @@ QStringList WorkManager::getFixtureClsList(const QString &craftID, const QString
 //初始化工单
 bool WorkManager::initialManager(const QString &orderID)
 {
+
     if (!createOrder(orderID))
     {
         qDebug() << "Initial order failed! orderID:" << orderID;
@@ -260,6 +262,7 @@ bool WorkManager::initialManager(const QString &orderID)
 
     for (auto stationID : getStationIDList())
     {
+        qDebug() << stationID;
         if (!appendStation(stationID, getStationType(stationID)))
         {
             qDebug() << "Initial station failed! stationID:" << stationID;

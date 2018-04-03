@@ -13,6 +13,9 @@ WidgetAssyProcessStation::WidgetAssyProcessStation(QWidget *parent)
     ui->setupUi(this);
 
     initialWidget();
+    ui->checkFixtureCheck->hide();
+    ui->checkMachineCheck->hide();
+    ui->checkProductCheck->hide();
 }
 
 WidgetAssyProcessStation::~WidgetAssyProcessStation()

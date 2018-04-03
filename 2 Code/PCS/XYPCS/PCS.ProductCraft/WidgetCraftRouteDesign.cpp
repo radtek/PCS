@@ -10,6 +10,8 @@ WidgetCraftRouteDesign::WidgetCraftRouteDesign(QWidget *parent)
 
     initialWidget();
     initialRecord();
+    ui->label_2->hide();
+    ui->labelCraftName->hide();
 }
 
 WidgetCraftRouteDesign::~WidgetCraftRouteDesign()
@@ -176,6 +178,10 @@ void WidgetCraftRouteDesign::slotTreeSelectionChanged()
                       ,[CraftID]
                       ,[ProductID]
                       ,[ProductName]
+                      ,[AssySerialRule]
+                      ,[AssySerialInit]
+                      ,[PackSerialRule]
+                      ,[PackSerialInit]
                       FROM [PCS_Craft]
                       WHERE [WorkLineID] = ? AND [CraftID] = ?)");
         query.addBindValue(qWorkManager->getWorklineID());
@@ -193,13 +199,13 @@ void WidgetCraftRouteDesign::slotTreeSelectionChanged()
             ui->labelProductID->setText(query.value("ProductID").toString());
             ui->labelProductName->setText(query.value("ProductName").toString());
 
-            //       SerialRule assyRule = static_cast<SerialRule>(query.value("AssySerialRule").toInt());//@@@
-            //      ui->labelAssySerialRule->setText(SerialRuleMap.value(assyRule));
-            //      SerialRule packRule = static_cast<SerialRule>(query.value("PackSerialRule").toInt());
-            //      ui->labelPackSerialRule->setText(SerialRuleMap.value(packRule));
+            SerialRule assyRule = static_cast<SerialRule>(query.value("AssySerialRule").toInt());    //@@@
+            ui->labelAssySerialRule->setText(SerialRuleMap.value(assyRule));
+            SerialRule packRule = static_cast<SerialRule>(query.value("PackSerialRule").toInt());
+            ui->labelPackSerialRule->setText(SerialRuleMap.value(packRule));
 
-            //      ui->labelAssySerialInit->setNum(query.value("AssySerialInit").toInt());
-            //      ui->labelPackSerialInit->setNum(query.value("PackSerialInit").toInt());
+            ui->labelAssySerialInit->setNum(query.value("AssySerialInit").toInt());
+            ui->labelPackSerialInit->setNum(query.value("PackSerialInit").toInt());
         }
     } while (0);
 

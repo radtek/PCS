@@ -8,6 +8,7 @@ WidgetAssyProcessProduce::WidgetAssyProcessProduce(QWidget *parent)
     ui->setupUi(this);
 
     initialWidget();
+    ui->frame->hide();
 }
 
 WidgetAssyProcessProduce::~WidgetAssyProcessProduce()
@@ -25,8 +26,8 @@ void WidgetAssyProcessProduce::loadParameter(const QString &craftID)
     this->craftID = craftID;
 
     QString filename = QString("%1/%2.xml")
-                       .arg(PROCESS_PRODUCE_PATH)
-                       .arg(craftID);
+                           .arg(PROCESS_PRODUCE_PATH)
+                           .arg(craftID);
 
     if (AssyProduce_ReadXmlFile(filename, producePara))
     {
@@ -43,8 +44,8 @@ void WidgetAssyProcessProduce::saveParameter()
     getWidgetData();
 
     QString filename = QString("%1/%2.xml")
-                       .arg(PROCESS_PRODUCE_PATH)
-                       .arg(craftID);
+                           .arg(PROCESS_PRODUCE_PATH)
+                           .arg(craftID);
 
     if (AssyProduce_SaveXmlFile(filename, producePara))
     {
@@ -62,8 +63,7 @@ void WidgetAssyProcessProduce::setWidgetData()
     {
         ui->checkFirstProductQA->setChecked(producePara.enableFirstProductQA);
         ui->checkFinalProductQA->setChecked(producePara.enableFinalProductQA);
-    }
-    while (0);
+    } while (0);
 
     do
     {
@@ -78,8 +78,7 @@ void WidgetAssyProcessProduce::setWidgetData()
         ui->checkMistakeProof09->setChecked(producePara.enableMistakeProof09);
         ui->checkMistakeProof10->setChecked(producePara.enableMistakeProof10);
         ui->checkMistakeProof11->setChecked(producePara.enableMistakeProof11);
-    }
-    while (0);
+    } while (0);
 }
 
 void WidgetAssyProcessProduce::getWidgetData()
@@ -88,8 +87,7 @@ void WidgetAssyProcessProduce::getWidgetData()
     {
         producePara.enableFirstProductQA = ui->checkFirstProductQA->isChecked();
         producePara.enableFinalProductQA = ui->checkFinalProductQA->isChecked();
-    }
-    while (0);
+    } while (0);
 
     do
     {
@@ -104,6 +102,5 @@ void WidgetAssyProcessProduce::getWidgetData()
         producePara.enableMistakeProof09 = ui->checkMistakeProof09->isChecked();
         producePara.enableMistakeProof10 = ui->checkMistakeProof10->isChecked();
         producePara.enableMistakeProof11 = ui->checkMistakeProof11->isChecked();
-    }
-    while (0);
+    } while (0);
 }

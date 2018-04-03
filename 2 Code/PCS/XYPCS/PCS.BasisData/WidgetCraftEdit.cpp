@@ -70,6 +70,10 @@ void WidgetCraftEdit::slotTreeSelect(QTreeWidgetItem *item, int)
         query.prepare(R"(SELECT [CraftID]
                       ,[ProductID]
                       ,[ProductName]
+                      ,[AssySerialRule]
+                      ,[AssySerialInit]
+                      ,[PackSerialRule]
+                      ,[PackSerialInit]
                       ,[Description]
                   FROM [PCS_Craft] WHERE [CraftID]=? )");
         query.addBindValue(item->text(0));
@@ -84,6 +88,10 @@ void WidgetCraftEdit::slotTreeSelect(QTreeWidgetItem *item, int)
             ui->editProductID->setText(query.value("ProductID").toString());
             ui->editProductName->setText(query.value("ProductName").toString());
             ui->textEditDescription->setPlainText(query.value("Description").toString());
+            ui->editAssySerialInit->setText(query.value("AssySerialInit").toString());
+            ui->editPackSerialInit->setText(query.value("PackSerialInit").toString());
+            ui->comboBoxAssySerialRule->setCurrentIndex(query.value("AssySerialRule").toInt());
+            ui->comboBoxPackSerialRule->setCurrentIndex(query.value("PackSerialRule").toInt());
         }
         ui->buttonGroup->setEnabled(true);
         initialFrameStation();
@@ -98,6 +106,10 @@ void WidgetCraftEdit::slotTreeSelect(QTreeWidgetItem *item, int)
         query.prepare(R"(SELECT [CraftID]
                       ,[ProductID]
                       ,[ProductName]
+                      ,[AssySerialRule]
+                      ,[AssySerialInit]
+                      ,[PackSerialRule]
+                      ,[PackSerialInit]
                       ,[Description]
                   FROM [PCS_Craft] WHERE [CraftID]=? )");
         query.addBindValue(item->parent()->text(0));
@@ -112,6 +124,10 @@ void WidgetCraftEdit::slotTreeSelect(QTreeWidgetItem *item, int)
             ui->editProductID->setText(query.value("ProductID").toString());
             ui->editProductName->setText(query.value("ProductName").toString());
             ui->textEditDescription->setPlainText(query.value("Description").toString());
+            ui->editAssySerialInit->setText(query.value("AssySerialInit").toString());
+            ui->editPackSerialInit->setText(query.value("PackSerialInit").toString());
+            ui->comboBoxAssySerialRule->setCurrentIndex(query.value("AssySerialRule").toInt());
+            ui->comboBoxPackSerialRule->setCurrentIndex(query.value("PackSerialRule").toInt());
         }
 
         query.prepare(R"(SELECT [WorkStationID]
@@ -223,6 +239,26 @@ void WidgetCraftEdit::slotSaveCraft()
         QMessageBox::warning(this, tr("警告"), tr("请输入产品名称！"));
         return;
     }
+    if (ui->comboBoxAssySerialRule->currentText().isEmpty())
+    {
+        QMessageBox::warning(this, tr("警告"), tr("请输入包装流水规则！"));
+        return;
+    }
+    if (ui->comboBoxPackSerialRule->currentText().isEmpty())
+    {
+        QMessageBox::warning(this, tr("警告"), tr("请输入总成流水规则！"));
+        return;
+    }
+    if (ui->editAssySerialInit->text().isEmpty())
+    {
+        QMessageBox::warning(this, tr("警告"), tr("请输入总成流水起始值！"));
+        return;
+    }
+    if (ui->editPackSerialInit->text().isEmpty())
+    {
+        QMessageBox::warning(this, tr("警告"), tr("请输入包装流水起始值！"));
+        return;
+    }
     QSqlQuery query(LOCAL_DB);
     switch (saveStateMark)
     {
@@ -249,17 +285,25 @@ void WidgetCraftEdit::slotSaveCraft()
                       ,[CraftID]
                       ,[ProductID]
                       ,[ProductName]
+                      ,[AssySerialRule]
+                      ,[AssySerialInit]
+                      ,[PackSerialRule]
+                      ,[PackSerialInit]
                       ,[CreateUser]
                       ,[CreateTime]
                       ,[State]
                       ,[Description])
                 VALUES
-                      (?,?,?,?,?,?,?,?,?)       )");
-        query.addBindValue("");
-        query.addBindValue("");
+                      (?,?,?,?,?,?,?,?,?,?,?,?,?)       )");
+        query.addBindValue(qWorkManager->getWorkshopID());
+        query.addBindValue(qWorkManager->getWorklineID());
         query.addBindValue(ui->editCraftID->text());
         query.addBindValue(ui->editProductID->text());
         query.addBindValue(ui->editProductName->text());
+        query.addBindValue(static_cast<int>(SerialRuleMap.key(ui->comboBoxAssySerialRule->currentText())));
+        query.addBindValue(ui->editAssySerialInit->text().toInt());
+        query.addBindValue(static_cast<int>(SerialRuleMap.key(ui->comboBoxPackSerialRule->currentText())));
+        query.addBindValue(ui->editPackSerialInit->text().toInt());
         query.addBindValue("");
         query.addBindValue(QDateTime::currentDateTime());
         query.addBindValue(0);
@@ -280,14 +324,21 @@ void WidgetCraftEdit::slotSaveCraft()
         query.prepare(R"(UPDATE [PCS_Craft]
                       SET [ProductID] = ?
                          ,[ProductName] = ?
+                         ,[AssySerialRule]=?
+                         ,[AssySerialInit]=?
+                         ,[PackSerialRule]=?
+                         ,[PackSerialInit]=?
                          ,[ModifyUser] = ?
                          ,[ModifyTime] = ?
                          ,[State] = ?
                          ,[Description] = ?
                     WHERE [CraftID] = ?    )");
-
         query.addBindValue(ui->editProductID->text());
         query.addBindValue(ui->editProductName->text());
+        query.addBindValue(static_cast<int>(SerialRuleMap.key(ui->comboBoxAssySerialRule->currentText())));
+        query.addBindValue(ui->editAssySerialInit->text().toInt());
+        query.addBindValue(static_cast<int>(SerialRuleMap.key(ui->comboBoxPackSerialRule->currentText())));
+        query.addBindValue(ui->editPackSerialInit->text().toInt());
         query.addBindValue("");
         query.addBindValue(QDateTime::currentDateTime());
         query.addBindValue(1);
@@ -832,6 +883,14 @@ void WidgetCraftEdit::initialFrameCraft()
     ui->editProductID->clear();
     ui->editProductName->clear();
     ui->textEditDescription->clear();
+    ui->editAssySerialInit->clear();
+    ui->editPackSerialInit->clear();
+    ui->comboBoxAssySerialRule->clear();
+    ui->comboBoxAssySerialRule->addItems(SerialRuleMap.values());
+    ui->comboBoxAssySerialRule->setCurrentIndex(-1);
+    ui->comboBoxPackSerialRule->clear();
+    ui->comboBoxPackSerialRule->addItems(SerialRuleMap.values());
+    ui->comboBoxPackSerialRule->setCurrentIndex(-1);
 }
 
 void WidgetCraftEdit::lockFrameCraft()

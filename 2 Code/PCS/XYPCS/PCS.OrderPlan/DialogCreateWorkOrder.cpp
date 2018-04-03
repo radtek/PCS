@@ -100,8 +100,8 @@ void DialogCreateWorkOrder::slotAccept()
                   ,[Description])
             VALUES
                   (?,?,?,?,?,?,?,?,?,?,?,?))");
-    query.addBindValue("");
-    query.addBindValue("");
+    query.addBindValue(qWorkManager->getWorkshopID());
+    query.addBindValue(qWorkManager->getWorklineID());
     query.addBindValue(ui->editOrderID->text());
     query.addBindValue(ui->editProductionBatch->text());
     query.addBindValue(ui->comboBoxCraftID->currentText());

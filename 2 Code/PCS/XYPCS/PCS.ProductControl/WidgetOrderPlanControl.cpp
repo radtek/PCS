@@ -17,6 +17,12 @@ WidgetOrderPlanControl::WidgetOrderPlanControl(QWidget *parent)
     ui->setupUi(this);
 
     initialWidget();
+    ui->buttonMaterialFeed->hide();
+    ui->buttonAdvancedFunc->hide();
+
+    ui->tabWidget->removeTab(4);
+    ui->tabFixtureInfo->hide();
+    //  ui->tableFixture->hide();
 }
 
 WidgetOrderPlanControl::~WidgetOrderPlanControl()
@@ -55,6 +61,9 @@ void WidgetOrderPlanControl::initialWidget()
         table->verticalHeader()->setDefaultSectionSize(25);
         table->horizontalHeader()->setMinimumSectionSize(80);
         table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        ui->tableStation->hideColumn(6);
+        ui->tableStation->hideColumn(7);
+        ui->tableStation->hideColumn(8);
     } while (0);
 
     do
@@ -87,6 +96,7 @@ void WidgetOrderPlanControl::initialWidget()
         table->verticalHeader()->setDefaultSectionSize(25);
         table->horizontalHeader()->setMinimumSectionSize(80);
         table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        ui->tableOperator->hideColumn(4);
     } while (0);
 
     do
@@ -364,6 +374,9 @@ void WidgetOrderPlanControl::slotOrderActivated()
 
             ++row;
         }
+        ui->tableStation->hideColumn(6);
+        ui->tableStation->hideColumn(7);
+        ui->tableStation->hideColumn(8);
     } while (0);
 
     //员工信息
@@ -434,7 +447,7 @@ void WidgetOrderPlanControl::slotOrderActivated()
                     item = new QTableWidgetItem(data.operatorTeam);
                     table->setItem(row, static_cast<int>(OperatorHeader::OperatorTeam), item);
 
-                    item = new QTableWidgetItem(data.operatorDuty);
+                    item = new QTableWidgetItem(OperatorDutyMap.value(static_cast<OperatorDuty>(data.operatorDuty.toInt())));
                     table->setItem(row, static_cast<int>(OperatorHeader::OperatorDuty), item);
 
                     XYCustomButton *button = new XYCustomButton;
@@ -447,6 +460,7 @@ void WidgetOrderPlanControl::slotOrderActivated()
                 }
             }
         }
+        ui->tableOperator->hideColumn(4);
     } while (0);
 
     //物料信息
@@ -554,7 +568,7 @@ void WidgetOrderPlanControl::slotOrderActivated()
     } while (0);
 
     //工装模具信息
-    do
+    /*  do
     {
         QTableWidget *table = ui->tableFixture;
         QTableWidgetItem *item = nullptr;
@@ -645,7 +659,7 @@ void WidgetOrderPlanControl::slotOrderActivated()
                 }
             }
         }
-    } while (0);
+    } while (0);*/
 }
 
 void WidgetOrderPlanControl::slotOrderSuspended()
@@ -908,7 +922,7 @@ void WidgetOrderPlanControl::slotOperatorLogin(const QString &stationID, const O
             item->setText(data.operatorTeam);
 
             item = table->item(row, static_cast<int>(OperatorHeader::OperatorDuty));
-            item->setText(data.operatorDuty);
+            item->setText(OperatorDutyMap.value(static_cast<OperatorDuty>(data.operatorDuty.toInt())));
         }
         else
         {
@@ -931,7 +945,7 @@ void WidgetOrderPlanControl::slotOperatorLogin(const QString &stationID, const O
             item = new QTableWidgetItem(data.operatorTeam);
             table->setItem(newRow, static_cast<int>(OperatorHeader::OperatorTeam), item);
 
-            item = new QTableWidgetItem(data.operatorDuty);
+            item = new QTableWidgetItem(OperatorDutyMap.value(static_cast<OperatorDuty>(data.operatorDuty.toInt())));
             table->setItem(newRow, static_cast<int>(OperatorHeader::OperatorDuty), item);
 
             XYCustomButton *button = new XYCustomButton;

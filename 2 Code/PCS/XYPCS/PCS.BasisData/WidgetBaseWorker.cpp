@@ -146,8 +146,8 @@ void WidgetBaseWorker::slotSaveWorker()
                       ,[Description])
                 VALUES
                       (?,?,?,?,?,?,?,?,?,?)       )");
-        query.addBindValue("");
-        query.addBindValue("");
+        query.addBindValue(qWorkManager->getWorkshopID());
+        query.addBindValue(qWorkManager->getWorklineID());
         query.addBindValue(ui->editWorkerID->text());
         query.addBindValue(ui->editWorkerName->text());
         query.addBindValue(ui->editWorkerBarcode->text());

@@ -635,7 +635,7 @@
         <string>员工登陆</string>
        </property>
        <property name="icon">
-        <iconset resource="../PCS.qrc">
+        <iconset resource="../Resources/PCS.qrc">
          <normaloff>:/images/pngs/operator_login.png</normaloff>:/images/pngs/operator_login.png</iconset>
        </property>
        <property name="iconSize">
@@ -663,7 +663,7 @@
         <string>员工上料</string>
        </property>
        <property name="icon">
-        <iconset resource="../PCS.qrc">
+        <iconset resource="../Resources/PCS.qrc">
          <normaloff>:/images/pngs/material_input.png</normaloff>:/images/pngs/material_input.png</iconset>
        </property>
        <property name="iconSize">
@@ -691,7 +691,7 @@
         <string>物流投料</string>
        </property>
        <property name="icon">
-        <iconset resource="../PCS.qrc">
+        <iconset resource="../Resources/PCS.qrc">
          <normaloff>:/images/pngs/logistics_feed.png</normaloff>:/images/pngs/logistics_feed.png</iconset>
        </property>
        <property name="iconSize">
@@ -719,7 +719,7 @@
         <string>高级功能</string>
        </property>
        <property name="icon">
-        <iconset resource="../PCS.qrc">
+        <iconset resource="../Resources/PCS.qrc">
          <normaloff>:/images/pngs/common_key.png</normaloff>:/images/pngs/common_key.png</iconset>
        </property>
        <property name="iconSize">
@@ -762,7 +762,7 @@
         <string>　暂停　</string>
        </property>
        <property name="icon">
-        <iconset resource="../PCS.qrc">
+        <iconset resource="../Resources/PCS.qrc">
          <normaloff>:/images/pngs/work_pause.png</normaloff>:/images/pngs/work_pause.png</iconset>
        </property>
        <property name="iconSize">
@@ -792,7 +792,7 @@
         <string>　开始　</string>
        </property>
        <property name="icon">
-        <iconset resource="../PCS.qrc">
+        <iconset resource="../Resources/PCS.qrc">
          <normaloff>:/images/pngs/work_start.png</normaloff>:/images/pngs/work_start.png</iconset>
        </property>
        <property name="iconSize">
@@ -823,7 +823,7 @@
      </property>
      <widget class="QWidget" name="tabStationInfo">
       <attribute name="icon">
-       <iconset resource="../PCS.qrc">
+       <iconset resource="../Resources/PCS.qrc">
         <normaloff>:/images/pngs/tag_blue.png</normaloff>:/images/pngs/tag_blue.png</iconset>
       </attribute>
       <attribute name="title">
@@ -856,7 +856,7 @@
      </widget>
      <widget class="QWidget" name="tabOperatorInfo">
       <attribute name="icon">
-       <iconset resource="../PCS.qrc">
+       <iconset resource="../Resources/PCS.qrc">
         <normaloff>:/images/pngs/tag_red.png</normaloff>:/images/pngs/tag_red.png</iconset>
       </attribute>
       <attribute name="title">
@@ -889,7 +889,7 @@
      </widget>
      <widget class="QWidget" name="tabMaterialInfo">
       <attribute name="icon">
-       <iconset resource="../PCS.qrc">
+       <iconset resource="../Resources/PCS.qrc">
         <normaloff>:/images/pngs/tag_green.png</normaloff>:/images/pngs/tag_green.png</iconset>
       </attribute>
       <attribute name="title">
@@ -922,7 +922,7 @@
      </widget>
      <widget class="QWidget" name="tabMeasureInfo">
       <attribute name="icon">
-       <iconset resource="../PCS.qrc">
+       <iconset resource="../Resources/PCS.qrc">
         <normaloff>:/images/pngs/tag_orange.png</normaloff>:/images/pngs/tag_orange.png</iconset>
       </attribute>
       <attribute name="title">
@@ -955,7 +955,7 @@
      </widget>
      <widget class="QWidget" name="tabFixtureInfo">
       <attribute name="icon">
-       <iconset resource="../PCS.qrc">
+       <iconset resource="../Resources/PCS.qrc">
         <normaloff>:/images/pngs/tag_yellow.png</normaloff>:/images/pngs/tag_yellow.png</iconset>
       </attribute>
       <attribute name="title">
@@ -1012,7 +1012,7 @@
   <tabstop>tableFixture</tabstop>
  </tabstops>
  <resources>
-  <include location="../PCS.qrc"/>
+  <include location="../Resources/PCS.qrc"/>
  </resources>
  <connections/>
 </ui>
