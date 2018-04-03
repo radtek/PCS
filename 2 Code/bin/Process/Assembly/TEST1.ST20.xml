@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <prepare>
+        <enableOperatorLogin>0</enableOperatorLogin>
+        <enableMaterialInput>0</enableMaterialInput>
+        <enableFixtureCheck>0</enableFixtureCheck>
+        <enableMachineCheck>0</enableMachineCheck>
+        <enableProductCheck>0</enableProductCheck>
+    </prepare>
+    <station>
+        <formulaNumber>1</formulaNumber>
+        <processNumber>1</processNumber>
+        <writeProductID itemID="S7:[S7 connection_2]DB1,STRING10.38"/>
+        <writeProductBatch itemID="S7:[S7 connection_2]DB1,STRING50.38"/>
+        <writeFinishQuantity itemID="S7:[S7 connection_2]DB1,DINT130"/>
+        <writeFailedQuantity itemID="S7:[S7 connection_2]DB1,DINT134"/>
+        <writeFormulaNumber itemID="S7:[S7 connection_2]DB1,WORD138"/>
+        <writeProcessPrompt itemID="S7:[S7 connection_2]DB1,WORD140"/>
+        <resetSignal itemID="S7:[S7 connection_2]DB1,DWORD0" value="0"/>
+        <alarmSignal itemID="S7:[S7 connection_2]DB1,DWORD0" value="1"/>
+    </station>
+    <step type="loopStart">
+        <interaction>循环开始</interaction>
+        <description>请求启动</description>
+        <isDisabled>0</isDisabled>
+        <maxMeasure>0</maxMeasure>
+        <startRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="100"/>
+        <startResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="100"/>
+        <skipResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="102"/>
+        <measureRequest itemID="" value=""/>
+        <successResponse itemID="" value=""/>
+        <failedResponse itemID="" value=""/>
+        <loopStart/>
+    </step>
+    <step type="scanBarcode">
+        <interaction>扫描条码</interaction>
+        <description>扫描气袋条码及过渡条码</description>
+        <isDisabled>0</isDisabled>
+        <maxMeasure>0</maxMeasure>
+        <startRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="200"/>
+        <startResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="200"/>
+        <skipResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="202"/>
+        <measureRequest itemID="" value=""/>
+        <successResponse itemID="" value=""/>
+        <failedResponse itemID="" value=""/>
+        <scanBarcode>
+            <item>
+                <barcodeType>物料条码</barcodeType>
+                <barcodeID>B-27403</barcodeID>
+                <measureType>COM读取</measureType>
+                <readBarcode itemID="条码枪20,条码"/>
+                <writeDisplay itemID="S7:[S7 connection_2]DB1,STRING90.38"/>
+                <writeResult itemID=""/>
+            </item>
+            <item>
+                <barcodeType>过渡条码</barcodeType>
+                <barcodeID>ZPZP024.ST10</barcodeID>
+                <measureType>COM读取</measureType>
+                <readBarcode itemID="条码枪20,条码"/>
+                <writeDisplay itemID="S7:[S7 connection_2]DB1,STRING90.38"/>
+                <writeResult itemID=""/>
+            </item>
+        </scanBarcode>
+    </step>
+    <step type="autoMotion">
+        <interaction>设备动作</interaction>
+        <description>自动叠袋</description>
+        <isDisabled>0</isDisabled>
+        <maxMeasure>0</maxMeasure>
+        <startRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="300"/>
+        <startResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="300"/>
+        <skipResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="302"/>
+        <measureRequest itemID="" value=""/>
+        <successResponse itemID="" value=""/>
+        <failedResponse itemID="" value=""/>
+        <autoMotion/>
+    </step>
+    <step type="loopEnd">
+        <interaction>循环结束</interaction>
+        <description>工作循环结束，保存数据</description>
+        <isDisabled>0</isDisabled>
+        <maxMeasure>0</maxMeasure>
+        <startRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="2000"/>
+        <startResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="2000"/>
+        <skipResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="2002"/>
+        <measureRequest itemID="" value=""/>
+        <successResponse itemID="" value=""/>
+        <failedResponse itemID="" value=""/>
+        <loopEnd/>
+    </step>
+</root>

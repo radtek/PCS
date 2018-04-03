@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <prepare>
+        <enableOperatorLogin>1</enableOperatorLogin>
+        <enableMaterialInput>1</enableMaterialInput>
+        <enableFixtureCheck>1</enableFixtureCheck>
+        <enableMachineCheck>1</enableMachineCheck>
+        <enableProductCheck>1</enableProductCheck>
+    </prepare>
+    <station>
+        <processCount>4</processCount>
+        <writeOrderID itemID="S7:[S7 connection_3]DB1,STRING484.38"/>
+        <writeCraftID itemID="S7:[S7 connection_3]DB1,STRING444.38"/>
+        <writeFinishCount itemID="S7:[S7 connection_3]DB1,DINT524"/>
+        <writeFailedCount itemID="S7:[S7 connection_3]DB1,DINT528"/>
+        <writeFormulaID itemID="S7:[S7 connection_3]DB1,W532" value="1"/>
+        <writeEventInfo itemID="S7:[S7 connection_3]DB1,W534"/>
+        <resetRequest itemID="S7:[S7 connection_3]DB1,DINT328" value="0"/>
+        <alarmRequest itemID="S7:[S7 connection_3]DB1,DINT328" value="1"/>
+    </station>
+    <step type="startProcess">
+        <description>下载产品信息，设备启动</description>
+        <interaction>流程启动</interaction>
+        <startRequest itemID="S7:[S7 connection_3]DB1,DINT328" value="100"/>
+        <skipRequest itemID="S7:[S7 connection_3]DB1,DINT328" value="102"/>
+        <successResponse itemID="S7:[S7 connection_3]DB1,DINT332" value="100"/>
+        <failedResponse itemID="S7:[S7 connection_3]DB1,DINT332" value="101"/>
+        <skipResponse itemID="S7:[S7 connection_3]DB1,DINT332" value="102"/>
+        <startProcess/>
+    </step>
+    <step type="scanBarcode">
+        <description>扫描物料和过渡条码</description>
+        <interaction>扫描条码</interaction>
+        <startRequest itemID="S7:[S7 connection_3]DB1,DINT328" value="200"/>
+        <skipRequest itemID="S7:[S7 connection_3]DB1,DINT328" value="202"/>
+        <successResponse itemID="S7:[S7 connection_3]DB1,DINT332" value="200"/>
+        <failedResponse itemID="S7:[S7 connection_3]DB1,DINT332" value="201"/>
+        <skipResponse itemID="S7:[S7 connection_3]DB1,DINT332" value="202"/>
+        <scanBarcode>
+            <barcodeItem>
+                <deviceID>条码枪30</deviceID>
+                <barcodeType>物料条码</barcodeType>
+                <materialID>Y-1434</materialID>
+                <stationID></stationID>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,STRING196.38"/>
+                <writeResult itemID=""/>
+            </barcodeItem>
+            <barcodeItem>
+                <deviceID>条码枪30</deviceID>
+                <barcodeType>过渡条码</barcodeType>
+                <materialID></materialID>
+                <stationID>ZPZP024.ST20</stationID>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,STRING196.38"/>
+                <writeResult itemID=""/>
+            </barcodeItem>
+        </scanBarcode>
+    </step>
+    <step type="measureCommData">
+        <description>拧紧1点数据采集</description>
+        <interaction>采集COM数据</interaction>
+        <startRequest itemID="S7:[S7 connection_3]DB1,DINT336" value="300"/>
+        <skipRequest itemID="S7:[S7 connection_3]DB1,DINT336" value="302"/>
+        <successResponse itemID="S7:[S7 connection_3]DB1,DINT340" value="300"/>
+        <failedResponse itemID="S7:[S7 connection_3]DB1,DINT340" value="301"/>
+        <skipResponse itemID="S7:[S7 connection_3]DB1,DINT340" value="302"/>
+        <measureCommData>
+            <measureItem>
+                <deviceID>拧紧枪30</deviceID>
+                <itemType>扭矩</itemType>
+                <measureID>NJN.m#1</measureID>
+                <offsetValue></offsetValue>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL362"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X536.0"/>
+            </measureItem>
+            <measureItem>
+                <deviceID>拧紧枪30</deviceID>
+                <itemType>落座角</itemType>
+                <measureID>LZJ°#1</measureID>
+                <offsetValue></offsetValue>
+                <writeDisplay itemID=""/>
+                <writeResult itemID=""/>
+            </measureItem>
+        </measureCommData>
+    </step>
+    <step type="measureCommData">
+        <description>拧紧2点数据采集</description>
+        <interaction>采集COM数据</interaction>
+        <startRequest itemID="S7:[S7 connection_3]DB1,DINT336" value="310"/>
+        <skipRequest itemID="S7:[S7 connection_3]DB1,DINT336" value="312"/>
+        <successResponse itemID="S7:[S7 connection_3]DB1,DINT340" value="310"/>
+        <failedResponse itemID="S7:[S7 connection_3]DB1,DINT340" value="311"/>
+        <skipResponse itemID="S7:[S7 connection_3]DB1,DINT340" value="312"/>
+        <measureCommData>
+            <measureItem>
+                <deviceID>拧紧枪30</deviceID>
+                <itemType>扭矩</itemType>
+                <measureID>NJN.m#2</measureID>
+                <offsetValue></offsetValue>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL366"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X536.1"/>
+            </measureItem>
+            <measureItem>
+                <deviceID>拧紧枪30</deviceID>
+                <itemType>落座角</itemType>
+                <measureID>LZJ°#2</measureID>
+                <offsetValue></offsetValue>
+                <writeDisplay itemID=""/>
+                <writeResult itemID=""/>
+            </measureItem>
+        </measureCommData>
+    </step>
+    <step type="measureOpcValue">
+        <description>螺柱高度检测</description>
+        <interaction>采集PLC数据</interaction>
+        <startRequest itemID="S7:[S7 connection_3]DB1,DINT344" value="400"/>
+        <skipRequest itemID="S7:[S7 connection_3]DB1,DINT344" value="402"/>
+        <successResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="400"/>
+        <failedResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="401"/>
+        <skipResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="402"/>
+        <measureOpcValue>
+            <measureItem>
+                <measureID>GDmm#1</measureID>
+                <offsetValue></offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL382"/>
+                <writeDisplay itemID=""/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X438.0"/>
+            </measureItem>
+            <measureItem>
+                <measureID>GDmm#2</measureID>
+                <offsetValue></offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL386"/>
+                <writeDisplay itemID=""/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X438.1"/>
+            </measureItem>
+        </measureOpcValue>
+    </step>
+    <step type="measureCommData">
+        <description>工作电阻检测</description>
+        <interaction>采集COM数据</interaction>
+        <startRequest itemID="S7:[S7 connection_3]DB1,DINT344" value="500"/>
+        <skipRequest itemID="S7:[S7 connection_3]DB1,DINT344" value="502"/>
+        <successResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="500"/>
+        <failedResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="501"/>
+        <skipResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="502"/>
+        <measureCommData>
+            <measureItem>
+                <deviceID>电阻表30</deviceID>
+                <itemType>工作电阻</itemType>
+                <measureID>NZΩ#1</measureID>
+                <offsetValue>0.9</offsetValue>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL370"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X536.2"/>
+            </measureItem>
+        </measureCommData>
+    </step>
+    <step type="measureCommData">
+        <description>绝缘电阻1检测</description>
+        <interaction>采集COM数据</interaction>
+        <startRequest itemID="S7:[S7 connection_3]DB1,DINT344" value="510"/>
+        <skipRequest itemID="S7:[S7 connection_3]DB1,DINT344" value="512"/>
+        <successResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="510"/>
+        <failedResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="511"/>
+        <skipResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="512"/>
+        <measureCommData>
+            <measureItem>
+                <deviceID>电阻表30</deviceID>
+                <itemType>绝缘电阻</itemType>
+                <measureID>JYMΩ#1</measureID>
+                <offsetValue></offsetValue>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL374"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X536.3"/>
+            </measureItem>
+        </measureCommData>
+    </step>
+    <step type="measureCommData">
+        <description>绝缘电阻2检测</description>
+        <interaction>采集COM数据</interaction>
+        <startRequest itemID="S7:[S7 connection_3]DB1,DINT344" value="520"/>
+        <skipRequest itemID="S7:[S7 connection_3]DB1,DINT344" value="522"/>
+        <successResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="520"/>
+        <failedResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="521"/>
+        <skipResponse itemID="S7:[S7 connection_3]DB1,DINT348" value="522"/>
+        <measureCommData>
+            <measureItem>
+                <deviceID>电阻表30</deviceID>
+                <itemType>绝缘电阻</itemType>
+                <measureID>JYMΩ#2</measureID>
+                <offsetValue></offsetValue>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL378"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X536.4"/>
+            </measureItem>
+        </measureCommData>
+    </step>
+    <step type="measureOpcValue">
+        <description>工件厚度检测</description>
+        <interaction>采集PLC数据</interaction>
+        <startRequest itemID="S7:[S7 connection_3]DB1,DINT352" value="600"/>
+        <skipRequest itemID="S7:[S7 connection_3]DB1,DINT352" value="602"/>
+        <successResponse itemID="S7:[S7 connection_3]DB1,DINT356" value="600"/>
+        <failedResponse itemID="S7:[S7 connection_3]DB1,DINT356" value="601"/>
+        <skipResponse itemID="S7:[S7 connection_3]DB1,DINT356" value="602"/>
+        <measureOpcValue>
+            <measureItem>
+                <measureID>GDmm#1</measureID>
+                <offsetValue>32.1</offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL434"/>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL582"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X439.5"/>
+            </measureItem>
+            <measureItem>
+                <measureID>HDmm#2</measureID>
+                <offsetValue>32.5</offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL430"/>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL578"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X439.4"/>
+            </measureItem>
+            <measureItem>
+                <measureID>HDmm#3</measureID>
+                <offsetValue>32.8</offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL426"/>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL574"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X439.3"/>
+            </measureItem>
+            <measureItem>
+                <measureID>HDmm#4</measureID>
+                <offsetValue>33.5</offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL422"/>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL570"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X439.2"/>
+            </measureItem>
+            <measureItem>
+                <measureID>HDmm#5</measureID>
+                <offsetValue>30.4</offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL418"/>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL566"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X439.1"/>
+            </measureItem>
+            <measureItem>
+                <measureID>HDmm#6</measureID>
+                <offsetValue>35</offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL414"/>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL562"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X439.0"/>
+            </measureItem>
+            <measureItem>
+                <measureID>HDmm#7</measureID>
+                <offsetValue>23.3</offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL410"/>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL558"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X438.7"/>
+            </measureItem>
+            <measureItem>
+                <measureID>HDmm#8</measureID>
+                <offsetValue>34.4</offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL406"/>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL554"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X438.6"/>
+            </measureItem>
+            <measureItem>
+                <measureID>HDmm#9</measureID>
+                <offsetValue>20.3</offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL402"/>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL550"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X438.5"/>
+            </measureItem>
+            <measureItem>
+                <measureID>HDmm#10</measureID>
+                <offsetValue>32.3</offsetValue>
+                <readMeasure itemID="S7:[S7 connection_3]DB1,REAL398"/>
+                <writeDisplay itemID="S7:[S7 connection_3]DB1,REAL546"/>
+                <writeResult itemID="S7:[S7 connection_3]DB1,X438.4"/>
+            </measureItem>
+        </measureOpcValue>
+    </step>
+    <step type="endProcess">
+        <description>工作循环结束，保存生产数据</description>
+        <interaction>流程结束</interaction>
+        <startRequest itemID="S7:[S7 connection_3]DB1,DINT352" value="2000"/>
+        <skipRequest itemID="S7:[S7 connection_3]DB1,DINT352" value="2002"/>
+        <successResponse itemID="S7:[S7 connection_3]DB1,DINT356" value="2000"/>
+        <failedResponse itemID="S7:[S7 connection_3]DB1,DINT356" value="2001"/>
+        <skipResponse itemID="S7:[S7 connection_3]DB1,DINT356" value="2002"/>
+        <endProcess/>
+    </step>
+</root>

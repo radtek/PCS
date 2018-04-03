@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <ItemSQL id="LOCAL_HOST" type="QMSSQL" enable="1" force="1">
+        <Addr>127.0.0.1</Addr>
+        <Port>1433</Port>
+        <User>sa</User>
+        <Pass>123456</Pass>
+        <Name>PCS</Name>
+    </ItemSQL>
+    <ItemSQL id="REMOTE_HOST" type="QMSSQL" enable="0" force="1">
+        <Addr>10.1.1.13</Addr>
+        <Port>1433</Port>
+        <User>sa</User>
+        <Pass>microsoft</Pass>
+        <Name>ChangKeMes</Name>
+    </ItemSQL>
+</root>

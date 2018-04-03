@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <prepare>
+        <enableOperatorLogin>1</enableOperatorLogin>
+        <enableMaterialInput>1</enableMaterialInput>
+        <enableFixtureCheck>1</enableFixtureCheck>
+        <enableMachineCheck>1</enableMachineCheck>
+        <enableProductCheck>1</enableProductCheck>
+    </prepare>
+    <station>
+        <processCount>1</processCount>
+        <writeOrderID itemID="S7:[S7 connection_2]DB1,STRING50.38"/>
+        <writeCraftID itemID="S7:[S7 connection_2]DB1,STRING10.38"/>
+        <writeFinishCount itemID="S7:[S7 connection_2]DB1,DINT130"/>
+        <writeFailedCount itemID="S7:[S7 connection_2]DB1,DINT134"/>
+        <writeFormulaID itemID="S7:[S7 connection_2]DB1,WORD138" value="1"/>
+        <writeEventInfo itemID="S7:[S7 connection_2]DB1,WORD140"/>
+        <resetRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="0"/>
+        <alarmRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="1"/>
+    </station>
+    <step type="startProcess">
+        <description>请求叠袋机启动</description>
+        <interaction>流程启动</interaction>
+        <startRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="100"/>
+        <skipRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="102"/>
+        <successResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="100"/>
+        <failedResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="101"/>
+        <skipResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="102"/>
+        <startProcess/>
+    </step>
+    <step type="scanBarcode">
+        <description>扫描气袋条码及过渡条码</description>
+        <interaction>扫描条码</interaction>
+        <startRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="200"/>
+        <skipRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="202"/>
+        <successResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="200"/>
+        <failedResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="201"/>
+        <skipResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="202"/>
+        <scanBarcode>
+            <barcodeItem>
+                <deviceID>条码枪20</deviceID>
+                <barcodeType>物料条码</barcodeType>
+                <materialID>B-27403</materialID>
+                <stationID></stationID>
+                <writeDisplay itemID="S7:[S7 connection_2]DB1,STRING90.38"/>
+                <writeResult itemID=""/>
+            </barcodeItem>
+            <barcodeItem>
+                <deviceID>条码枪20</deviceID>
+                <barcodeType>过渡条码</barcodeType>
+                <materialID></materialID>
+                <stationID>ZPZP024.ST10</stationID>
+                <writeDisplay itemID="S7:[S7 connection_2]DB1,STRING90.38"/>
+                <writeResult itemID=""/>
+            </barcodeItem>
+        </scanBarcode>
+    </step>
+    <step type="endProcess">
+        <description>工作循环结束，保存数据</description>
+        <interaction>流程结束</interaction>
+        <startRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="2000"/>
+        <skipRequest itemID="S7:[S7 connection_2]DB1,DWORD0" value="2002"/>
+        <successResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="2000"/>
+        <failedResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="2001"/>
+        <skipResponse itemID="S7:[S7 connection_2]DB1,DWORD4" value="2002"/>
+        <endProcess/>
+    </step>
+</root>

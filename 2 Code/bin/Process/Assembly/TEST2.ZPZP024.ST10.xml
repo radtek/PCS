@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <prepare>
+        <enableOperatorLogin>1</enableOperatorLogin>
+        <enableMaterialInput>1</enableMaterialInput>
+        <enableFixtureCheck>1</enableFixtureCheck>
+        <enableMachineCheck>1</enableMachineCheck>
+        <enableProductCheck>1</enableProductCheck>
+    </prepare>
+    <station>
+        <processCount>1</processCount>
+        <writeOrderID itemID="S7:[S7 connection_1]DB1,STRING356.38"/>
+        <writeCraftID itemID="S7:[S7 connection_1]DB1,STRING316.38"/>
+        <writeFinishCount itemID="S7:[S7 connection_1]DB1,DINT396"/>
+        <writeFailedCount itemID="S7:[S7 connection_1]DB1,DINT400"/>
+        <writeFormulaID itemID="S7:[S7 connection_1]DB1,W404" value="1"/>
+        <writeEventInfo itemID="S7:[S7 connection_1]DB1,W406"/>
+        <resetRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="0"/>
+        <alarmRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="1"/>
+    </station>
+    <step type="startProcess">
+        <description>下载产品信息，设备启动</description>
+        <interaction>流程启动</interaction>
+        <startRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="100"/>
+        <skipRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="102"/>
+        <successResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="100"/>
+        <failedResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="101"/>
+        <skipResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="102"/>
+        <startProcess/>
+    </step>
+    <step type="scanBarcode">
+        <description>扫描发生器条码</description>
+        <interaction>扫描条码</interaction>
+        <startRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="200"/>
+        <skipRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="202"/>
+        <successResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="200"/>
+        <failedResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="201"/>
+        <skipResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="202"/>
+        <scanBarcode>
+            <barcodeItem>
+                <deviceID>条码枪10</deviceID>
+                <barcodeType>物料条码</barcodeType>
+                <materialID>V-149</materialID>
+                <stationID></stationID>
+                <writeDisplay itemID="S7:[S7 connection_1]DB1,STRING180.38"/>
+                <writeResult itemID=""/>
+            </barcodeItem>
+        </scanBarcode>
+    </step>
+    <step type="measureOpcValue">
+        <description>压装盖壳，请求压力采集</description>
+        <interaction>采集PLC数据</interaction>
+        <startRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="300"/>
+        <skipRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="302"/>
+        <successResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="300"/>
+        <failedResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="301"/>
+        <skipResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="302"/>
+        <measureOpcValue>
+            <measureItem>
+                <measureID>YLKgf#1</measureID>
+                <offsetValue></offsetValue>
+                <readMeasure itemID="S7:[S7 connection_1]DB1,REAL244"/>
+                <writeDisplay itemID=""/>
+                <writeResult itemID="S7:[S7 connection_1]DB1,X314.0"/>
+            </measureItem>
+            <measureItem>
+                <measureID>WYmm#1</measureID>
+                <offsetValue></offsetValue>
+                <readMeasure itemID="S7:[S7 connection_1]DB1,REAL310"/>
+                <writeDisplay itemID=""/>
+                <writeResult itemID="S7:[S7 connection_1]DB1,X314.1"/>
+            </measureItem>
+        </measureOpcValue>
+    </step>
+    <step type="endProcess">
+        <description>工作循环结束，保存生产数据</description>
+        <interaction>流程结束</interaction>
+        <startRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="2000"/>
+        <skipRequest itemID="S7:[S7 connection_1]DB1,DINT302" value="2002"/>
+        <successResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="2000"/>
+        <failedResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="2001"/>
+        <skipResponse itemID="S7:[S7 connection_1]DB1,DINT306" value="2002"/>
+        <endProcess/>
+    </step>
+</root>

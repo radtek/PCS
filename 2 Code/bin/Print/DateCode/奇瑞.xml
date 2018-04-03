@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <year>
+        <item key="2011" value="A"/>
+        <item key="2012" value="B"/>
+        <item key="2013" value="C"/>
+        <item key="2014" value="D"/>
+        <item key="2015" value="E"/>
+        <item key="2016" value="F"/>
+        <item key="2017" value="G"/>
+        <item key="2018" value="H"/>
+        <item key="2019" value="J"/>
+        <item key="2020" value="K"/>
+        <item key="2021" value="L"/>
+        <item key="2022" value="M"/>
+        <item key="2023" value=""/>
+        <item key="2024" value=""/>
+        <item key="2025" value=""/>
+        <item key="2026" value=""/>
+        <item key="2027" value=""/>
+        <item key="2028" value=""/>
+        <item key="2029" value=""/>
+        <item key="2030" value=""/>
+        <item key="2031" value=""/>
+        <item key="2032" value=""/>
+        <item key="2033" value=""/>
+        <item key="2034" value=""/>
+        <item key="2035" value=""/>
+        <item key="2036" value=""/>
+        <item key="2037" value=""/>
+        <item key="2038" value=""/>
+        <item key="2039" value=""/>
+        <item key="2040" value=""/>
+        <item key="2041" value=""/>
+    </year>
+    <month>
+        <item key="1" value=""/>
+        <item key="2" value=""/>
+        <item key="3" value=""/>
+        <item key="4" value=""/>
+        <item key="5" value=""/>
+        <item key="6" value=""/>
+        <item key="7" value=""/>
+        <item key="8" value=""/>
+        <item key="9" value=""/>
+        <item key="10" value=""/>
+        <item key="11" value=""/>
+        <item key="12" value=""/>
+    </month>
+    <day>
+        <item key="1" value=""/>
+        <item key="2" value=""/>
+        <item key="3" value=""/>
+        <item key="4" value=""/>
+        <item key="5" value=""/>
+        <item key="6" value=""/>
+        <item key="7" value=""/>
+        <item key="8" value=""/>
+        <item key="9" value=""/>
+        <item key="10" value=""/>
+        <item key="11" value=""/>
+        <item key="12" value=""/>
+        <item key="13" value=""/>
+        <item key="14" value=""/>
+        <item key="15" value=""/>
+        <item key="16" value=""/>
+        <item key="17" value=""/>
+        <item key="18" value=""/>
+        <item key="19" value=""/>
+        <item key="20" value=""/>
+        <item key="21" value=""/>
+        <item key="22" value=""/>
+        <item key="23" value=""/>
+        <item key="24" value=""/>
+        <item key="25" value=""/>
+        <item key="26" value=""/>
+        <item key="27" value=""/>
+        <item key="28" value=""/>
+        <item key="29" value=""/>
+        <item key="30" value=""/>
+        <item key="31" value=""/>
+    </day>
+</root>

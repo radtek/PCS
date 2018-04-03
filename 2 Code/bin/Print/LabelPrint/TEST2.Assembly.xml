@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <bartender>
+        <templateFile>E:/标签模版/新朗逸总成标签.btw</templateFile>
+        <printerName>ZDesigner 220Xi4 300 dpi</printerName>
+        <dateCode>奇瑞</dateCode>
+        <checkCode>大众抽检</checkCode>
+    </bartender>
+    <template>
+        <item type="固定内容" text="03S" name="产品等级"/>
+        <item type="固定内容" text="R" name="左右标识"/>
+        <item type="固定内容" text="19D 880 242E" name="零件号"/>
+        <item type="格式化日期" text="DD MM YY WW" name="生产日期"/>
+        <item type="追溯条码" text="" name="追溯条码"/>
+    </template>
+    <barcode>
+        <item type="固定内容" text="673 4JO" size="7"/>
+        <item type="流水码(36)" text="" size="7"/>
+        <item type="校验码" text="" size="1"/>
+    </barcode>
+</root>

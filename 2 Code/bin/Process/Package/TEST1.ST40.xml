@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <prepare>
+        <enableOperatorLogin>0</enableOperatorLogin>
+        <enableMaterialInput>0</enableMaterialInput>
+        <enableFixtureCheck>0</enableFixtureCheck>
+        <enableMachineCheck>0</enableMachineCheck>
+        <enableProductCheck>0</enableProductCheck>
+    </prepare>
+    <assembly enable="1">
+        <rescanBarcode>1</rescanBarcode>
+        <verifyBarcode>1</verifyBarcode>
+        <printCount>1</printCount>
+        <rescanCount>1</rescanCount>
+        <prevStationID>ZPZP024.ST30</prevStationID>
+    </assembly>
+    <package enable="0">
+        <rescanBarcode>1</rescanBarcode>
+        <verifyBarcode>1</verifyBarcode>
+        <printCount>1</printCount>
+        <rescanCount>1</rescanCount>
+        <packageMarker>ABCDEFG</packageMarker>
+        <scaleDeviceID>电子秤40</scaleDeviceID>
+        <packageNumber>21</packageNumber>
+        <singleWeight>0.36</singleWeight>
+        <offsetWeight>0.1</offsetWeight>
+    </package>
+</root>

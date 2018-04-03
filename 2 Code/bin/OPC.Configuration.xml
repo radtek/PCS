@@ -18,6 +18,17 @@
             <OPCItem Active="0" DataType="18" ItemID="S7:[S7 connection_1]DB1,W406"/>
         </OPCGroup>
         <OPCGroup Active="1" UpdateRate="100" LCID="1033" Name="ST20" PercentDeadband="100" TimeBias="100">
+            <OPCItem Active="1" DataType="19" ItemID="S7:[S7 connection_2]DB1,DWORD0"/>
+            <OPCItem Active="0" DataType="19" ItemID="S7:[S7 connection_2]DB1,DWORD4"/>
+            <OPCItem Active="0" DataType="8" ItemID="S7:[S7 connection_2]DB1,STRING10.38"/>
+            <OPCItem Active="0" DataType="8" ItemID="S7:[S7 connection_2]DB1,STRING50.38"/>
+            <OPCItem Active="0" DataType="8" ItemID="S7:[S7 connection_2]DB1,STRING90.38"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_2]DB1,DINT130"/>
+            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_2]DB1,DINT134"/>
+            <OPCItem Active="0" DataType="18" ItemID="S7:[S7 connection_2]DB1,WORD138"/>
+            <OPCItem Active="0" DataType="18" ItemID="S7:[S7 connection_2]DB1,WORD140"/>
+        </OPCGroup>
+        <OPCGroup Active="1" UpdateRate="100" LCID="1033" Name="ST30" PercentDeadband="100" TimeBias="100">
             <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT328"/>
             <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT332"/>
             <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT336"/>
@@ -26,8 +37,6 @@
             <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT348"/>
             <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT352"/>
             <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT356"/>
-            <OPCItem Active="1" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT586"/>
-            <OPCItem Active="0" DataType="3" ItemID="S7:[S7 connection_3]DB1,DINT590"/>
             <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL362"/>
             <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL366"/>
             <OPCItem Active="0" DataType="4" ItemID="S7:[S7 connection_3]DB1,REAL370"/>
