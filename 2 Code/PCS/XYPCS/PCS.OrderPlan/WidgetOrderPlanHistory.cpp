@@ -59,35 +59,28 @@ void WidgetOrderPlanHistory::initialWidget()
 
     do
     {
-        orderSQL = QString(R"(SELECT [UID] AS [序号]
-                           ,[MCode] AS [产品编号]
-                           ,[MName] AS [产品名称]
-                           ,[MTeam] AS [产品族]
-                           ,[ProduceBatch] AS [生产批次]
-                           ,[WOCode] AS [工单编号]
-                           ,[PocessCode] AS [工艺编号]
-                           ,[PDCode] AS [计划编号]
-                           ,[PlanBatch] AS [计划批次]
-                           ,CONVERT(NVARCHAR, [PlanMadeDate], 23) AS [计划日期]
-                           ,[Dict_PDType] AS [计划类型]
-                           ,CONVERT(NVARCHAR, [PlanDate], 23) AS [排产日期]
-                           ,CONVERT(NVARCHAR, [DeliveryTime], 20) AS [完结时间]
-                           ,[priority] AS [优先级]
-                           ,[OrderNum] AS [顺序号]
-                           ,[PlanDailyYields] AS [排产计划数量]
-                           ,[QASubmitted] AS [排产抽检数量]
-                           ,[TotalCompleted] AS [已完成数量]
-                           ,[TotalBrokenParts] AS [不合格数量]
-                           ,[TotalPrimaryMolding] AS [一次成功数]
-                           ,[TotalPackageBox] AS [包装箱数量]
-                           ,[TotalSampleParts] AS [抽检件数量]
-                           ,[TotalRepairParts] AS [返修件数量]
-                           ,CASE [State] WHEN %1 THEN '%2' WHEN %3 THEN '%4' WHEN %5 THEN '%6'
+        orderSQL = QString(R"(SELECT A.[UID] AS [序号]
+                           ,B.[ProductID] AS [产品编号]
+                           ,B.[ProductName] AS [产品名称]
+                           ,A.[ProductionBatch] AS [生产批次]
+                           ,A.[OrderID] AS [工单编号]
+                           ,A.[CraftID] AS [工艺编号]
+                           ,CONVERT(NVARCHAR, A.[PlanDate], 23) AS [计划日期]
+                           ,CONVERT(NVARCHAR, A.[FinishTime], 20) AS [完结时间]
+                           ,A.[PlanProductionQuantity] AS [计划生产数量]
+                           ,A.[PlanInspectionQuantity] AS [计划抽检数量]
+                           ,A.[QualifiedQuantity] AS [合格数量]
+                           ,A.[UnqualifiedQuantity] AS [不合格数量]
+                           ,A.[FirstPassQuantity] AS [一次成功数]
+                           ,A.[PackageQuantity] AS [包装箱数量]
+                           ,A.[InspectionQuantity] AS [抽检件数量]
+                           ,A.[RepairQuantity] AS [返修件数量]
+                           ,CASE A.[State] WHEN %1 THEN '%2' WHEN %3 THEN '%4' WHEN %5 THEN '%6'
                            WHEN %7 THEN '%8' WHEN %9 THEN '%10' END AS [状态]
-                           ,[remark] AS [备注]
-                           FROM [MES_WorkOrder]
-                           WHERE [WorkShopCode] = '%11' AND [WorkLineCode] = '%12'
-                           AND ([State] = %13 OR [State] = %14 OR [State] = %15 OR [State] = %16 OR [State] = %17))")
+                           ,A.[Description] AS [备注]
+                           FROM [PCS_WorkOrder] A LEFT JOIN [PCS_Craft] B ON B.[CraftID]=A.[CraftID]
+                           WHERE A.[WorkShopID] = '%11' AND A.[WorkLineID] = '%12'
+                           AND (A.[State] = %13 OR A.[State] = %14 OR A.[State] = %15 OR A.[State] = %16 OR A.[State] = %17))")
                        .arg(static_cast<int>(OrderState::Closed))
                        .arg(orderStateMap.value(OrderState::Closed))
                        .arg(static_cast<int>(OrderState::ForceClose))
@@ -135,7 +128,7 @@ void WidgetOrderPlanHistory::queryByAllOrder()
 void WidgetOrderPlanHistory::queryByProductID()
 {
     QString productID = ui->editProductID->text();
-    QString filter = QString(" AND [MCode] = '%1'").arg(productID);
+    QString filter = QString(" AND B.[ProductID] = '%1'").arg(productID);
 
     orderModel->setQuery(orderSQL + filter, LOCAL_DB);
 }
@@ -143,7 +136,7 @@ void WidgetOrderPlanHistory::queryByProductID()
 void WidgetOrderPlanHistory::queryByCraftID()
 {
     QString craftID = ui->editCraftID->text();
-    QString filter = QString(" AND [PocessCode] = '%1'").arg(craftID);
+    QString filter = QString(" AND A.[CraftID] = '%1'").arg(craftID);
 
     orderModel->setQuery(orderSQL + filter, LOCAL_DB);
 }
@@ -151,7 +144,7 @@ void WidgetOrderPlanHistory::queryByCraftID()
 void WidgetOrderPlanHistory::queryByProductBatch()
 {
     QString prductBatch = ui->editProductBatch->text();
-    QString filter = QString(" AND [ProduceBatch] = '%1'").arg(prductBatch);
+    QString filter = QString(" AND A.[ProductionBatch] = '%1'").arg(prductBatch);
 
     orderModel->setQuery(orderSQL + filter, LOCAL_DB);
 }
@@ -159,7 +152,7 @@ void WidgetOrderPlanHistory::queryByProductBatch()
 void WidgetOrderPlanHistory::queryByOrderState()
 {
     OrderState state = orderStateMap.key(ui->comboOrderState->currentText());
-    QString filter = QString(" AND [State] = %1").arg(static_cast<int>(state));
+    QString filter = QString(" AND A.[State] = %1").arg(static_cast<int>(state));
 
     orderModel->setQuery(orderSQL + filter, LOCAL_DB);
 }
@@ -167,7 +160,7 @@ void WidgetOrderPlanHistory::queryByOrderState()
 void WidgetOrderPlanHistory::queryByPlanDate()
 {
     QString planDate = ui->datePlanDate->date().toString("yyyy-MM-dd");
-    QString filter = QString(" AND CONVERT(NVARCHAR, [PlanDate], 23) = '%1'").arg(planDate);
+    QString filter = QString(" AND CONVERT(NVARCHAR, A.[PlanDate], 23) = '%1'").arg(planDate);
 
     orderModel->setQuery(orderSQL + filter, LOCAL_DB);
 }
@@ -175,7 +168,7 @@ void WidgetOrderPlanHistory::queryByPlanDate()
 void WidgetOrderPlanHistory::queryByDeliveryDate()
 {
     QString deliveryDate = ui->dateDeliveryDate->date().toString("yyyy-MM-dd");
-    QString filter = QString(" AND CONVERT(NVARCHAR, [DeliveryTime], 23) = '%1'").arg(deliveryDate);
+    QString filter = QString(" AND CONVERT(NVARCHAR, A.[FinishTime], 23) = '%1'").arg(deliveryDate);
 
     orderModel->setQuery(orderSQL + filter, LOCAL_DB);
 }

@@ -45,9 +45,9 @@ bool StationOperator::operatorLogin(const QString &barcode)
         operatorData.operatorID = query.value("WorkerID").toString();
         operatorData.operatorCard = query.value("WorkerBarCode").toString();
         operatorData.operatorName = query.value("WorkerName").toString();
-        //   operatorData.operatorTeam = query.value("OperatorTeam").toString();//@@@
+        //   operatorData.operatorTeam = query.value("OperatorTeam").toString();//////@@
         operatorData.operatorDuty = query.value("WorkerDuty").toString();
-        operatorData.dutyLevel = static_cast<OperatorDuty>(query.value("DutyLevel").toInt());    //@@@
+        operatorData.dutyLevel = static_cast<OperatorDuty>(query.value("DutyLevel").toInt());    //////@@
     } while (0);
 
     //校验人员能力

@@ -26,7 +26,7 @@ void DialogCraftMaterial::slotSelectMaterial(const QString &MaterialID)
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT [MaterialName]
                   ,[BarcodeRule]
-                  FROM [PCS_Base_Material] WHERE [MaterialID]=? )");
+                  FROM [PCS_Base_Material] WHERE [MaterialID]=? )");    //////
     query.addBindValue(MaterialID);
     if (!query.exec())
     {
@@ -73,7 +73,7 @@ void DialogCraftMaterial::initialDialog()
     ui->lineEditShortWarningQuantity->clear();
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT DISTINCT [MaterialID]
-                  FROM [PCS_Base_Material] )");
+                  FROM [PCS_Base_Material] )");    //////
     if (!query.exec())
     {
         qDebug().noquote() << query.lastError().text();

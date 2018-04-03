@@ -663,7 +663,7 @@ void PackageStation::saveAssemblyData()
         QSqlQuery query(LOCAL_DB);
         query.prepare("INSERT INTO PCS_Data_Assembly "
                       "(WorkShopID, WorkLineID, AssemblyID, OrderID, ProductID, WorkerID, AssemblyBarcode, AssemblySerial, "
-                      "AssemblyState, InspectionMarker, RepairState, RetestState, CreateTime, FinishTime, UploadTime) "
+                      "AssemblyState, InspectionMarker, RepairMarker, RetestState, CreateTime, FinishTime, UploadTime) "
                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         query.addBindValue(manager->getWorkshopID());
         query.addBindValue(manager->getWorklineID());

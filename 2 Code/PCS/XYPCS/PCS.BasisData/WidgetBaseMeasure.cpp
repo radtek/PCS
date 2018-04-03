@@ -62,7 +62,7 @@ void WidgetBaseMeasure::slotDeleteMeasure()
         return;
     }
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(UPDATE [PCS_Base_Measure] SET [State]=2 WHERE [MeasureType]=? )");
+    query.prepare(R"(UPDATE [PCS_Base_Measure] SET [State]=2 WHERE [MeasureType]=? )");    //////
     query.addBindValue(ui->editMeasureType->text());
     query.exec();
     ui->buttonGroup->setGroupState(ButtonGroup::GroupState::Unselect);
@@ -101,7 +101,7 @@ void WidgetBaseMeasure::slotSaveMeasure()
     case StateMark::AddNew:
     {
 
-        query.prepare(R"(SELECT [MeasureType] FROM [PCS_Base_Measure] WHERE [MeasureType]=? )");
+        query.prepare(R"(SELECT [MeasureType] FROM [PCS_Base_Measure] WHERE [MeasureType]=? )");    //////
         query.addBindValue(ui->editMeasureType->text());
         if (!query.exec())
         {
@@ -124,7 +124,7 @@ void WidgetBaseMeasure::slotSaveMeasure()
                       ,[State]
                       ,[Description])
                 VALUES
-                      (?,?,?,?,?,?,?)       )");
+                      (?,?,?,?,?,?,?)       )");    //////
         query.addBindValue(ui->editMeasureType->text());
         query.addBindValue(ui->editMeasurerName->text());
         query.addBindValue(ui->editUnit->text());
@@ -154,7 +154,7 @@ void WidgetBaseMeasure::slotSaveMeasure()
                          ,[ModifyTime] = ?
                          ,[State] = ?
                          ,[Description] = ?
-                    WHERE [MeasureType] = ?    )");
+                    WHERE [MeasureType] = ?    )");    //////
 
         query.addBindValue(ui->editMeasurerName->text());
         query.addBindValue(ui->editUnit->text());
@@ -229,12 +229,13 @@ void WidgetBaseMeasure::initialWidgetMeasureList()
     view->setEditTriggers(QTableView::NoEditTriggers);
     view->horizontalHeader()->setMinimumSectionSize(120);
     view->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT [MeasureType]
                   ,[MeasureName]
                   ,[Unit]
                   ,[Description]
-              FROM [PCS_Base_Measure] WHERE [State]!=2 )");
+              FROM [PCS_Base_Measure] WHERE [State]!=2 )");    //////
     query.exec();
 
     model->setQuery(query);
@@ -251,7 +252,7 @@ void WidgetBaseMeasure::updateWidgetMeasureList()
                   ,[MeasureName]
                   ,[Unit]
                   ,[Description]
-              FROM [PCS_Base_Measure] WHERE [State]!=2 )");
+              FROM [PCS_Base_Measure] WHERE [State]!=2 )");    //////
     query.exec();
 
     model->setQuery(query);

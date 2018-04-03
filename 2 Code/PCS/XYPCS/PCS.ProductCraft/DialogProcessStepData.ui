@@ -25,52 +25,7 @@
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_1" columnstretch="0,0,0,0">
-      <item row="0" column="1">
-       <widget class="QComboBox" name="comboInteraction">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="editMaxMeasure">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>160</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="labelMaxMeasure">
-        <property name="text">
-         <string>采集次数：</string>
-        </property>
-       </widget>
-      </item>
+     <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
        <widget class="QLabel" name="labelInteraction">
         <property name="text">
@@ -81,7 +36,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="2" column="0">
        <widget class="QLabel" name="labelDescription">
         <property name="text">
          <string>步骤描述：</string>
@@ -91,44 +46,119 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="3">
-       <widget class="QCheckBox" name="checkIsDisabled">
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelMaxMeasure">
         <property name="text">
-         <string>直接跳过步骤</string>
+         <string>采集次数：</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1" colspan="3">
-       <widget class="QLineEdit" name="editDescription"/>
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QComboBox" name="comboInteraction">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>160</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkIsDisabled">
+          <property name="text">
+           <string>直接跳过步骤</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
-      <item row="2" column="2" colspan="2">
-       <widget class="QLabel" name="labelMaxCommet">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>（采集允许的最大次数）</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
+      <item row="2" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLineEdit" name="editDescription"/>
+        </item>
+       </layout>
+      </item>
+      <item row="4" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLineEdit" name="editMaxMeasure">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>160</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelMaxCommet">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>7</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>（采集允许的最大次数）</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -452,7 +482,7 @@
         <string>确定</string>
        </property>
        <property name="icon">
-        <iconset resource="../PCS.qrc">
+        <iconset resource="../Resources/PCS.qrc">
          <normaloff>:/images/pngs/common_accept.png</normaloff>:/images/pngs/common_accept.png</iconset>
        </property>
       </widget>
@@ -469,7 +499,7 @@
         <string>取消</string>
        </property>
        <property name="icon">
-        <iconset resource="../PCS.qrc">
+        <iconset resource="../Resources/PCS.qrc">
          <normaloff>:/images/pngs/common_reject.png</normaloff>:/images/pngs/common_reject.png</iconset>
        </property>
       </widget>
@@ -479,9 +509,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>comboInteraction</tabstop>
-  <tabstop>editDescription</tabstop>
-  <tabstop>editMaxMeasure</tabstop>
   <tabstop>comboStartRequset</tabstop>
   <tabstop>editStartRequset</tabstop>
   <tabstop>comboStartResponse</tabstop>
@@ -498,7 +525,7 @@
   <tabstop>buttonCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../PCS.qrc"/>
+  <include location="../Resources/PCS.qrc"/>
  </resources>
  <connections/>
 </ui>

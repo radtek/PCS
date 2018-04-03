@@ -26,7 +26,7 @@ void DialogCraftMeasure::slotSelectMeasure(const QString &MeasureType)
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT [MeasureName]
                   ,[Unit]
-                  FROM [PCS_Base_Measure] WHERE [MeasureType]=? )");
+                  FROM [PCS_Base_Measure] WHERE [MeasureType]=? )");    //////
     query.addBindValue(MeasureType);
     if (!query.exec())
     {
@@ -87,7 +87,7 @@ void DialogCraftMeasure::initialDialog()
     ui->lineEditLowerLimit->clear();
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT DISTINCT [MeasureType]
-                  FROM [PCS_Base_Measure] )");
+                  FROM [PCS_Base_Measure] )");    //////
     if (!query.exec())
     {
         qDebug().noquote() << query.lastError().text();

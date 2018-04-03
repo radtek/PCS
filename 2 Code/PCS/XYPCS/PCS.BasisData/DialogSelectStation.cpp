@@ -45,7 +45,7 @@ void DialogSelectStation::init()
                  ,[WorkStationCode]
                  ,[IsPackage]
                  ,[Description]
-             FROM [PCS_Base_Station] WHERE [State] != 2 )");
+             FROM [PCS_Base_Station] WHERE [State] != 2 )");    //////
 
     model->setQuery(query);
 
@@ -73,7 +73,7 @@ void DialogSelectStation::slotAccept()
 
     // check
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(SELECT [UID] FROM [PCS_Craft_Station] WHERE [CraftID] = :CraftID AND [WorkStationID] = :WorkStationID )");
+    query.prepare(R"(SELECT [UID] FROM [PCS_Craft_Station] WHERE [CraftID] = :CraftID AND [WorkStationID] = :WorkStationID )");    //////
     query.bindValue(":WorkStationID", stationID);
     query.bindValue(":CraftID", craftID);
     if (!query.exec())

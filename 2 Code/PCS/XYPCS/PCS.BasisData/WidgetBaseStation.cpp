@@ -70,7 +70,7 @@ void WidgetBaseStation::slotDeleteStation()
         return;
     }
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(UPDATE [PCS_Base_Station] SET [State]=2 WHERE [WorkStationID]=? )");
+    query.prepare(R"(UPDATE [PCS_Base_Station] SET [State]=2 WHERE [WorkStationID]=? )");    //////
     query.addBindValue(ui->editStationID->text());
     query.exec();
     ui->buttonGroup->setGroupState(ButtonGroup::GroupState::Unselect);
@@ -114,7 +114,7 @@ void WidgetBaseStation::slotSaveStation()
     case StateMark::AddNew:
     {
 
-        query.prepare(R"(SELECT [WorkStationID] FROM [PCS_Base_Station] WHERE [WorkStationID]=? OR [WorkStationCode]=? )");
+        query.prepare(R"(SELECT [WorkStationID] FROM [PCS_Base_Station] WHERE [WorkStationID]=? OR [WorkStationCode]=? )");    //////
         query.addBindValue(ui->editStationID->text());
         query.addBindValue(ui->editStationCode->text());
         if (!query.exec())
@@ -141,7 +141,7 @@ void WidgetBaseStation::slotSaveStation()
                       ,[State]
                       ,[Description])
                 VALUES
-                      (?,?,?,?,?,?,?,?,?,?)       )");
+                      (?,?,?,?,?,?,?,?,?,?)       )");    //////
         query.addBindValue(qWorkManager->getWorkshopID());
         query.addBindValue(qWorkManager->getWorklineID());
         query.addBindValue(ui->editStationID->text());
@@ -167,7 +167,7 @@ void WidgetBaseStation::slotSaveStation()
     }
     case StateMark::ModifyOld:
     {
-        query.prepare(R"(SELECT [WorkStationID] FROM [PCS_Base_Station] WHERE [WorkStationID]!=? AND [WorkStationCode]=? )");
+        query.prepare(R"(SELECT [WorkStationID] FROM [PCS_Base_Station] WHERE [WorkStationID]!=? AND [WorkStationCode]=? )");    //////
         query.addBindValue(ui->editStationID->text());
         query.addBindValue(ui->editStationCode->text());
         if (!query.exec())
@@ -190,7 +190,7 @@ void WidgetBaseStation::slotSaveStation()
                          ,[ModifyTime] = ?
                          ,[State] = ?
                          ,[Description] = ?
-                    WHERE [WorkStationID] = ?    )");
+                    WHERE [WorkStationID] = ?    )");    //////
 
         query.addBindValue(ui->editStationName->text());
         query.addBindValue(ui->editStationCode->text());
@@ -277,7 +277,7 @@ void WidgetBaseStation::initialWidgetStationList()
                   ,[WorkStationCode]
                   ,[IsPackage]
                   ,[Description]
-              FROM [PCS_Base_Station] WHERE [State]!=2 )");
+              FROM [PCS_Base_Station] WHERE [State]!=2 )");    //////
     query.exec();
 
     model->setQuery(query);
@@ -297,7 +297,7 @@ void WidgetBaseStation::updateWidgetStationList()
                   ,[WorkStationCode]
                   ,[IsPackage]
                   ,[Description]
-              FROM [PCS_Base_Station] WHERE [State]!=2 )");
+              FROM [PCS_Base_Station] WHERE [State]!=2 )");    //////
     query.exec();
     model->setQuery(query);
     ui->tableView->setModel(model);

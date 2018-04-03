@@ -19,6 +19,10 @@ bool WorkCraft::initialCraft(const QString &craftID)
                       ,[CraftID]
                       ,[ProductID]
                       ,[ProductName]
+                      ,[AssySerialRule]
+                      ,[AssySerialInit]
+                      ,[PackSerialRule]
+                      ,[PackSerialInit]
                       FROM [PCS_Craft]
                       WHERE [WorkLineID] = ? AND [CraftID] = ?)");
         query.addBindValue(manager->getWorklineID());
@@ -40,10 +44,10 @@ bool WorkCraft::initialCraft(const QString &craftID)
         //  craftData.craftName = query.value("CraftName").toString();
         craftData.productID = query.value("ProductID").toString();
         craftData.productName = query.value("ProductName").toString();
-        //   craftData.assySerialRule = static_cast<SerialRule>(query.value("AssySerialRule").toInt());
-        //   craftData.packSerialRule = static_cast<SerialRule>(query.value("PackSerialRule").toInt());
-        //   craftData.assySerialInit = query.value("AssySerialInit").toInt();
-        //  craftData.packSerialInit = query.value("PackSerialInit").toInt();
+        craftData.assySerialRule = static_cast<SerialRule>(query.value("AssySerialRule").toInt());
+        craftData.packSerialRule = static_cast<SerialRule>(query.value("PackSerialRule").toInt());
+        craftData.assySerialInit = query.value("AssySerialInit").toInt();
+        craftData.packSerialInit = query.value("PackSerialInit").toInt();
     } while (0);
 
     return true;

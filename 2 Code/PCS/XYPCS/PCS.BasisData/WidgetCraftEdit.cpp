@@ -75,7 +75,7 @@ void WidgetCraftEdit::slotTreeSelect(QTreeWidgetItem *item, int)
                       ,[PackSerialRule]
                       ,[PackSerialInit]
                       ,[Description]
-                  FROM [PCS_Craft] WHERE [CraftID]=? )");
+                  FROM [PCS_Craft] WHERE [CraftID]=? )");    //////
         query.addBindValue(item->text(0));
         if (!query.exec())
         {
@@ -111,7 +111,7 @@ void WidgetCraftEdit::slotTreeSelect(QTreeWidgetItem *item, int)
                       ,[PackSerialRule]
                       ,[PackSerialInit]
                       ,[Description]
-                  FROM [PCS_Craft] WHERE [CraftID]=? )");
+                  FROM [PCS_Craft] WHERE [CraftID]=? )");    //////
         query.addBindValue(item->parent()->text(0));
         if (!query.exec())
         {
@@ -133,7 +133,7 @@ void WidgetCraftEdit::slotTreeSelect(QTreeWidgetItem *item, int)
         query.prepare(R"(SELECT [WorkStationID]
                       ,[WorkStationName]
                       ,[WorkStationCode]
-                  FROM [PCS_Base_Station] WHERE [WorkStationID]=? )");
+                  FROM [PCS_Base_Station] WHERE [WorkStationID]=? )");    //////
         query.addBindValue(item->text(0));
         if (!query.exec())
         {
@@ -204,7 +204,7 @@ void WidgetCraftEdit::slotDeleteCraft()
         return;
     }
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(UPDATE [PCS_Craft] SET [State]=2 WHERE [CraftID]=? )");
+    query.prepare(R"(UPDATE [PCS_Craft] SET [State]=2 WHERE [CraftID]=? )");    //////
     query.addBindValue(ui->editCraftID->text());
     query.exec();
     ui->buttonGroup->setGroupState(ButtonGroup::GroupState::Unselect);
@@ -265,7 +265,7 @@ void WidgetCraftEdit::slotSaveCraft()
     case StateMark::AddNew:
     {
 
-        query.prepare(R"(SELECT [CraftID] FROM [PCS_Craft] WHERE [CraftID]=? )");
+        query.prepare(R"(SELECT [CraftID] FROM [PCS_Craft] WHERE [CraftID]=? )");    //////
         query.addBindValue(ui->editCraftID->text());
         if (!query.exec())
         {
@@ -294,7 +294,7 @@ void WidgetCraftEdit::slotSaveCraft()
                       ,[State]
                       ,[Description])
                 VALUES
-                      (?,?,?,?,?,?,?,?,?,?,?,?,?)       )");
+                      (?,?,?,?,?,?,?,?,?,?,?,?,?)       )");    //////
         query.addBindValue(qWorkManager->getWorkshopID());
         query.addBindValue(qWorkManager->getWorklineID());
         query.addBindValue(ui->editCraftID->text());
@@ -332,7 +332,7 @@ void WidgetCraftEdit::slotSaveCraft()
                          ,[ModifyTime] = ?
                          ,[State] = ?
                          ,[Description] = ?
-                    WHERE [CraftID] = ?    )");
+                    WHERE [CraftID] = ?    )");    //////
         query.addBindValue(ui->editProductID->text());
         query.addBindValue(ui->editProductName->text());
         query.addBindValue(static_cast<int>(SerialRuleMap.key(ui->comboBoxAssySerialRule->currentText())));
@@ -391,7 +391,7 @@ void WidgetCraftEdit::slotDeleteStation()
 {
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(DELETE FROM [PCS_Craft_Station]
-                  WHERE [CraftID]=? AND [WorkStationID]=? )");
+                  WHERE [CraftID]=? AND [WorkStationID]=? )");    //////
     query.addBindValue(ui->editCraftID->text());
     query.addBindValue(ui->editStationID->text());
     if (!query.exec())
@@ -400,7 +400,7 @@ void WidgetCraftEdit::slotDeleteStation()
         return;
     }
     query.prepare(R"(DELETE FROM [PCS_Craft_Station_Fixture]
-                  WHERE [CraftID]=? AND [WorkStationID]=? )");
+                  WHERE [CraftID]=? AND [WorkStationID]=? )");    //////
     query.addBindValue(ui->editCraftID->text());
     query.addBindValue(ui->editStationID->text());
     if (!query.exec())
@@ -409,7 +409,7 @@ void WidgetCraftEdit::slotDeleteStation()
         return;
     }
     query.prepare(R"(DELETE FROM [PCS_Craft_Station_Material]
-                  WHERE [CraftID]=? AND [WorkStationID]=? )");
+                  WHERE [CraftID]=? AND [WorkStationID]=? )");    //////
     query.addBindValue(ui->editCraftID->text());
     query.addBindValue(ui->editStationID->text());
     if (!query.exec())
@@ -419,7 +419,7 @@ void WidgetCraftEdit::slotDeleteStation()
     }
 
     query.prepare(R"(DELETE FROM [PCS_Craft_Station_Measure]
-                  WHERE [CraftID]=? AND [WorkStationID]=? )");
+                  WHERE [CraftID]=? AND [WorkStationID]=? )");    //////
     query.addBindValue(ui->editCraftID->text());
     query.addBindValue(ui->editStationID->text());
     if (!query.exec())
@@ -441,7 +441,7 @@ void WidgetCraftEdit::showCraftStationDialog()
     if (QDialog::Accepted != dialog.exec())
         return;
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(INSERT INTO [PCS_Craft_Station] ([CraftID],[WorkStationID]) VALUES (? ,?) )");
+    query.prepare(R"(INSERT INTO [PCS_Craft_Station] ([CraftID],[WorkStationID]) VALUES (? ,?) )");    //////
     query.addBindValue(ui->editCraftID->text());
     query.addBindValue(dialog.getStationID());
     if (!query.exec())
@@ -454,7 +454,7 @@ void WidgetCraftEdit::showCraftStationDialog()
     query.prepare(R"(SELECT [WorkStationID]
                   ,[WorkStationName]
                   ,[WorkStationCode]
-              FROM [PCS_Base_Station] WHERE [WorkStationID]=? )");
+              FROM [PCS_Base_Station] WHERE [WorkStationID]=? )");    //////
     query.addBindValue(dialog.getStationID());
     if (!query.exec())
     {
@@ -483,7 +483,7 @@ void WidgetCraftEdit::showCraftMeasureDialog()
     if (QDialog::Accepted != dialog.exec())
         return;
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(SELECT [UID] FROM [PCS_Craft_Station_Measure] WHERE [CraftID] = :CraftID AND [WorkStationID] = :WorkStationID AND [MeasureType]=:MeasureType AND [MeasureOrder]=:MeasureOrder )");
+    query.prepare(R"(SELECT [UID] FROM [PCS_Craft_Station_Measure] WHERE [CraftID] = :CraftID AND [WorkStationID] = :WorkStationID AND [MeasureType]=:MeasureType AND [MeasureOrder]=:MeasureOrder )");    //////
     query.bindValue(":WorkStationID", ui->editStationID->text());
     query.bindValue(":CraftID", ui->editCraftID->text());
     query.bindValue(":MeasureType", dialog.getMeasureType());
@@ -510,7 +510,7 @@ void WidgetCraftEdit::showCraftMeasureDialog()
                     ,[CreateTime]
                     ,[State])
               VALUES
-                    (?,?,?,?,?,?,?,?,?,? ))");
+                    (?,?,?,?,?,?,?,?,?,? ))");    //////
     query.addBindValue(ui->editCraftID->text());
     query.addBindValue(ui->editStationID->text());
     query.addBindValue(dialog.getMeasureType());
@@ -554,7 +554,7 @@ void WidgetCraftEdit::slotModifyCraftMeasure()
                      ,[ModifyUser] = ?
                      ,[ModifyTime] = ?
                      ,[State] = ?
-                WHERE  [CraftID] = ? AND [WorkStationID] = ? AND [MeasureType] = ? AND [UID] =?)");
+                WHERE  [CraftID] = ? AND [WorkStationID] = ? AND [MeasureType] = ? AND [UID] =?)");    //////
     query.addBindValue(dialog.getMeasureSerial().toInt());
     query.addBindValue(dialog.getStandardValue().toDouble());
     query.addBindValue(dialog.getUpperLimit().toDouble());
@@ -587,7 +587,7 @@ void WidgetCraftEdit::slotDeleteCraftMeasure()
     QSqlRecord record = modelMeasure->record(index.row());
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(DELETE FROM [PCS_Craft_Station_Measure]
-                  WHERE[CraftID] = ? AND [WorkStationID] = ? AND [MeasureType] = ?  AND [MeasureOrder] = ? AND [UID] =?)");
+                  WHERE[CraftID] = ? AND [WorkStationID] = ? AND [MeasureType] = ?  AND [MeasureOrder] = ? AND [UID] =?)");    //////
     query.addBindValue(record.value("CraftID").toString());
     query.addBindValue(record.value("WorkStationID").toString());
     query.addBindValue(record.value("MeasureType").toString());
@@ -611,7 +611,7 @@ void WidgetCraftEdit::showCraftMaterialDialog()
     if (QDialog::Accepted != dialog.exec())
         return;
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(SELECT [UID] FROM [PCS_Craft_Station_Material] WHERE [CraftID] = :CraftID AND [WorkStationID] = :WorkStationID AND [MaterialID]=:MaterialID )");
+    query.prepare(R"(SELECT [UID] FROM [PCS_Craft_Station_Material] WHERE [CraftID] = :CraftID AND [WorkStationID] = :WorkStationID AND [MaterialID]=:MaterialID )");    //////
     query.bindValue(":WorkStationID", ui->editStationID->text());
     query.bindValue(":CraftID", ui->editCraftID->text());
     query.bindValue(":MaterialID", dialog.getMaterialID());
@@ -635,7 +635,7 @@ void WidgetCraftEdit::showCraftMaterialDialog()
                     ,[CreateTime]
                     ,[State])
               VALUES
-                    (?,?,?,?,?,?,?,? ))");
+                    (?,?,?,?,?,?,?,? ))");    //////
     query.addBindValue(ui->editCraftID->text());
     query.addBindValue(ui->editStationID->text());
     query.addBindValue(dialog.getMaterialID());
@@ -675,7 +675,7 @@ void WidgetCraftEdit::slotModifyCraftMaterial()
                      ,[ModifyUser] = ?
                      ,[ModifyTime] = ?
                      ,[State] = ?
-                WHERE  [CraftID] = ? AND [WorkStationID] = ? AND [MaterialID] = ? AND [UID] =?)");
+                WHERE  [CraftID] = ? AND [WorkStationID] = ? AND [MaterialID] = ? AND [UID] =?)");    //////
     query.addBindValue(dialog.getConsumeQuantity().toDouble());
     query.addBindValue(dialog.getWarningQuantity().toDouble());
     query.addBindValue("");
@@ -706,7 +706,7 @@ void WidgetCraftEdit::slotDeleteCraftMaterial()
     QSqlRecord record = modelMaterial->record(index.row());
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(DELETE FROM [PCS_Craft_Station_Material]
-                WHERE  [CraftID] = ? AND [WorkStationID] = ? AND [MaterialID] = ? AND [UID] =?)");
+                WHERE  [CraftID] = ? AND [WorkStationID] = ? AND [MaterialID] = ? AND [UID] =?)");    //////
     query.addBindValue(record.value("CraftID").toString());
     query.addBindValue(record.value("WorkStationID").toString());
     query.addBindValue(record.value("MaterialID").toString());
@@ -730,7 +730,7 @@ void WidgetCraftEdit::showCraftFixtureDialog()
     if (QDialog::Accepted != dialog.exec())
         return;
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(SELECT [UID] FROM [PCS_Craft_Station_Fixture] WHERE [CraftID] = :CraftID AND [WorkStationID] = :WorkStationID AND [FixtureType]=:FixtureType AND [FixtureOrder]=:FixtureOrder )");
+    query.prepare(R"(SELECT [UID] FROM [PCS_Craft_Station_Fixture] WHERE [CraftID] = :CraftID AND [WorkStationID] = :WorkStationID AND [FixtureType]=:FixtureType AND [FixtureOrder]=:FixtureOrder )");    //////
     query.bindValue(":WorkStationID", ui->editStationID->text());
     query.bindValue(":CraftID", ui->editCraftID->text());
     query.bindValue(":FixtureType", dialog.getFixtureType());
@@ -754,7 +754,7 @@ void WidgetCraftEdit::showCraftFixtureDialog()
                     ,[CreateTime]
                     ,[State])
               VALUES
-                    (?,?,?,?,?,?,? ))");
+                    (?,?,?,?,?,?,? ))");    //////
     query.addBindValue(ui->editCraftID->text());
     query.addBindValue(ui->editStationID->text());
     query.addBindValue(dialog.getFixtureType());
@@ -792,7 +792,7 @@ void WidgetCraftEdit::slotModifyCraftFixture()
                      ,[ModifyUser] = ?
                      ,[ModifyTime] = ?
                      ,[State] = ?
-                WHERE  [CraftID] = ? AND [WorkStationID] = ? AND [FixtureType] = ? AND [UID] =?)");
+                WHERE  [CraftID] = ? AND [WorkStationID] = ? AND [FixtureType] = ? AND [UID] =?)");    //////
     query.addBindValue(dialog.getFixtureSerial().toInt());
     query.addBindValue("");
     query.addBindValue(QDateTime::currentDateTime());
@@ -822,7 +822,7 @@ void WidgetCraftEdit::slotDeleteCraftFixture()
     QSqlRecord record = modelFixture->record(index.row());
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(DELETE FROM [PCS_Craft_Station_Fixture]
-                  WHERE[CraftID] = ? AND [WorkStationID] = ? AND [FixtureType] = ?  AND [FixtureOrder] = ? AND [UID] =?)");
+                  WHERE[CraftID] = ? AND [WorkStationID] = ? AND [FixtureType] = ?  AND [FixtureOrder] = ? AND [UID] =?)");    //////
     query.addBindValue(record.value("CraftID").toString());
     query.addBindValue(record.value("WorkStationID").toString());
     query.addBindValue(record.value("FixtureType").toString());
@@ -846,7 +846,7 @@ void WidgetCraftEdit::initialTreeWidget()
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT
                     [CraftID]
-                FROM [PCS_Craft] WHERE [State] !=2 )");
+                FROM [PCS_Craft] WHERE [State] !=2 )");    //////
     if (!query.exec())
     {
         qDebug().noquote() << query.lastError().text();
@@ -861,7 +861,7 @@ void WidgetCraftEdit::initialTreeWidget()
         QSqlQuery queryChild(LOCAL_DB);
         queryChild.prepare(R"(SELECT
                         [WorkStationID]
-                    FROM [PCS_Craft_Station] WHERE [CraftID] =? )");
+                    FROM [PCS_Craft_Station] WHERE [CraftID] =? )");    //////
         queryChild.addBindValue(root->text(0));
         if (!queryChild.exec())
         {
@@ -973,7 +973,7 @@ void WidgetCraftEdit::updateTableViewMaterial()
                  ,B.[BarcodeRule]
                  ,A.[SingleConsumeQuantity]
                  ,A.[ShortWarningQuantity]
-             FROM [PCS_Craft_Station_Material] A LEFT JOIN  [PCS_Base_Material] B ON A.[MaterialID]= B.[MaterialID] WHERE A.[CraftID]= ? AND A.[WorkStationID]=? AND A.[State]!=2)");
+             FROM [PCS_Craft_Station_Material] A LEFT JOIN  [PCS_Base_Material] B ON A.[MaterialID]= B.[MaterialID] WHERE A.[CraftID]= ? AND A.[WorkStationID]=? AND A.[State]!=2)");    //////
     query.addBindValue(ui->editCraftID->text());
     query.addBindValue(ui->editStationID->text());
     query.exec();
@@ -1027,7 +1027,7 @@ void WidgetCraftEdit::updateTableViewMeasure()
                    ,A.[StandardValue]
                    ,A.[UpperLimit]
                    ,A.[LowerLimit]
-               FROM  [PCS_Craft_Station_Measure] A LEFT JOIN  [PCS_Base_Measure] B ON A.[MeasureType]= B.[MeasureType] WHERE A.[CraftID]=? AND A.[WorkStationID]=? AND A.[State]!=2 )");
+               FROM  [PCS_Craft_Station_Measure] A LEFT JOIN  [PCS_Base_Measure] B ON A.[MeasureType]= B.[MeasureType] WHERE A.[CraftID]=? AND A.[WorkStationID]=? AND A.[State]!=2 )");    //////
     query.addBindValue(ui->editCraftID->text());
     query.addBindValue(ui->editStationID->text());
     query.exec();
@@ -1072,7 +1072,7 @@ void WidgetCraftEdit::updateTableViewFixture()
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT [UID], [CraftID], [WorkStationID], [FixtureType]
                     ,[FixtureOrder]
-              FROM [PCS_Craft_Station_Fixture] WHERE [CraftID]= ? AND [WorkStationID]=? AND [State]!=2 )");
+              FROM [PCS_Craft_Station_Fixture] WHERE [CraftID]= ? AND [WorkStationID]=? AND [State]!=2 )");    //////
     query.addBindValue(ui->editCraftID->text());
     query.addBindValue(ui->editStationID->text());
     query.exec();

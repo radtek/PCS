@@ -199,7 +199,7 @@ void WidgetCraftRouteDesign::slotTreeSelectionChanged()
             ui->labelProductID->setText(query.value("ProductID").toString());
             ui->labelProductName->setText(query.value("ProductName").toString());
 
-            SerialRule assyRule = static_cast<SerialRule>(query.value("AssySerialRule").toInt());    //@@@
+            SerialRule assyRule = static_cast<SerialRule>(query.value("AssySerialRule").toInt());    //////@@
             ui->labelAssySerialRule->setText(SerialRuleMap.value(assyRule));
             SerialRule packRule = static_cast<SerialRule>(query.value("PackSerialRule").toInt());
             ui->labelPackSerialRule->setText(SerialRuleMap.value(packRule));

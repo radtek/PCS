@@ -74,7 +74,7 @@ void WidgetBaseWorker::slotDeleteWorker()
         return;
     }
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(UPDATE [PCS_Base_Worker] SET [State]=2 WHERE [WorkerID]=? )");
+    query.prepare(R"(UPDATE [PCS_Base_Worker] SET [State]=2 WHERE [WorkerID]=? )");    //////
     query.addBindValue(ui->editWorkerID->text());
     query.exec();
     ui->buttonGroup->setGroupState(ButtonGroup::GroupState::Unselect);
@@ -118,7 +118,7 @@ void WidgetBaseWorker::slotSaveWorker()
     case StateMark::AddNew:
     {
 
-        query.prepare(R"(SELECT [WorkerID] FROM [PCS_Base_Worker] WHERE [WorkerID]=? OR [WorkerBarcode]=? )");
+        query.prepare(R"(SELECT [WorkerID] FROM [PCS_Base_Worker] WHERE [WorkerID]=? OR [WorkerBarcode]=? )");    //////
         query.addBindValue(ui->editWorkerID->text());
         query.addBindValue(ui->editWorkerBarcode->text());
         if (!query.exec())
@@ -145,7 +145,7 @@ void WidgetBaseWorker::slotSaveWorker()
                       ,[State]
                       ,[Description])
                 VALUES
-                      (?,?,?,?,?,?,?,?,?,?)       )");
+                      (?,?,?,?,?,?,?,?,?,?)       )");    //////
         query.addBindValue(qWorkManager->getWorkshopID());
         query.addBindValue(qWorkManager->getWorklineID());
         query.addBindValue(ui->editWorkerID->text());
@@ -171,7 +171,7 @@ void WidgetBaseWorker::slotSaveWorker()
     }
     case StateMark::ModifyOld:
     {
-        query.prepare(R"(SELECT [WorkerID] FROM [PCS_Base_Worker] WHERE [WorkerID]!=? AND [WorkerBarcode]=? )");
+        query.prepare(R"(SELECT [WorkerID] FROM [PCS_Base_Worker] WHERE [WorkerID]!=? AND [WorkerBarcode]=? )");    //////
         query.addBindValue(ui->editWorkerID->text());
         query.addBindValue(ui->editWorkerBarcode->text());
         if (!query.exec())
@@ -194,7 +194,7 @@ void WidgetBaseWorker::slotSaveWorker()
                          ,[ModifyTime] = ?
                          ,[State] = ?
                          ,[Description] = ?
-                    WHERE [WorkerID] = ?    )");
+                    WHERE [WorkerID] = ?    )");    //////
 
         query.addBindValue(ui->editWorkerName->text());
         query.addBindValue(ui->editWorkerBarcode->text());
@@ -283,7 +283,7 @@ void WidgetBaseWorker::initialWidgetWorkerList()
                   ,[WorkerBarcode]
                   ,[WorkerDuty]
                   ,[Description]
-              FROM [PCS_Base_Worker] WHERE [State]!=2 )");
+              FROM [PCS_Base_Worker] WHERE [State]!=2 )");    //////
     query.exec();
 
     model->setQuery(query);
@@ -303,7 +303,7 @@ void WidgetBaseWorker::updateWidgetWorkerList()
                   ,[WorkerBarcode]
                   ,[WorkerDuty]
                   ,[Description]
-              FROM [PCS_Base_Worker] WHERE [State]!=2 )");
+              FROM [PCS_Base_Worker] WHERE [State]!=2 )");    //////
     query.exec();
 
     model->setQuery(query);

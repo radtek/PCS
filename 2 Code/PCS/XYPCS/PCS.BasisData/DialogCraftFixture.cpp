@@ -49,7 +49,7 @@ void DialogCraftFixture::initialDialog()
     ui->lineEditFixtureSerial->clear();
     QSqlQuery query(LOCAL_DB);
     query.prepare(R"(SELECT DISTINCT [FixtureType]
-                  FROM [PCS_Base_Fixture] )");
+                  FROM [PCS_Base_Fixture] )");    //////
     if (!query.exec())
     {
         qDebug().noquote() << query.lastError().text();

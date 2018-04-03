@@ -15,9 +15,9 @@
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
-//@@MIDL_FILE_HEADING(  )
+//////@MIDL_FILE_HEADING(  )
 
-//#if !defined(_M_IA64) && !defined(_M_AMD64)
+//////if !defined(_M_IA64) && !defined(_M_AMD64)
 
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */

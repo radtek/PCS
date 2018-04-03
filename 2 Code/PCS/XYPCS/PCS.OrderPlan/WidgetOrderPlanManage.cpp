@@ -13,6 +13,9 @@ WidgetOrderPlanManage::WidgetOrderPlanManage(QWidget *parent)
     initialWidget();
     initialOrder();
     initialButton();
+    ui->buttonLoadOffline->hide();
+    ui->buttonReturnOrder->hide();
+    ui->buttonSyncOrder->hide();
 }
 
 WidgetOrderPlanManage::~WidgetOrderPlanManage()

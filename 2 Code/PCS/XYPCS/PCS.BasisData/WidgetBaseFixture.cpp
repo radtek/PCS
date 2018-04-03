@@ -80,7 +80,7 @@ void WidgetBaseFixture::slotDeleteFixture()
         return;
     }
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(UPDATE [PCS_Base_Fixture] SET [State]=2 WHERE [FixtureID]=? )");
+    query.prepare(R"(UPDATE [PCS_Base_Fixture] SET [State]=2 WHERE [FixtureID]=? )");    //////
     query.addBindValue(ui->editFixtureID->text());
     query.exec();
     ui->buttonGroup->setGroupState(ButtonGroup::GroupState::Unselect);
@@ -139,7 +139,7 @@ void WidgetBaseFixture::slotSaveFixture()
     case StateMark::AddNew:
     {
 
-        query.prepare(R"(SELECT [FixtureID] FROM [PCS_Base_Fixture] WHERE [FixtureID]=? )");
+        query.prepare(R"(SELECT [FixtureID] FROM [PCS_Base_Fixture] WHERE [FixtureID]=? )");    //////
         query.addBindValue(ui->editFixtureID->text());
         if (!query.exec())
         {
@@ -167,7 +167,7 @@ void WidgetBaseFixture::slotSaveFixture()
                       ,[State]
                       ,[Description])
                 VALUES
-                      (?,?,?,?,?,?,?,?,?,?,?,?)       )");
+                      (?,?,?,?,?,?,?,?,?,?,?,?)       )");    //////
         query.addBindValue(ui->editFixtureID->text());
         query.addBindValue(ui->editFixtureName->text());
         query.addBindValue(ui->editFixtureType->text());
@@ -207,7 +207,7 @@ void WidgetBaseFixture::slotSaveFixture()
                          ,[ModifyTime] = ?
                          ,[State] = ?
                          ,[Description] = ?
-                    WHERE [FixtureID] = ?    )");
+                    WHERE [FixtureID] = ?    )");    //////
 
         query.addBindValue(ui->editFixtureName->text());
         query.addBindValue(ui->editFixtureType->text());
@@ -306,7 +306,7 @@ void WidgetBaseFixture::initialWidgetFixtureList()
                   ,[WarningCount]
                   ,[ScrapMarker]
                   ,[Description]
-              FROM [PCS_Base_Fixture] WHERE [State]!=2 )");
+              FROM [PCS_Base_Fixture] WHERE [State]!=2 )");    //////
     query.exec();
 
     model->setQuery(query);
@@ -330,7 +330,7 @@ void WidgetBaseFixture::updateWidgetFixtureList()
                   ,[WarningCount]
                   ,[ScrapMarker]
                   ,[Description]
-              FROM [PCS_Base_Fixture] WHERE [State]!=2 )");
+              FROM [PCS_Base_Fixture] WHERE [State]!=2 )");    //////
     query.exec();
     model->setQuery(query);
     ui->tableView->setModel(model);

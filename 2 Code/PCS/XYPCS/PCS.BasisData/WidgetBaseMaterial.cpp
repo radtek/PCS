@@ -62,7 +62,7 @@ void WidgetBaseMaterial::slotDeleteMaterial()
         return;
     }
     QSqlQuery query(LOCAL_DB);
-    query.prepare(R"(UPDATE [PCS_Base_Material] SET [State]=2 WHERE [MaterialID]=? )");
+    query.prepare(R"(UPDATE [PCS_Base_Material] SET [State]=2 WHERE [MaterialID]=? )");    //////
     query.addBindValue(ui->editMaterialID->text());
     query.exec();
     ui->buttonGroup->setGroupState(ButtonGroup::GroupState::Unselect);
@@ -101,7 +101,7 @@ void WidgetBaseMaterial::slotSaveMaterial()
     case StateMark::AddNew:
     {
 
-        query.prepare(R"(SELECT [MaterialID] FROM [PCS_Base_Material] WHERE [MaterialID]=? )");
+        query.prepare(R"(SELECT [MaterialID] FROM [PCS_Base_Material] WHERE [MaterialID]=? )");    //////
         query.addBindValue(ui->editMaterialID->text());
         if (!query.exec())
         {
@@ -124,7 +124,7 @@ void WidgetBaseMaterial::slotSaveMaterial()
                       ,[State]
                       ,[Description])
                 VALUES
-                      (?,?,?,?,?,?,?)       )");
+                      (?,?,?,?,?,?,?)       )");    //////
         query.addBindValue(ui->editMaterialID->text());
         query.addBindValue(ui->editMaterialName->text());
         query.addBindValue(ui->editMaterialBarcode->text());
@@ -154,7 +154,7 @@ void WidgetBaseMaterial::slotSaveMaterial()
                          ,[ModifyTime] = ?
                          ,[State] = ?
                          ,[Description] = ?
-                    WHERE [MaterialID] = ?    )");
+                    WHERE [MaterialID] = ?    )");    //////
 
         query.addBindValue(ui->editMaterialName->text());
         query.addBindValue(ui->editMaterialBarcode->text());
@@ -233,7 +233,7 @@ void WidgetBaseMaterial::initialWidgetMaterialList()
                   ,[MaterialName]
                   ,[BarcodeRule]
                   ,[Description]
-              FROM [PCS_Base_Material] WHERE [State]!=2 )");
+              FROM [PCS_Base_Material] WHERE [State]!=2 )");    //////
     query.exec();
 
     model->setQuery(query);
@@ -250,7 +250,7 @@ void WidgetBaseMaterial::updateWidgetMaterialList()
                   ,[MaterialName]
                   ,[BarcodeRule]
                   ,[Description]
-              FROM [PCS_Base_Material] WHERE [State]!=2 )");
+              FROM [PCS_Base_Material] WHERE [State]!=2 )");    //////
     query.exec();
 
     model->setQuery(query);
